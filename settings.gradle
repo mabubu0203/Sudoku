@@ -1,0 +1,8 @@
+rootProject.name = 'Sudoku'
+include(
+        'micro-admin',
+        'micro-api',
+        'micro-interfaces',
+        'micro-rdb'
+)
+
