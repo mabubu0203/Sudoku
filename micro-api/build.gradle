@@ -1,0 +1,17 @@
+dependencies {
+
+    // SpringBoot projects
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+
+}
+
+springBoot {
+    buildInfo()
+    mainClassName = 'com.mabubu0203.sudoku.api.ApiApp'
+}
+
+war {
+    archiveName = 'Api.war'
+}
