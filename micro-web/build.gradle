@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'war'
+}
+
+apply plugin: "com.moowork.node"
+apply plugin: "com.moowork.gulp"
+
+war {
+    archiveName = 'Web.war'
+}
+
+classes.dependsOn gulp_build
+gulp_build.dependsOn npmInstall
+
+node {
+    download = true
+    version = '11.11.0'
+    npmVersion = '6.7.0'
+    npmWorkDir = file("${projectDir}/src/main/resources/node")
+}
+
+gulp {
+    workDir = file("${projectDir}/src/main/resources/")
+    colors = true
+    bufferOutput = false
+}
+
+mainClassName = 'com.mabubu0203.sudoku.web.WebApp'

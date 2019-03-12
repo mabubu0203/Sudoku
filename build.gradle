@@ -1,0 +1,136 @@
+buildscript {
+    ext {
+        // ソースと実行ファイルのJavaバージョン
+        jdkVersion = jdkVersion
+        defaultEncoding = defaultEncoding
+
+        // SpringBoot
+        springBootVersion = springbootVersion
+
+        // SpringBootAdmin
+        springbootAdminVersion = springbootAdminVersion
+
+        // ModelMapper
+        modelmapperVersion = modelmapperVersion
+
+    }
+
+    repositories {
+        jcenter()
+    }
+
+}
+
+plugins {
+    id "org.springframework.boot" version "2.1.3.RELEASE"
+    id "org.sonarqube" version "2.7"
+}
+
+apply from: "$rootDir/gradle/ide.gradle"
+
+sonarqube {
+    properties {
+        property "sonar.github.repository", "mabubu0203/Sudoku"
+        property "sonar.host.url", "http://localhost:9000/sonar"
+        property "sonar.jacoco.reportPaths", { "${project.buildDir}/jacoco/test.exec" }
+        property "sonar.jdbc.driverClassName", "org.postgresql.Driver"
+        property "sonar.jdbc.password", "sonar"
+        property "sonar.jdbc.url", "jdbc:postgresql://localhost:5432/sonar"
+        property "sonar.jdbc.username", "sonar"
+        property "sonar.junit.reportsPaths", { "${project.buildDir}/test-results" }
+        property "sonar.language", "java"
+        property "sonar.links.issue", "https://github.com/mabubu0203/Sudoku/issues"
+        property "sonar.links.scm", "https://github.com/mabubu0203/Sudoku/"
+        property "sonar.scm.provider", "git"
+    }
+}
+
+allprojects {
+
+    apply plugin: 'jacoco'
+    apply plugin: 'java'
+
+    repositories {
+        jcenter()
+    }
+
+    jacoco {
+        toolVersion = "0.8.2"
+        reportsDir = file("$buildDir/customJacocoReportDir")
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+    javadoc {
+        doFirst {
+            exclude "**/module-info.java"
+            options {
+                addBooleanOption('html5', true)
+                author = true
+                charSet = defaultEncoding
+                docEncoding = defaultEncoding
+                encoding = defaultEncoding
+                links(
+                        "https://docs.oracle.com/en/java/javase/11/docs/api/",
+                        "https://docs.spring.io/spring-boot/docs/current/api/"
+                )
+                linkSource = true
+                noHelp = true
+                setMemberLevel(JavadocMemberLevel.PUBLIC)
+                setNoQualifiers(["all"])
+            }
+        }
+    }
+
+    compileJava {
+        doFirst {
+            sourceCompatibility = jdkVersion
+            targetCompatibility = jdkVersion
+            options.encoding = defaultEncoding
+            options.compilerArgs += [
+                    "-Xlint:unchecked", "-Xlint:deprecation",
+                    "--module-path", classpath.asPath
+            ]
+            classpath = files()
+        }
+    }
+
+}
+
+subprojects {
+
+    apply plugin: 'application'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'war'
+
+    repositories {
+        jcenter()
+    }
+
+    task('default') {
+        dependsOn 'clean', 'check'
+    }
+
+}
+
+
+project(':micro-api') {
+    dependencies {
+        compile project(':micro-interfaces'), project(':micro-rdb')
+    }
+}
+
+project(':micro-interfaces') {
+}
+
+project(':micro-rdb') {
+    dependencies {
+        compile project(':micro-interfaces')
+    }
+}

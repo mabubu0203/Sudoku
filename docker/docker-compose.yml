@@ -1,0 +1,46 @@
+version: '3.6'
+
+services:
+
+  mysqlRc:
+    image: mysql:8.0.15
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/conf/:/etc/mysql/conf.d
+    networks:
+      - sonarnet
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+
+  sonarqube:
+    image: sonarqube:7.6
+    container_name: sonarqube
+    depends_on:
+      - mysqlRc
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+    networks:
+      - sonarnet
+    command: -Dsonar.web.context=/sonar
+    ports:
+      - 9000:9000
+      - 9092:9092
+    environment:
+      - SONAR_JDBC_URL=jdbc:mysql://localhost:3306/sonar?useUnicode=true&characterEncoding=utf8
+    restart: always
+
+networks:
+  sonarnet:
+    driver: bridge
+volumes:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:
