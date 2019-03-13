@@ -31,8 +31,8 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=mysqlRc
-      - PMA_USER=app_user
-      - PMA_PASSWORD=app_pass
+      - PMA_USER=root
+      - PMA_PASSWORD=root
     restart: always
 
   sonarqube:

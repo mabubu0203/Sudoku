@@ -1,3 +1,6 @@
+plugins {
+    id "org.flywaydb.flyway" version "5.2.4"
+}
 dependencies {
 
     // SpringBoot projects
@@ -6,13 +9,25 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.data:spring-data-rest-hal-browser")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    // Flyway
+    implementation("org.flywaydb:flyway-core")
 
     // lombok
     compileOnly("org.projectlombok:lombok")
 
     // JDBC Drivers
-    runtimeOnly("mysql:mysql-connector-java")
+    compile("mysql:mysql-connector-java")
 
+}
+
+flyway {
+    driver = 'com.mysql.cj.jdbc.Driver'
+    user = 'root'
+    password = 'root'
+    schemas = ['SUDOKU']
+    url = 'jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8'
 }
 
 springBoot {
