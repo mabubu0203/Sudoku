@@ -71,7 +71,6 @@ allprojects {
             sourceCompatibility = jdkVersion
             targetCompatibility = jdkVersion
             options.encoding = defaultEncoding
-            classpath = files()
         }
     }
 
