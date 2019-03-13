@@ -104,6 +104,9 @@ project(':micro-api') {
 }
 
 project(':micro-common') {
+    dependencies {
+        compile project(':micro-interfaces')
+    }
 }
 
 project(':micro-interfaces') {
