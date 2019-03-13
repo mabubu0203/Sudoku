@@ -24,7 +24,6 @@ public interface AnswerInfoRepository
      * ANSWER_INFO_TBLへAnswerKeyで検索を行います。
      *
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     List<AnswerInfoTbl> findByAnswerKey(String answerKey);
@@ -34,7 +33,6 @@ public interface AnswerInfoRepository
      *
      * @return AnswerInfoTbl
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     AnswerInfoTbl findByTypeAndKeyHash(int type, String keyHash);
@@ -44,7 +42,6 @@ public interface AnswerInfoRepository
      *
      * @return AnswerInfoTbl
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Query(
@@ -52,4 +49,5 @@ public interface AnswerInfoRepository
             value = "SELECT * FROM ANSWER_INFO_TBL WHERE TYPE = :TYPE ORDER BY NO DESC LIMIT 1"
     )
     AnswerInfoTbl findByType(@Param("TYPE") int type);
+
 }
