@@ -1,0 +1,19 @@
+dependencies {
+
+    // SpringBoot projects
+    compile("org.springframework.boot:spring-boot-starter-validation")
+
+}
+
+jar {
+    baseName = 'micro-validation'
+    version = '1.0'
+    enabled = true
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+    failFast = true
+}
