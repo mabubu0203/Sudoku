@@ -1,0 +1,24 @@
+dependencies {
+
+    // EclipseCollections
+    compile("org.eclipse.collections:eclipse-collections:$ecVersion")
+    compile("org.eclipse.collections:eclipse-collections-api:$ecVersion")
+    testCompile("org.eclipse.collections:eclipse-collections-testutils:$ecVersion")
+    compile("org.eclipse.collections:eclipse-collections-forkjoin:$ecVersion")
+
+    // lombok
+    compileOnly("org.projectlombok:lombok")
+}
+
+jar {
+    baseName = 'micro-common'
+    version = '1.0'
+    enabled = true
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+    failFast = true
+}
