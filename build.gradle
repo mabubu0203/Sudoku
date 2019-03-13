@@ -66,37 +66,11 @@ allprojects {
         }
     }
 
-    javadoc {
-        doFirst {
-            exclude "**/module-info.java"
-            options {
-                addBooleanOption('html5', true)
-                author = true
-                charSet = defaultEncoding
-                docEncoding = defaultEncoding
-                encoding = defaultEncoding
-                links(
-                        "https://docs.oracle.com/en/java/javase/11/docs/api/",
-                        "https://docs.spring.io/spring-boot/docs/current/api/"
-                )
-                linkSource = true
-                noHelp = true
-                setMemberLevel(JavadocMemberLevel.PUBLIC)
-                setNoQualifiers(["all"])
-            }
-        }
-    }
-
     compileJava {
         doFirst {
             sourceCompatibility = jdkVersion
             targetCompatibility = jdkVersion
             options.encoding = defaultEncoding
-            options.compilerArgs += [
-                    "-Xlint:unchecked", "-Xlint:deprecation",
-                    "--module-path", classpath.asPath
-            ]
-            classpath = files()
         }
     }
 
@@ -104,9 +78,9 @@ allprojects {
 
 subprojects {
 
-    apply plugin: 'application'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'org.springframework.boot'
+    apply plugin: 'java-library'
     apply plugin: 'war'
 
     repositories {
@@ -122,7 +96,7 @@ subprojects {
 
 project(':micro-api') {
     dependencies {
-        compile project(':micro-interfaces'), project(':micro-rdb')
+        compile project(':micro-interfaces')
     }
 }
 
@@ -130,7 +104,4 @@ project(':micro-interfaces') {
 }
 
 project(':micro-rdb') {
-    dependencies {
-        compile project(':micro-interfaces')
-    }
 }

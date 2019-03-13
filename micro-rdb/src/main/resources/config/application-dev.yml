@@ -1,0 +1,196 @@
+# ----------------------------------------
+# SPRING PROPERTIES
+# ----------------------------------------
+spring:
+  aop:
+    auto: true
+  beaninfo:
+    ignore: true
+  data:
+    jpa:
+      repositories:
+        enabled: true
+    rest:
+      base-path: /
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0.9
+    check-location: false
+    locations: classpath:/db/migration/mysql
+    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffix: .sql
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+  profiles: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  info:
+    build:
+      location: classpath:META-INF/build-info.properties
+    git:
+      location: classpath:git.properties
+  main:
+    banner-mode: console
+  # ----------------------------------------
+  # DATA PROPERTIES
+  # ----------------------------------------
+  datasource:
+    continue-on-error: false
+    driverClassName: com.mysql.cj.jdbc.Driver
+    generate-unique-name: false
+    jmx-enabled: true
+    password: root
+    sql-script-encoding: UTF-8
+    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+  h2:
+    console:
+      enabled: false
+
+
+
+  # ----------------------------------------
+  # INTEGRATION PROPERTIES
+  # ----------------------------------------
+
+  # ----------------------------------------
+  # DEVTOOLS PROPERTIES
+  # ----------------------------------------
+  devtools:
+    livereload:
+      enabled: true
+      port: 35219
+    restart:
+      enabled: true
+      poll-interval: 1000
+    quiet-period: 400
+  remote:
+    debug:
+      enabled: false
+      local-port: 8000
+    restart:
+      enabled: false
+      secret-header-name: X-AUTH-TOKEN
+# ----------------------------------------
+# WEB PROPERTIES
+# ----------------------------------------
+server:
+  port: 8075
+  context-path: /SudokuRdb
+  servlet:
+    jsp:
+      registered: false
+  ssl:
+    enabled: false
+  tomcat:
+    accesslog:
+      directory: logs
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern: common
+      prefix: access_log
+      rotate: true
+      suffix: .log
+    uri-encoding: UTF-8
+# ----------------------------------------
+# SECURITY PROPERTIES
+# ----------------------------------------
+security:
+  basic:
+    enabled: false
+  enable-csrf: false
+  headers:
+    cache: false
+    content-type: false
+    frame: false
+    xss: false
+    require-ssl: false
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+  cloudfoundry:
+    enabled: false
+  endpoint:
+    auditevents:
+      enabled: true
+    beans:
+      enabled: true
+    conditions:
+      enabled: true
+    configprops:
+      enabled: true
+    env:
+      enabled: true
+    flyway:
+      enabled: true
+    health:
+      enabled: true
+    heapdump:
+      enabled: true
+    info:
+      enabled: true
+    jmx:
+      enabled: false
+    jolokia:
+      enabled: true
+      path: /jolokia
+      sensitive: true
+    liquibase:
+      enabled: false
+    logfile:
+      enabled: true
+      path: /logfile
+      sensitive: true
+    loggers:
+      enabled: true
+    mappings:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    scheduledtasks:
+      enabled: false
+    sessions:
+      enabled: false
+    shutdown:
+      enabled: false
+    threaddump:
+      enabled: false
+    trace:
+      enabled: false
+    web:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,jolokia,logfile,loggers,mappings,metrics,web
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: true
+  info:
+    build:
+      enabled: true
+    defaults:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+  jolokia:
+    enabled: true
+  security:
+    enabled: false
