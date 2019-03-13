@@ -10,6 +10,9 @@ buildscript {
         // SpringBootAdmin
         springbootAdminVersion = springbootAdminVersion
 
+        // EclipseCollections
+        ecVersion = eclipsecollectionsVersion
+
         // ModelMapper
         modelmapperVersion = modelmapperVersion
 
@@ -96,12 +99,24 @@ subprojects {
 
 project(':micro-api') {
     dependencies {
+        compile project(':micro-common') , project(':micro-interfaces')
+    }
+}
+
+project(':micro-common') {
+    dependencies {
         compile project(':micro-interfaces')
     }
 }
 
 project(':micro-interfaces') {
+    dependencies {
+        compile project(':micro-validation')
+    }
 }
 
 project(':micro-rdb') {
+}
+
+project(':micro-validation') {
 }
