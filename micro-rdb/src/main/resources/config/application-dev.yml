@@ -31,7 +31,7 @@ spring:
     jmx-enabled: true
     password: root
     sql-script-encoding: UTF-8
-    url: jdbc:mysql://localhost:3306/sudoku?useSSL=false
+    url: jdbc:mysql://localhost:3306/sudoku?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
     username: root
   h2:
     console:

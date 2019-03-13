@@ -4,7 +4,7 @@ services:
 
   mysqlRc:
     image: mysql:8.0.15
-    container_name: mysql
+    container_name: mysqlRc
     ports:
       - 3306:3306
     volumes:
@@ -14,10 +14,29 @@ services:
       - sonarnet
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass
+      TZ: "Asia/Tokyo"
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - mysqlRc
+    ports:
+      - 8280:80
+    volumes:
+      - /sessions
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysqlRc
+      - PMA_USER=app_user
+      - PMA_PASSWORD=app_pass
     restart: always
 
   sonarqube:
-    image: sonarqube:7.6
+    image: sonarqube:7.6-community
     container_name: sonarqube
     depends_on:
       - mysqlRc
@@ -33,7 +52,7 @@ services:
       - 9000:9000
       - 9092:9092
     environment:
-      - SONAR_JDBC_URL=jdbc:mysql://localhost:3306/sonar?useUnicode=true&characterEncoding=utf8
+      - SONAR_JDBC_URL=jdbc:mysql://localhost:3306/sonar?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
     restart: always
 
 networks:
