@@ -1,15 +1,15 @@
 package jp.co.valtech.sudoku.web;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jp.co.valtech.sudoku.core.Core;
+
+import com.mabubu0203.sudoku.rdb.RdbCore;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -23,8 +23,8 @@ import java.util.concurrent.Executor;
  * @since 1.0
  */
 @SpringBootApplication
-@Import(Core.class)
-@EntityScan(basePackageClasses = {WebApp.class, Jsr310JpaConverters.class})
+@Import(RdbCore.class)
+@EntityScan(basePackageClasses = {WebApp.class})
 @EnableScheduling
 public class WebApp extends SpringBootServletInitializer implements SchedulingConfigurer {
 
