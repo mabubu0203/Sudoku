@@ -116,6 +116,9 @@ project(':micro-interfaces') {
 }
 
 project(':micro-rdb') {
+    dependencies {
+        compile project(':micro-common')
+    }
 }
 
 project(':micro-validation') {

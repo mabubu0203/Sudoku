@@ -21,6 +21,9 @@ dependencies {
     // JDBC Drivers
     compile("mysql:mysql-connector-java")
 
+    // ModelMapper
+    compile("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
+
 }
 
 flyway {

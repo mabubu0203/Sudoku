@@ -1,0 +1,105 @@
+package com.mabubu0203.sudoku.rdb.service.impl;
+
+import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
+import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
+import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.rdb.repository.AnswerInfoRepository;
+import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
+import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;
+import com.mabubu0203.sudoku.rdb.specification.ScoreInfoSpecifications;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+/**
+ * ANSWER_INFO_TBLへのサービスクラスです。 このクラスを経由してCRUD操作を実行してください。
+ *
+ * @author uratamanabu
+ * @version 1.0
+ * @since 1.0
+ */
+@Slf4j
+@Service
+public class AnswerInfoServiceImpl implements AnswerInfoService {
+
+    private static final String NO = "no";
+
+    private final AnswerInfoRepository answerInfoRepository;
+    private final ModelMapper modelMapper;
+
+    public AnswerInfoServiceImpl(AnswerInfoRepository answerInfoRepository, ModelMapper modelMapper) {
+        this.answerInfoRepository = answerInfoRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public AnswerInfoTbl insert(NumberPlaceBean numberplaceBean) {
+        AnswerInfoTbl answerInfoTbl = modelMapper.map(numberplaceBean, AnswerInfoTbl.class);
+        answerInfoTbl.setCreateDate(LocalDateTime.now());
+        return answerInfoRepository.saveAndFlush(answerInfoTbl);
+    }
+
+    @Override
+    public List<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean) {
+        return answerInfoRepository.findByAnswerKey(numberplaceBean.getAnswerKey());
+    }
+
+    @Override
+    public List<AnswerInfoTbl> findByAnswerKey(String answerKey) {
+        return answerInfoRepository.findByAnswerKey(answerKey);
+    }
+
+    @Override
+    public AnswerInfoTbl findByType(int type) {
+        return answerInfoRepository.findByType(type);
+    }
+
+    @Override
+    public AnswerInfoTbl findByTypeAndKeyHash(int type, String keyHash) {
+        return answerInfoRepository.findByTypeAndKeyHash(type, keyHash);
+    }
+
+    @Override
+    public Page<AnswerInfoTbl> findRecords(SearchConditionBean condition, Pageable pageable) {
+
+        Specification<AnswerInfoTbl> typeContains =
+                AnswerInfoSpecifications.typeContains(condition.getType());
+        Specification<AnswerInfoTbl> noContains =
+                AnswerInfoSpecifications.noContains(condition.getNo(), condition.getSelectorNo());
+        Specification<AnswerInfoTbl> keyHashContains =
+                AnswerInfoSpecifications.keyHashContains(
+                        condition.getKeyHash(), condition.getSelectorKeyHash());
+        Specification<AnswerInfoTbl> scoreContains =
+                ScoreInfoSpecifications.scoreContains(condition.getScore(), condition.getSelectorScore());
+        Specification<AnswerInfoTbl> nameContains =
+                ScoreInfoSpecifications.nameContains(condition.getName(), condition.getSelectorName());
+        Specification<AnswerInfoTbl> dateContains =
+                ScoreInfoSpecifications.dateContains(condition.getDateStart(), condition.getDateEnd());
+
+        Specifications<AnswerInfoTbl> answerSpecification = Specifications.where(typeContains);
+        if (noContains != null) {
+            answerSpecification.and(noContains);
+        }
+        if (keyHashContains != null) {
+            answerSpecification.and(keyHashContains);
+        }
+        if (scoreContains != null) {
+            answerSpecification.and(scoreContains);
+        }
+        if (nameContains != null) {
+            answerSpecification.and(nameContains);
+        }
+        if (dateContains != null) {
+            answerSpecification.and(dateContains);
+        }
+        Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
+        return page;
+    }
+}
