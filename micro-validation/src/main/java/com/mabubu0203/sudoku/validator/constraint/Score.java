@@ -12,9 +12,9 @@ import java.lang.annotation.Target;
 @Digits(integer = 7, fraction = 0)
 public @interface Score {
 
-  String message() default "Score is invalid";
+    String message() default "Score is invalid";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

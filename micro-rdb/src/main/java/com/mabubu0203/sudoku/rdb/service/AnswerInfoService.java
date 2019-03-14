@@ -1,12 +1,12 @@
 package com.mabubu0203.sudoku.rdb.service;
 
+import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,7 +28,7 @@ public interface AnswerInfoService {
      * @author uratamanabu
      * @since 1.0
      */
-    AnswerInfoTbl insert(NumberPlaceBean numberplaceBean) ;
+    AnswerInfoTbl insert(NumberPlaceBean numberplaceBean);
 
     /**
      * ANSWER_INFO_TBLへAnswerKeyで検索を行います。
@@ -38,7 +38,7 @@ public interface AnswerInfoService {
      * @author uratamanabu
      * @since 1.0
      */
-    List<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean) ;
+    List<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean);
 
     /**
      * ANSWER_INFO_TBLへanswerKeyで検索を行います。
@@ -75,10 +75,21 @@ public interface AnswerInfoService {
      * ANSWER_INFO_TBLとScore_INFO_TBLの結合テーブルへ検索画面から入力された条件で検索します。
      *
      * @param condition 検索条件
-     * @param pageable ページ情報
+     * @param pageable  ページ情報
      * @author uratamanabu
      * @since 1.0
      */
     Page<AnswerInfoTbl> findRecords(SearchConditionBean condition, Pageable pageable);
+
+    /**
+     * EntityをBeanに変換して返却します。<br>
+     * .
+     *
+     * @param answerInfoTbl
+     * @return NumberPlaceBean
+     * @throws SudokuApplicationException
+     */
+    NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl)
+            throws SudokuApplicationException;
 
 }

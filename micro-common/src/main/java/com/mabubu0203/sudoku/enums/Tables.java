@@ -9,8 +9,12 @@ package com.mabubu0203.sudoku.enums;
  */
 public enum Tables {
 
-  /** answerInfoTbl */
-  ANSWER_INFO_TBL,
-  /** scoreInfoTbl */
-  SCORE_INFO_TBL
+    /**
+     * answerInfoTbl
+     */
+    ANSWER_INFO_TBL,
+    /**
+     * scoreInfoTbl
+     */
+    SCORE_INFO_TBL
 }

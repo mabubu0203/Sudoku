@@ -7,8 +7,8 @@ import java.io.Serializable;
 @Data
 public class ScoreResponseBean implements Serializable {
 
-  private int score;
-  private String name;
-  private String memo;
+    private int score;
+    private String name;
+    private String memo;
 
 }

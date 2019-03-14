@@ -12,9 +12,9 @@ import java.lang.annotation.Target;
 @Size(max = 64)
 public @interface Name {
 
-  String message() default "KeyHash is invalid";
+    String message() default "KeyHash is invalid";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

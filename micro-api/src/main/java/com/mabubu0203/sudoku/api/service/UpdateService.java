@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 public interface UpdateService {
 
     /**
-     *
-     *
      * @author uratamanabu
      * @since 1.0
      */

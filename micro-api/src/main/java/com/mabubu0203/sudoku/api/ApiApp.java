@@ -1,12 +1,10 @@
 package com.mabubu0203.sudoku.api;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import com.mabubu0203.sudoku.rdb.RdbCore;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

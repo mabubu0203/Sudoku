@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class ResisterSudokuRecordRequestBean {
 
-  private NumberPlaceBean numberPlaceBean;
+    private NumberPlaceBean numberPlaceBean;
 }

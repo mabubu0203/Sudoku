@@ -10,38 +10,38 @@ import java.time.LocalDate;
 @Data
 public class SearchSudokuRecordRequestBean {
 
-  @NotNull
-  private int selectType;
+    @NotNull
+    private int selectType;
 
-  @Digits(integer = 10, fraction = 0, message = "数値10桁を入力しましょう。")
-  private long no;
+    @Digits(integer = 10, fraction = 0, message = "数値10桁を入力しましょう。")
+    private long no;
 
-  private String keyHash;
+    private String keyHash;
 
-  private int score;
+    private int score;
 
-  private String name;
+    private String name;
 
-  private LocalDate dateStart;
-  private LocalDate dateEnd;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
 
-  @NotNull
-  private int selectorNo;
+    @NotNull
+    private int selectorNo;
 
-  @NotNull
-  private int selectorKeyHash;
+    @NotNull
+    private int selectorKeyHash;
 
-  @NotNull
-  private int selectorScore;
-  @NotNull
-  private int selectorName;
+    @NotNull
+    private int selectorScore;
+    @NotNull
+    private int selectorName;
 
-  @NotNull
-  @Digits(integer = 7, fraction = 0)
-  private int pageNumber;
+    @NotNull
+    @Digits(integer = 7, fraction = 0)
+    private int pageNumber;
 
-  @NotNull
-  @Digits(integer = 7, fraction = 0)
-  private int pageSize;
+    @NotNull
+    @Digits(integer = 7, fraction = 0)
+    private int pageSize;
 
 }

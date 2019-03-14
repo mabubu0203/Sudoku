@@ -19,18 +19,18 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false)
 public class SearchConditionBean extends RecordBean {
 
-  @Digits(integer = 1, fraction = 0)
-  private int selectorNo;
+    @Digits(integer = 1, fraction = 0)
+    private int selectorNo;
 
-  @Digits(integer = 1, fraction = 0)
-  private int selectorScore;
+    @Digits(integer = 1, fraction = 0)
+    private int selectorScore;
 
-  @Digits(integer = 1, fraction = 0)
-  private int selectorKeyHash;
+    @Digits(integer = 1, fraction = 0)
+    private int selectorKeyHash;
 
-  @Digits(integer = 1, fraction = 0)
-  private int selectorName;
+    @Digits(integer = 1, fraction = 0)
+    private int selectorName;
 
-  private LocalDate dateStart;
-  private LocalDate dateEnd;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
 }

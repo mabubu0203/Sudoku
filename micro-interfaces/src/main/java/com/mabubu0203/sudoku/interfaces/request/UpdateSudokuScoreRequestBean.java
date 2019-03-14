@@ -7,15 +7,15 @@ import javax.validation.constraints.NotNull;
 @Data
 public class UpdateSudokuScoreRequestBean {
 
-  private int score;
+    private int score;
 
-  private String name;
+    private String name;
 
-  private String memo;
+    private String memo;
 
-  private String keyHash;
+    private String keyHash;
 
-  @NotNull
-  private int type;
+    @NotNull
+    private int type;
 
 }

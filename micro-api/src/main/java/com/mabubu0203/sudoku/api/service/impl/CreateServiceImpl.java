@@ -3,7 +3,7 @@ package com.mabubu0203.sudoku.api.service.impl;
 import com.mabubu0203.sudoku.api.service.CreateService;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.logic.Sudoku;
+import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
