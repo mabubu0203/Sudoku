@@ -18,9 +18,9 @@ import java.lang.annotation.Target;
 @Size(max = 64)
 public @interface AnswerKey {
 
-  String message() default "AnswerKey is invalid";
+    String message() default "AnswerKey is invalid";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

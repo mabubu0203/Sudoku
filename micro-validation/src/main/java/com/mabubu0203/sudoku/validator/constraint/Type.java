@@ -18,9 +18,9 @@ import java.lang.annotation.Target;
 @Digits(integer = 1, fraction = 0)
 public @interface Type {
 
-  String message() default "Type is invalid";
+    String message() default "Type is invalid";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

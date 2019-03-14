@@ -11,14 +11,24 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
+    // EclipseCollections
+    implementation("org.eclipse.collections:eclipse-collections:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-api:$ecVersion")
+    testCompile("org.eclipse.collections:eclipse-collections-testutils:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-forkjoin:$ecVersion")
+
     // Flyway
     implementation("org.flywaydb:flyway-core")
 
     // lombok
+    annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
 
     // JDBC Drivers
-    compile("mysql:mysql-connector-java")
+    implementation("mysql:mysql-connector-java")
+
+    // ModelMapper
+    implementation("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
 
 }
 

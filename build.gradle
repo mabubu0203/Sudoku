@@ -99,23 +99,26 @@ subprojects {
 
 project(':micro-api') {
     dependencies {
-        compile project(':micro-common') , project(':micro-interfaces')
+        implementation project(':micro-common') , project(':micro-interfaces') , project(':micro-rdb')
     }
 }
 
 project(':micro-common') {
     dependencies {
-        compile project(':micro-interfaces')
+        implementation project(':micro-interfaces')
     }
 }
 
 project(':micro-interfaces') {
     dependencies {
-        compile project(':micro-validation')
+        implementation project(':micro-validation')
     }
 }
 
 project(':micro-rdb') {
+    dependencies {
+        implementation project(':micro-common') , project(':micro-interfaces')
+    }
 }
 
 project(':micro-validation') {

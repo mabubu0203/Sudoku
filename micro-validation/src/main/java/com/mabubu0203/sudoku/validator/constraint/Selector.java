@@ -18,9 +18,9 @@ import java.lang.annotation.Target;
 @Digits(integer = 1, fraction = 0)
 public @interface Selector {
 
-  String message() default "Selector is invalid";
+    String message() default "Selector is invalid";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

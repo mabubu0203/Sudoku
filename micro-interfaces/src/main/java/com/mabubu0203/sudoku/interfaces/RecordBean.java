@@ -16,11 +16,11 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class RecordBean {
 
-  private long no;
-  private int type;
-  private String keyHash;
-  private String name;
-  private int score;
-  private String memo;
-  private LocalDate updateDate;
+    private long no;
+    private int type;
+    private String keyHash;
+    private String name;
+    private int score;
+    private String memo;
+    private LocalDate updateDate;
 }
