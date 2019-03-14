@@ -99,7 +99,7 @@ subprojects {
 
 project(':micro-api') {
     dependencies {
-        compile project(':micro-common') , project(':micro-interfaces')
+        compile project(':micro-common') , project(':micro-interfaces') , project(':micro-rdb')
     }
 }
 
