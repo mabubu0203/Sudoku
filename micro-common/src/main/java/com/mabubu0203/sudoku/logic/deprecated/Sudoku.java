@@ -135,6 +135,7 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
         } catch (SudokuApplicationException e) {
             e.printStackTrace();
             log.error("やらかしています。");
+
             this.numberPlaceBean = new NumberPlaceBean();
         }
     }
