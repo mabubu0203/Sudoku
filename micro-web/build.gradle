@@ -38,7 +38,7 @@ gulp_build.dependsOn npmInstall
 
 node {
     download = true
-    version = '11.11.0'
+    version = '10.15.3'
     npmVersion = '6.7.0'
     npmWorkDir = file("${projectDir}/src/main/resources/node")
 }
