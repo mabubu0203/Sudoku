@@ -7,7 +7,6 @@ import com.mabubu0203.sudoku.rdb.repository.ScoreRepository;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,22 +22,16 @@ import java.time.LocalDateTime;
 @Service
 public class ScoreInfoServiceImpl implements ScoreInfoService {
 
-    @SuppressWarnings("initialization.fields.uninitialized")
-    @Autowired
-    private ScoreRepository scoreRepository;
+    private final ScoreRepository scoreRepository;
 
-    @SuppressWarnings("initialization.fields.uninitialized")
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    /**
-     * SCORE_INFO_TBLへ空スコア情報をインサートします。
-     *
-     * @param numberplaceBean 数独
-     * @return ScoreInfoTbl
-     * @author uratamanabu
-     * @since 1.0
-     */
+    public ScoreInfoServiceImpl(ScoreRepository scoreRepository, ModelMapper modelMapper) {
+        this.scoreRepository = scoreRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Override
     public ScoreInfoTbl insert(NumberPlaceBean numberplaceBean) {
         ScoreInfoTbl scoreInfoTbl = modelMapper.map(numberplaceBean, ScoreInfoTbl.class);
         scoreInfoTbl.setScore(CommonConstants.ZERO);
@@ -48,41 +41,19 @@ public class ScoreInfoServiceImpl implements ScoreInfoService {
         return scoreRepository.save(scoreInfoTbl);
     }
 
-    /**
-     * SCORE_INFO_TBLへTypeとKeyHashで検索を行います。
-     *
-     * @param type    タイプ
-     * @param keyHash KeyHash
-     * @return ScoreInfoTbl
-     * @author uratamanabu
-     * @since 1.0
-     */
+    @Override
     public ScoreInfoTbl findByTypeAndKeyHash(int type, String keyHash) {
         return scoreRepository.findByTypeAndKeyHash(type, keyHash);
     }
 
-    /**
-     * SCORE_INFO_TBLへスコア情報をアップデートします。
-     *
-     * @param numberplaceBean 数独
-     * @return ScoreInfoTbl
-     * @author uratamanabu
-     * @since 1.0
-     */
+    @Override
     public ScoreInfoTbl update(NumberPlaceBean numberplaceBean) {
         ScoreInfoTbl scoreInfoTbl = modelMapper.map(numberplaceBean, ScoreInfoTbl.class);
         scoreInfoTbl.setUpdateDate(LocalDateTime.now());
         return scoreRepository.save(scoreInfoTbl);
     }
 
-    /**
-     * SCORE_INFO_TBLへスコア情報をアップデートします。
-     *
-     * @param scoreInfoTbl スコア情報
-     * @return ScoreInfoTbl
-     * @author uratamanabu
-     * @since 1.0
-     */
+    @Override
     public ScoreInfoTbl update(ScoreInfoTbl scoreInfoTbl) {
         scoreInfoTbl.setUpdateDate(LocalDateTime.now());
         return scoreRepository.save(scoreInfoTbl);
