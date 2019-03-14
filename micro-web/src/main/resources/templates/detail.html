@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      lang="ja"
-      xmlns="http://www.w3.org/1999/xhtml">
+<html lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
     <title>detail</title>
     <meta charset="UTF-8">
-    <meta name="author" content="著者情報">
-    <meta name="description" content="記事の概要">
+    <meta content="著者情報" name="author">
+    <meta content="記事の概要" name="description">
     <!-- OGP -->
-    <meta property="og:description" content="記事の概要">
-    <meta property="og:title" content="記事タイトル">
-    <meta property="og:url" content="http://example.com">
-    <meta property="og:image" content="http://example.com/images/thumbnail.png">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="EXAMPLE">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="publisher" href="//plus.google.com/00000000000">
-    <link rel="icon" href="/icon/favicon.ico">
-    <link rel="apple-touch-icon" href="/icon/icon.png">
-    <link rel="alternate" type="application/rss+xml" href="http://example.com/feed">
+    <meta content="記事の概要" property="og:description">
+    <meta content="記事タイトル" property="og:title">
+    <meta content="http://example.com" property="og:url">
+    <meta content="http://example.com/images/thumbnail.png" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="EXAMPLE" property="og:site_name">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="//plus.google.com/00000000000" rel="publisher">
+    <link href="/icon/favicon.ico" rel="icon">
+    <link href="/icon/icon.png" rel="apple-touch-icon">
+    <link href="http://example.com/feed" rel="alternate" type="application/rss+xml">
     <!-- bootstrap -->
-    <link rel="stylesheet" type="text/css"
-          href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"/>
+    <link href="../static/css/bootstrap.css" rel="stylesheet"
+          th:href="@{/css/bootstrap.css}"
+          type="text/css"/>
     <!-- bootstrap-datepicker -->
-    <link rel="stylesheet" type="text/css"
-          href="../static/css/bootstrap-datepicker.min.css"
-          th:href="@{/css/bootstrap-datepicker.min.css}"/>
-    <style type="text/css" th:replace="./common/_temp :: css"></style>
+    <link href="../static/css/bootstrap-datepicker.min.css" rel="stylesheet"
+          th:href="@{/css/bootstrap-datepicker.min.css}"
+          type="text/css"/>
+    <style th:replace="./common/_temp :: css" type="text/css"></style>
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -51,26 +51,26 @@
             </div>
         </div>
         <div class="well bs-component">
-            <form class="form-horizontal" id="detailForm" method="post" action="#" th:action="@{/playNumberPlaceDetail}"
-                  th:object="${detailForm}" autocomplete="off">
+            <form action="#" autocomplete="off" class="form-horizontal" id="detailForm" method="post"
+                  th:action="@{/playNumberPlaceDetail}" th:object="${detailForm}">
                 <fieldset>
                     <div>
                         <div class="row form-group">
                             <label class="col-lg-3 control-label" for="selectLevel">レベル</label>
                             <div class="col-lg-3">
-                                <select class="form-control" id="selectLevel" th:name="selectLevel"
-                                        data-error="セレクトボックスは必須選択です。"
+                                <select class="form-control" data-error="セレクトボックスは必須選択です。" id="selectLevel"
+                                        required
                                         th:data-error="#{selectLevel.input.required}"
-                                        required>
+                                        th:name="selectLevel">
                                     <option value="">---</option>
                                     <option th:each="level : ${selectLevels}"
+                                            th:selected="${level.value} == *{selectLevel}"
                                             th:text="${level.key}"
-                                            th:value="${level.value}"
-                                            th:selected="${level.value} == *{selectLevel}">pulldown
+                                            th:value="${level.value}">pulldown
                                     </option>
                                 </select>
-                                <span th:if="${#fields.hasErrors('selectLevel')}" class="help-block"
-                                      th:errors="*{selectLevel}">error!</span>
+                                <span class="help-block" th:errors="*{selectLevel}"
+                                      th:if="${#fields.hasErrors('selectLevel')}">error!</span>
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="col-lg-6"></div>
@@ -79,11 +79,11 @@
                     <div>
                         <div class="row">
                             <div class="col-lg-8 col-lg-offset-4">
-                                <input type="hidden" th:id="type" th:name="type" th:value="*{type}"/>
-                                <input type="hidden" th:id="keyHash" th:name="keyHash" th:value="*{keyHash}"/>
-                                <button type="reset" id="reset" class="btn btn-default">リセット
+                                <input th:id="type" th:name="type" th:value="*{type}" type="hidden"/>
+                                <input th:id="keyHash" th:name="keyHash" th:value="*{keyHash}" type="hidden"/>
+                                <button class="btn btn-default" id="reset" type="reset">リセット
                                 </button>
-                                <button type="submit" id="submit" class="btn btn-primary">プレイ！
+                                <button class="btn btn-primary" id="submit" type="submit">プレイ！
                                 </button>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                 </fieldset>
             </form>
         </div>
-        <script type="text/javascript" th:inline="javascript">
+        <script th:inline="javascript" type="text/javascript">
         /*<![CDATA[*/
             $('#selectLevel').tooltip({
                 title: [[ #{selectLevel.default.message} ]]
@@ -104,6 +104,7 @@
                 }
             });
         /*]]>*/
+
         </script>
     </div>
 </div>

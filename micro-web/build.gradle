@@ -6,6 +6,29 @@ plugins {
     id "com.moowork.gulp" version "1.2.0"
 }
 
+dependencies {
+
+    // SpringBoot projects
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // EclipseCollections
+    implementation("org.eclipse.collections:eclipse-collections:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-api:$ecVersion")
+    testCompile("org.eclipse.collections:eclipse-collections-testutils:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-forkjoin:$ecVersion")
+
+    // lombok
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+
+    // ModelMapper
+    compile("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
+
+}
+
 war {
     archiveName = 'Web.war'
 }
