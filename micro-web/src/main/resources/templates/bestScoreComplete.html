@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title>bestScoreComplete</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="著者情報">
+    <meta name="description" content="記事の概要">
+    <!-- OGP -->
+    <meta property="og:description" content="記事の概要">
+    <meta property="og:title" content="記事タイトル">
+    <meta property="og:url" content="http://example.com">
+    <meta property="og:image" content="http://example.com/images/thumbnail.png">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="EXAMPLE">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="publisher" href="//plus.google.com/00000000000">
+    <link rel="icon" href="/icon/favicon.ico">
+    <link rel="apple-touch-icon" href="/icon/icon.png">
+    <link rel="alternate" type="application/rss+xml" href="http://example.com/feed">
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"/>
+    <!-- bootstrap-datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap-datepicker.min.css"
+          th:href="@{/css/bootstrap-datepicker.min.css}"/>
+    <style type="text/css" th:replace="./common/_temp :: css"></style>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div th:replace="./common/_temp :: script"/>
+<div class="container">
+    <div th:replace="./common/_temp :: nav"/>
+    <div class="bs-docs-section">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li>セレクト</li>
+                    <li>プレイ</li>
+                    <li class="active">スコア</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="well bs-component">
+                <form id="scoreForm" class="form-horizontal" method="post" action="#"
+                      th:object="${scoreForm}" autocomplete="off">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <li th:text="下記内容でスコアを更新しました。">下記内容でスコアを更新しました。</li>
+                                <li th:text="ナビゲーションバーよりメニューを選択してください。">ナビゲーションバーよりメニューを選択してください。</li>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <li th:text="ベストスコア">ベストスコア</li>
+                                <ul class="breadcrumb">
+                                    <li th:text="'スコア:'+${scoreForm.score}+'点'">スコア:2000点</li>
+                                    <li th:text="'ネーム:'+${scoreForm.name}">ネーム:aaaa</li>
+                                    <li th:text="'一言:'+${scoreForm.memo}">一言:bbbb</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div th:replace="./common/_SearchList :: base"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -2,10 +2,9 @@ plugins {
     id 'java'
     id 'application'
     id 'war'
+    id "com.moowork.node" version "1.2.0"
+    id "com.moowork.gulp" version "1.2.0"
 }
-
-apply plugin: "com.moowork.node"
-apply plugin: "com.moowork.gulp"
 
 war {
     archiveName = 'Web.war'

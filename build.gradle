@@ -122,3 +122,9 @@ project(':micro-rdb') {
 
 project(':micro-validation') {
 }
+
+project(':micro-web') {
+    dependencies {
+        implementation project(':micro-common') , project(':micro-interfaces')
+    }
+}

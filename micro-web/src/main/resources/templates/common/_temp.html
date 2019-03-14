@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title>タイトル</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="著者情報">
+    <meta name="description" content="記事の概要">
+    <!-- OGP -->
+    <meta property="og:description" content="記事の概要">
+    <meta property="og:title" content="記事タイトル">
+    <meta property="og:url" content="http://example.com">
+    <meta property="og:image" content="http://example.com/images/thumbnail.png">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="EXAMPLE">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="publisher" href="//plus.google.com/00000000000">
+    <link rel="icon" href="/icon/favicon.ico">
+    <link rel="apple-touch-icon" href="/icon/icon.png">
+    <link rel="alternate" type="application/rss+xml" href="http://example.com/feed">
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="../../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"/>
+    <!-- bootstrap-datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="../../static/css/bootstrap-datepicker.min.css"
+          th:href="@{/css/bootstrap-datepicker.min.css}"/>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css" th:fragment="css">
+      body {
+        padding-top: 80px;
+      }
+
+      @media(min-width: 768px) {
+        #banner {
+          min-height: 300px;
+          border-bottom: none;
+        }
+        .bs-docs-section {
+          margin-top: 8em;
+        }
+        .bs-component {
+          position: relative;
+        }
+        .bs-component .modal {
+          position: relative;
+          top: auto;
+          right: auto;
+          left: auto;
+          bottom: auto;
+          z-index: 1;
+          display: block;
+        }
+        .bs-component .modal-dialog {
+          width: 90%;
+        }
+        .bs-component .popover {
+          position: relative;
+          display: inline-block;
+          width: 220px;
+          margin: 20px;
+        }
+        .nav-tabs {
+          margin-bottom: 15px;
+        }
+        .progress {
+          margin-bottom: 10px;
+        }
+      }
+      .table > thead > tr > td.successLock,
+      .table > thead > tr > th.successLock,
+      .table > thead > tr.successLock > td,
+      .table > thead > tr.successLock > th,
+      .table > tbody > tr > td.successLock,
+      .table > tbody > tr > th.successLock,
+      .table > tbody > tr.successLock > td,
+      .table > tbody > tr.successLock > th {
+        background-color: aliceblue;
+        color: deeppink;
+      }
+      .hover {
+        background: #B2D8FF;
+      }
+    }
+
+    </style>
+</head>
+<body>
+
+<header th:fragment="header"></header>
+<div th:fragment="script">
+    <!-- bootstrap -->
+    <script type="text/javascript"
+            th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js}"></script>
+    <script type="text/javascript"
+            th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <!-- bootstrap-validator -->
+    <script type="text/javascript"
+            src="../../static/js/validator.js"
+            th:src="@{/js/validator.js}"></script>
+    <!-- bootstrap-datepicker -->
+    <script type="text/javascript"
+            src="../../static/js/bootstrap-datepicker.min.js"
+            th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+    <script type="text/javascript"
+            src="../../static/js/bootstrap-datepicker.ja.min.js"
+            th:src="@{/js/bootstrap-datepicker.ja.min.js}"></script>
+    <script type="text/javascript">
+            $('.bs-component [data-toggle="popover"]').popover();
+            $('.bs-component [data-toggle="tooltip"]').tooltip();
+
+    </script>
+</div>
+<div class="container">
+    <div th:fragment="nav" 　class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="./top" class="navbar-brand">数独</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse"
+                        data-target="#navbar-main">
+                    <span class="icon-bar">作成</span>
+                    <span class="icon-bar">遊ぶ</span>
+                    <span class="icon-bar">検索</span>
+                    <span class="icon-bar">紹介</span>
+                    <span class="icon-bar">ACTOR</span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li><a href="./createAnswer">作成</a></li>
+                    <li><a href="./createQuestion">遊ぶ</a></li>
+                    <li><a href="./searchAnswer">検索</a></li>
+                    <li><a href="./introduce">紹介</a></li>
+                    <li><a href="./linkList">ACTOR</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:fragment="footer"></footer>
+</body>
+</html>

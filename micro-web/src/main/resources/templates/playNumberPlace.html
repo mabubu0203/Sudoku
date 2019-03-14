@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title>playNumberPlace</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="著者情報">
+    <meta name="description" content="記事の概要">
+    <!-- OGP -->
+    <meta property="og:description" content="記事の概要">
+    <meta property="og:title" content="記事タイトル">
+    <meta property="og:url" content="http://example.com">
+    <meta property="og:image" content="http://example.com/images/thumbnail.png">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="EXAMPLE">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="publisher" href="//plus.google.com/00000000000">
+    <link rel="icon" href="/icon/favicon.ico">
+    <link rel="apple-touch-icon" href="/icon/icon.png">
+    <link rel="alternate" type="application/rss+xml" href="http://example.com/feed">
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"/>
+    <!-- bootstrap-datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap-datepicker.min.css"
+          th:href="@{/css/bootstrap-datepicker.min.css}"/>
+    <style type="text/css" th:replace="./common/_temp :: css"></style>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div th:replace="./common/_temp :: script"/>
+<div class="container">
+    <div th:replace="./common/_temp :: nav"/>
+    <div class="bs-docs-section">
+        <div class="col-lg-12">
+            <ul class="breadcrumb">
+                <li>セレクト</li>
+                <li class="active">プレイ</li>
+                <li>スコア</li>
+            </ul>
+        </div>
+        <div class="col-lg-12">
+            <div class="well bs-component">
+                <form class="form-horizontal" id="playForm" method="post" action="#" th:action="@{/isCheck}"
+                      th:object="${playForm}" autocomplete="off" data-toggle="validator">
+                    <fieldset>
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <ul class="breadcrumb">
+                                <li th:text="'スコア:' + ${playForm.score} + '点'">スコア:2000点</li>
+                                <li th:text="'カウント:' + ${playForm.count} + '回'">カウント:1回</li>
+                                <input type="hidden" th:id="score" th:name="score" th:value="*{score}"/>
+                                <input type="hidden" th:id="count" th:name="count" th:value="*{count}"/>
+                            </ul>
+                        </div>
+                        <div th:replace="./common/_NumberPlace :: base"></div>
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <input type="hidden" th:id="type" th:name="type" th:value="*{type}"/>
+                            <input type="hidden" th:id="keyHash" th:name="keyHash" th:value="*{keyHash}"/>
+                            <button type="reset" id="reset" class="btn btn-warning">リセット</button>
+                            <button type="submit" id="submit" class="btn btn-success">エンター</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(
+                function(){
+                    $("td")
+                        .mouseover(
+                            function(){
+                                var idx = $(this).attr('id').substr(1);
+                                $("[id *= " + idx + "]").css("background-color",'paleturquoise');
+                                $(this).siblings().not("th").css("background-color",'paleturquoise');
+                            }
+                        )
+                        .mouseout(
+                            function(){
+                                var idx = $(this).attr('id').substr(1);
+                                $("[id *= " + idx + "]").css("background-color",'aliceblue');
+                                $(this).siblings().not("th").css("background-color",'aliceblue');
+                            }
+                        )
+                }
+            );
+        </script>
+    </div>
+</div>
+
+</body>
+
+</html>

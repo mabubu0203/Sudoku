@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title>searchAnswer</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="著者情報">
+    <meta name="description" content="記事の概要">
+    <!-- OGP -->
+    <meta property="og:description" content="記事の概要">
+    <meta property="og:title" content="searchAnswer">
+    <meta property="og:url" content="http://example.com">
+    <meta property="og:image" content="http://example.com/images/thumbnail.png">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="EXAMPLE">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="publisher" href="//plus.google.com/00000000000">
+    <link rel="icon" href="/icon/favicon.ico">
+    <link rel="apple-touch-icon" href="/icon/icon.png">
+    <link rel="alternate" type="application/rss+xml" href="http://example.com/feed">
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"/>
+    <!-- bootstrap-datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap-datepicker.min.css"
+          th:href="@{/css/bootstrap-datepicker.min.css}"/>
+    <style type="text/css" th:replace="./common/_temp :: css"></style>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div th:replace="./common/_temp :: script"/>
+<div class="container">
+    <div th:replace="./common/_temp :: nav"/>
+    <div class="bs-docs-section">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li class="active">セレクト</li>
+                </ul>
+            </div>
+        </div>
+        <div class="well bs-component">
+            <form class="form-horizontal" id="searchForm" method="post" action="#" th:action="@{/isSearch}"
+                  th:object="${searchForm}" autocomplete="off" data-toggle="validator">
+                <fieldset>
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <div class="col-lg-2"></div>
+                            <label for="selectType" class="col-lg-2 control-label">タイプ</label>
+                            <div class="col-lg-4">
+                                <select class="form-control" id="selectType" th:name="selectType"
+                                        data-error="セレクトボックスは必須選択です。"
+                                        th:data-error="#{selectType.input.required}"
+                                        required>
+                                    <option value="">---</option>
+                                    <option th:each="type : ${selectTypes}"
+                                            th:text="${type.key}"
+                                            th:value="${type.value}"
+                                            th:selected="${type.value} == *{selectType}">pulldown
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('selectType')}" class="help-block"
+                                      th:errors="*{selectType}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-4"></div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-2 control-label" for="no">No</label>
+                            <div class="col-lg-4">
+                                <input type="number" class="form-control" id="no" th:name="no"
+                                       min="0" max="9999999999" step="1"
+                                       th:field="*{no}" placeholder="Noを入力してください。"
+                                       data-error="Noは半角数字のみです。"
+                                       th:data-error="#{no.input.error}"/>
+                                <span th:if="${#fields.hasErrors('no')}" class="help-block"
+                                      th:errors="*{no}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2">
+                                <select class="form-control" th:id="selectorNo" th:name="selectorNo"
+                                        data-error="特に不要であれば初期値を選択してください。"
+                                        th:data-error="#{selectorNo.input.required}"
+                                        required>
+                                    <option value="0">---</option>
+                                    <option th:each="noCompare : ${selectorNo}"
+                                            th:text="${noCompare.key}"
+                                            th:value="${noCompare.value}"
+                                            th:selected="${noCompare.value} == *{selectorNo}">pulldown
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('selectorNo')}" class="help-block"
+                                      th:errors="*{selectorNo}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-2 control-label" for="keyHash">Keyhash</label>
+                            <div class="col-lg-4">
+                                <input type="search" class="form-control" id="keyHash" th:name="keyHash"
+                                       maxlength="64"
+                                       th:field="*{keyHash}" placeholder="KeyHashを入力してください。"
+                                       pattern="[a-zA-Z0-9]{1,64}"
+                                       data-error="KeyHashは半角英数字のみです。"
+                                       th:data-error="#{keyHash.input.error}"/>
+                                <span th:if="${#fields.hasErrors('keyHash')}" class="help-block" th:errors="*{keyHash}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2">
+                                <select class="form-control" th:id="selectorKeyHash" th:name="selectorKeyHash"
+                                        data-error="特に不要であれば初期値を選択してください"
+                                        th:data-error="#{selectorKeyHash.input.required}"
+                                        required>
+                                    <option value="0">---</option>
+                                    <option th:each="keyHashCompare : ${selectorKeyHash}"
+                                            th:text="${keyHashCompare.key}"
+                                            th:value="${keyHashCompare.value}"
+                                            th:selected="${keyHashCompare.value} == *{selectorKeyHash}">pulldown
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('selectorKeyHash')}" class="help-block"
+                                      th:errors="*{selectorKeyHash}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-2 control-label" for="score">Score</label>
+                            <div class="col-lg-4">
+                                <input type="number" class="form-control" id="score" th:name="score"
+                                       min="0"
+                                       max="9999999" step="1"
+                                       th:field="*{score}" placeholder="Scoreを入力してください。"
+                                       data-error="Scoreは半角数字のみです。"
+                                       th:data-error="#{score.input.error}"/>
+                                <span th:if="${#fields.hasErrors('score')}" class="help-block" th:errors="*{score}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2">
+                                <select class="form-control" th:id="selectorScore" th:name="selectorScore"
+                                        data-error="特に不要であれば初期値を選択してください"
+                                        th:data-error="#{selectorScore.input.required}"
+                                        required>
+                                    <option value="0">---</option>
+                                    <option th:each="scoreCompare : ${selectorScore}"
+                                            th:text="${scoreCompare.key}"
+                                            th:value="${scoreCompare.value}"
+                                            th:selected="${scoreCompare.value} == *{selectorScore}">pulldown
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('selectorScore')}" class="help-block"
+                                      th:errors="*{selectorScore}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-2 control-label" for="name">Name</label>
+                            <div class="col-lg-4">
+                                <input type="search" class="form-control" id="name" th:name="name"
+                                       maxlength="64"
+                                       th:field="*{name}" placeholder="Nameを入力してください。"
+                                       pattern="[^\x22\x27]*"
+                                       data-error="Nameに不要な記号が入力されています。"
+                                       th:data-error="#{name.input.error}"/>
+                                <span th:if="${#fields.hasErrors('name')}" class="help-block"
+                                      th:errors="*{name}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2">
+                                <select id="selectorName" class="form-control" name="selectorName"
+                                        data-error="特に不要であれば初期値を選択してください"
+                                        th:data-error="#{selectorName.input.required}"
+                                        required>
+                                    <option value="0">---</option>
+                                    <option th:each="nameCompare : ${selectorName}"
+                                            th:text="${nameCompare.key}" th:value="${nameCompare.value}"
+                                            th:selected="${nameCompare.value} == *{selectorName}">pulldown
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('selectorName')}" class="help-block"
+                                      th:errors="*{selectorName}">error!</span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-2 control-label">toDate</label>
+                            <div class="col-lg-6 input-group input-daterange" id="datepicker">
+                                <div class="col-lg-6">
+                                    <input type="date" class="form-control"
+                                           th:id="dateStart" th:name="dateStart"
+                                           th:field="*{dateStart}" placeholder="開始日を入力してください。"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="date" class="form-control"
+                                           th:id="dateEnd" th:name="dateEnd"
+                                           th:field="*{dateEnd}" placeholder="終了日を入力してください。"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <input type="hidden" th:id="pageNumber" th:name="pageNumber" value="0"/>
+                                <input type="hidden" th:id="pageSize" th:name="pageSize" value="10"/>
+                                <button type="reset" id="reset" class="btn btn-warning">リセット
+                                </button>
+                                <button type="submit" id="submit" class="btn btn-success">サーチ！
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div th:replace="./common/_SearchList :: base"/>
+        <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+            $('#selectType').tooltip({
+                title: [[#{selectType.default.message}]]
+            }).on({
+                "hide.bs.tooltip": function() {
+                if ($(this).is(":focus")) return false;
+              },
+                "blur": function() {
+                $(this).tooltip('hide');
+              }
+            });
+
+            jQuery('#datepicker').datepicker({
+                clearBtn: true,
+                language: "ja",
+                format: "yyyy年mm月dd日",
+                daysOfWeekHighlighted: "0",
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true,
+                onSelect: function( selectedDate ) {
+                    var option = this . id == 'dateStart' ? 'minDate' : 'maxDate',
+                    instance = $( this ) . data( 'datepicker' ),
+                    date = $ . datepicker . parseDate(
+                        instance . settings . dateFormat ||
+                        $ . datepicker . _defaults . dateFormat,
+                        selectedDate, instance . settings
+                    );
+                    dates . not( this ) . datepicker( 'option', option, date );
+                }
+            });
+        /*]]>*/
+        </script>
+    </div>
+</div>
+</body>
+</html>
