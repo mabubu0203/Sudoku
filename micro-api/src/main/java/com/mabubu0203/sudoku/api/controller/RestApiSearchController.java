@@ -11,6 +11,7 @@ import com.mabubu0203.sudoku.validator.constraint.AnswerKey;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import lombok.extern.slf4j.Slf4j;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

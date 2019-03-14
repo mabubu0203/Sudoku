@@ -12,17 +12,6 @@ spring:
         enabled: true
     rest:
       base-path: /
-  flyway:
-    baseline-on-migrate: true
-    baseline-version: 0.9
-    check-location: false
-    locations: classpath:/db/migration/mysql
-    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-    password: root
-    sql-migration-prefix: V
-    sql-migration-separator: __
-    sql-migration-suffix: .sql
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -57,8 +46,6 @@ spring:
     console:
       enabled: false
 
-
-
   # ----------------------------------------
   # INTEGRATION PROPERTIES
   # ----------------------------------------
@@ -85,8 +72,8 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 8075
-  context-path: /SudokuRdb
+  port: 8085
+  context-path: /SudokuApi
   servlet:
     jsp:
       registered: false

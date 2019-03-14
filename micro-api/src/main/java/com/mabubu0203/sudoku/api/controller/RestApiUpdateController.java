@@ -7,6 +7,7 @@ import com.mabubu0203.sudoku.controller.RestBaseController;
 import com.mabubu0203.sudoku.interfaces.request.UpdateSudokuScoreRequestBean;
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import lombok.extern.slf4j.Slf4j;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;

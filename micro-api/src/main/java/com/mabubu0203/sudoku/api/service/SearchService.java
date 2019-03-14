@@ -3,6 +3,7 @@ package com.mabubu0203.sudoku.api.service;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
