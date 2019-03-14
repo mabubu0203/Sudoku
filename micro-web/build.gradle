@@ -2,10 +2,32 @@ plugins {
     id 'java'
     id 'application'
     id 'war'
+    id "com.moowork.node" version "1.2.0"
+    id "com.moowork.gulp" version "1.2.0"
 }
 
-apply plugin: "com.moowork.node"
-apply plugin: "com.moowork.gulp"
+dependencies {
+
+    // SpringBoot projects
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // EclipseCollections
+    implementation("org.eclipse.collections:eclipse-collections:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-api:$ecVersion")
+    testCompile("org.eclipse.collections:eclipse-collections-testutils:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-forkjoin:$ecVersion")
+
+    // lombok
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+
+    // ModelMapper
+    compile("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
+
+}
 
 war {
     archiveName = 'Web.war'
@@ -16,7 +38,7 @@ gulp_build.dependsOn npmInstall
 
 node {
     download = true
-    version = '11.11.0'
+    version = '10.15.3'
     npmVersion = '6.7.0'
     npmWorkDir = file("${projectDir}/src/main/resources/node")
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title></title>
+    <meta charset="UTF-8">
+    <meta content="著者情報" name="author">
+    <meta content="記事の概要" name="description">
+    <!-- OGP -->
+    <meta content="記事の概要" property="og:description">
+    <meta content="" property="og:title">
+    <meta content="http://example.com" property="og:url">
+    <meta content="http://example.com/images/thumbnail.png" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="EXAMPLE" property="og:site_name">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="//plus.google.com/00000000000" rel="publisher">
+    <link href="/icon/favicon.ico" rel="icon">
+    <link href="/icon/icon.png" rel="apple-touch-icon">
+    <link href="http://example.com/feed" rel="alternate" type="application/rss+xml">
+    <!-- bootstrap -->
+    <link href="../../static/css/bootstrap.css" rel="stylesheet"
+          th:href="@{/css/bootstrap.css}"
+          type="text/css"/>
+    <!-- bootstrap-datepicker -->
+    <link href="../../static/css/bootstrap-datepicker.min.css" rel="stylesheet"
+          th:href="@{/css/bootstrap-datepicker.min.css}"
+          type="text/css"/>
+    <style th:replace="./common/_temp :: css" type="text/css"></style>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<div th:fragment="base">
+    <div class="table-responsive col-lg-12 form-group">
+        <table class="table table-striped table-hover table-bordered">
+            <tbody>
+            <tr>
+                <th class="success">#</th>
+                <th class="warning"
+                    th:each="num : ${selectNums}"
+                    th:text="${num}"
+                    th:value="${num}"></th>
+            </tr>
+            <tr th:each="Cells : ${selectCells}" th:object="${Cells}">
+                <th class="warning" th:text="*{get(0).substring(0,1)}">1</th>
+                <div th:each="cell : ${Cells}" th:object="${cell}"
+                     th:with="cellValue=${playForm[cell]}">
+                    <td class="successLock" th:id="${cell}"
+                        th:name="${cell}" th:text="${cellValue}" th:unless="${cellValue}=='0'"></td>
+                    <input th:id="${cell}" th:name="${cell}"
+                           th:unless="${cellValue}=='0'" th:value="${cellValue}" type="hidden"/>
+                    <td th:id="${cell}" th:if="${cellValue}=='0'" th:name="${cell}">
+                        <select class="form-control" data-error="セレクトボックスは必須選択です。" required
+                                th:data-error="#{cell.input.required}"
+                                th:id="${cell}"
+                                th:name="${cell}">
+                            <option value="">---</option>
+                            <option th:each="num : ${selectNums}"
+                                    th:selected="${num}==${cell}" th:text="${num}"
+                                    th:value="${num}">pulldown
+                            </option>
+                        </select>
+                    </td>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+        <div class="help-block with-errors"/>
+    </div>
+</div>
+
+</html>

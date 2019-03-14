@@ -1,4 +1,4 @@
-package com.mabubu0203.sudoku.interfaces.formBean;
+package com.mabubu0203.sudoku.form;
 
 import lombok.ToString;
 
@@ -12,5 +12,4 @@ import lombok.ToString;
  * @since 1.0
  */
 @ToString
-public abstract class BaseForm {
-}
+public abstract class BaseForm {}

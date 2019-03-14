@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title>bestScore</title>
+    <meta charset="UTF-8">
+    <meta content="著者情報" name="author">
+    <meta content="記事の概要" name="description">
+    <!-- OGP -->
+    <meta content="記事の概要" property="og:description">
+    <meta content="記事タイトル" property="og:title">
+    <meta content="http://example.com" property="og:url">
+    <meta content="http://example.com/images/thumbnail.png" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="EXAMPLE" property="og:site_name">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="//plus.google.com/00000000000" rel="publisher">
+    <link href="/icon/favicon.ico" rel="icon">
+    <link href="/icon/icon.png" rel="apple-touch-icon">
+    <link href="http://example.com/feed" rel="alternate" type="application/rss+xml">
+    <!-- bootstrap -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet"
+          th:href="@{/css/bootstrap.css}"
+          type="text/css"/>
+    <!-- bootstrap-datepicker -->
+    <link href="../static/css/bootstrap-datepicker.min.css" rel="stylesheet"
+          th:href="@{/css/bootstrap-datepicker.min.css}"
+          type="text/css"/>
+    <style th:replace="./common/_temp :: css" type="text/css"></style>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div th:replace="./common/_temp :: script"/>
+
+<div class="container">
+    <div th:replace="./common/_temp :: nav"/>
+    <div class="bs-docs-section">
+        <div class="col-lg-12">
+            <ul class="breadcrumb">
+                <li>セレクト</li>
+                <li>プレイ</li>
+                <li class="active">スコア</li>
+            </ul>
+        </div>
+        <div class="col-lg-12">
+            <div class="well bs-component">
+                <form action="#" autocomplete="off" class="form-horizontal" data-toggle="validator"
+                      id="scoreForm"
+                      method="post" th:action="@{/bestScore}" th:object="${scoreForm}">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <ul class="breadcrumb">
+                                    <li th:text="'スコア:'+${scoreForm.score}+'点'">スコア:2000点</li>
+                                    <li th:text="'カウント:'+${scoreForm.count}+'回'">カウント:1回</li>
+                                    <input th:id="score" th:name="score" th:value="*{score}"
+                                           type="hidden"/>
+                                    <input th:id="count" th:name="count" th:value="*{count}"
+                                           type="hidden"/>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <li th:text="'前回のベストスコア:'+${hiScore}+'点'">前回のベストスコア:200点</li>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group row">
+                                <div class="col-lg-2"></div>
+                                <label class="col-lg-2 control-label" for="name">名前</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" data-error="Nameに不要な記号が入力されています。" id="name" maxlength="64"
+                                           pattern="[^\x22\x27]*"
+                                           placeholder="Nameを入力してください。" required
+                                           th:data-error="#{name.input.error}" th:field="*{name}"
+                                           th:name="name" type="text"/>
+                                    <span class="help-block" th:errors="*{name}"
+                                          th:if="${#fields.hasErrors('name')}">error!</span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="col-lg-2"></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-2"></div>
+                                <label class="col-lg-2 control-label" for="memo">一言メモ</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" data-error="Memoに不要な記号が入力されています。" id="memo" maxlength="64"
+                                           pattern="[^\x22\x27]*"
+                                           placeholder="Memoを入力してください。" th:data-error="#{memo.input.error}"
+                                           th:field="*{memo}" th:name="memo"
+                                           type="text"/>
+                                    <span class="help-block" th:errors="*{memo}"
+                                          th:if="${#fields.hasErrors('memo')}">error!</span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="col-lg-2"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <input th:id="type" th:name="type" th:value="*{type}"
+                                       type="hidden"/>
+                                <input th:id="keyHash" th:name="keyHash" th:value="*{keyHash}"
+                                       type="hidden"/>
+                                <button class="btn btn-default" id="reset" type="reset">キャンセル
+                                </button>
+                                <button class="btn btn-primary" id="submit" type="submit">レジスト
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

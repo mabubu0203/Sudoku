@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title></title>
+    <meta charset="UTF-8">
+    <meta content="著者情報" name="author">
+    <meta content="記事の概要" name="description">
+    <!-- OGP -->
+    <meta content="記事の概要" property="og:description">
+    <meta content="" property="og:title">
+    <meta content="http://example.com" property="og:url">
+    <meta content="http://example.com/images/thumbnail.png" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="EXAMPLE" property="og:site_name">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="//plus.google.com/00000000000" rel="publisher">
+    <link href="/icon/favicon.ico" rel="icon">
+    <link href="/icon/icon.png" rel="apple-touch-icon">
+    <link href="http://example.com/feed" rel="alternate" type="application/rss+xml">
+    <!-- bootstrap -->
+    <link href="../../static/css/bootstrap.css" rel="stylesheet"
+          th:href="@{/css/bootstrap.css}"
+          type="text/css"/>
+    <!-- bootstrap-datepicker -->
+    <link href="../../static/css/bootstrap-datepicker.min.css" rel="stylesheet"
+          th:href="@{/css/bootstrap-datepicker.min.css}"
+          type="text/css"/>
+    <style th:replace="./common/_temp :: css" type="text/css"></style>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<div th:fragment="base">
+    <div class="bs-component" th:if="${page} != null">
+        <form action="#" autocomplete="off" class="form-horizontal" id="searchForm" method="post"
+              th:action="@{/isSearch}" th:object="${searchForm}">
+            <input th:id="selectType" th:name="selectType" th:value="*{selectType}" type="hidden"/>
+            <input th:id="no" th:name="no" th:value="*{no}" type="hidden"/>
+            <input th:id="selectorNo" th:name="selectorNo" th:value="*{selectorNo}" type="hidden"/>
+            <input th:id="keyHash" th:name="keyHash" th:value="*{keyHash}" type="hidden"/>
+            <input th:id="selectorKeyHash" th:name="selectorKeyHash" th:value="*{selectorKeyHash}" type="hidden"/>
+            <input th:id="score" th:name="score" th:value="*{score}" type="hidden"/>
+            <input th:id="selectorScore" th:name="selectorScore" th:value="*{selectorScore}" type="hidden"/>
+            <input th:id="name" th:name="name" th:value="*{name}" type="hidden"/>
+            <input th:id="selectorName" th:name="selectorName" th:value="*{selectorName}" type="hidden"/>
+            <input th:id="pageNumber" th:name="pageNumber" th:value="${page.number}" type="hidden"/>
+            <input th:id="pageSize" th:name="pageSize" th:value="${page.size}" type="hidden"/>
+            <div class="text-center">
+                <ul class="pagination">
+                    <li th:attr="style=${ph.hiddenPrev} ? 'visibility:hidden'">
+                        <button class="btn btn-default" th:id="pagination-prev" type="button">&#171;
+                        </button>
+                    </li>
+                </ul>
+                <ul class="pagination">
+                    <li th:class="${ph.activePage1} ? 'active'">
+                        <button class="btn btn-default" th:id="pagination-1" th:text="${ph.page1PageValue + 1}"
+                                type="button">1
+                        </button>
+                    </li>
+                    <li th:attr="style=${ph.hiddenPage2} ? 'visibility:hidden'" th:class="${ph.activePage2} ? 'active'">
+                        <button class="btn btn-default" th:id="pagination-2" th:text="${ph.page1PageValue + 2}"
+                                type="button">2
+                        </button>
+                    </li>
+                    <li th:attr="style=${ph.hiddenPage3} ? 'visibility:hidden'" th:class="${ph.activePage3} ? 'active'">
+                        <button class="btn btn-default" th:id="pagination-3" th:text="${ph.page1PageValue + 3}"
+                                type="button">3
+                        </button>
+                    </li>
+                </ul>
+                <ul class="pagination">
+                    <li th:attr="style=${ph.hiddenNext} ? 'visibility:hidden'">
+                        <button class="btn btn-default" th:id="pagination-next" type="button">&#187;
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <table class="table table-condensed table-bordered table-striped">
+                <tbody>
+                <tr class="info">
+                    <th>#</th>
+                    <th>no</th>
+                    <th>type</th>
+                    <th>keyHash</th>
+                    <th>score</th>
+                    <th>name</th>
+                    <th>memo</th>
+                    <th>date</th>
+                </tr>
+                <tr th:each="record, recordStat : ${page}" th:object="${record}">
+                    <td align="left" th:text="${recordStat.count}">Sequence</td>
+                    <td align="right" th:text="${record.no}">No</td>
+                    <td align="right" th:text="${record.type}">Type</td>
+                    <td align="left">
+                        <a charset="UTF-8" href="detail.html"
+                           hreflang="ja"
+                           th:href="@{/detail(type=${record.type},keyHash=${record.keyHash})}">
+                            リンクはこちら
+                        </a>
+                    </td>
+                    <td align="right" th:text="${record.score}">Score</td>
+                    <td align="left" th:text="${record.name}">Name</td>
+                    <td align="left" th:text="${record.memo}">Memo</td>
+                    <td align="left" th:text="${record.memo}">Memo</td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <script th:inline="javascript" type="text/javascript">
+        /*<![CDATA[*/
+            $('#pagination-prev').click(function() {
+                setPagenation(/*[[ ${page.number - 1} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-1').click(function() {
+                setPagenation(/*[[ ${ph.page1PageValue} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-2').click(function() {
+                setPagenation(/*[[ ${ph.page1PageValue + 1} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-3').click(function() {
+                setPagenation(/*[[ ${ph.page1PageValue + 2} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-next').click(function() {
+                setPagenation(/*[[ ${page.number + 1} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            function setPagenation(pageNumber,pageSize) {
+                $('#pageNumber').val(pageNumber);
+                $('#pageSize').val(pageSize);
+            }
+        /*]]>*/
+
+        </script>
+    </div>
+</div>
+
+</html>

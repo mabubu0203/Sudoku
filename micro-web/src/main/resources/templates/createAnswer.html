@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title>createAnswer</title>
+    <meta charset="UTF-8">
+    <meta content="著者情報" name="author">
+    <meta content="記事の概要" name="description">
+    <!-- OGP -->
+    <meta content="記事の概要" property="og:description">
+    <meta content="createAnswer" property="og:title">
+    <meta content="http://example.com" property="og:url">
+    <meta content="http://example.com/images/thumbnail.png" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="EXAMPLE" property="og:site_name">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="//plus.google.com/00000000000" rel="publisher">
+    <link href="/icon/favicon.ico" rel="icon">
+    <link href="/icon/icon.png" rel="apple-touch-icon">
+    <link href="http://example.com/feed" rel="alternate" type="application/rss+xml">
+    <!-- bootstrap -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet"
+          th:href="@{/css/bootstrap.css}"
+          type="text/css"/>
+    <!-- bootstrap-datepicker -->
+    <link href="../static/css/bootstrap-datepicker.min.css" rel="stylesheet"
+          th:href="@{/css/bootstrap-datepicker.min.css}"
+          type="text/css"/>
+    <style th:replace="./common/_temp :: css" type="text/css"></style>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js">
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js">
+    <![endif]-->
+</head>
+
+<body>
+<div th:replace="./common/_temp :: script"/>
+<div class="container">
+    <div th:replace="./common/_temp :: nav"/>
+    <div class="bs-docs-section">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li class="active">セレクト</li>
+                    <li>コンプリート</li>
+                </ul>
+            </div>
+        </div>
+        <div class="well bs-component">
+            <form action="#" autocomplete="off" class="form-horizontal" data-toggle="validator"
+                  id="createForm"
+                  method="post" th:action="@{/completeAnswer}" th:object="${createForm}">
+                <fieldset>
+                    <div class="row form-group">
+                        <div class="col-lg-2"></div>
+                        <label class="col-lg-2 control-label" for="selectType">タイプ</label>
+                        <div class="col-lg-4">
+                            <select class="form-control" data-error="セレクトボックスは必須選択です。" id="selectType"
+                                    required
+                                    th:data-error="#{selectType.input.required}"
+                                    th:name="selectType">
+                                <option value="">---</option>
+                                <option data-content=""
+                                        data-title="This is item ."
+                                        th:each="type : ${selectTypes}"
+                                        th:selected="${type.value} == *{selectType}"
+                                        th:text="${type.key}" th:value="${type.value}">pulldown
+                                </option>
+                            </select>
+                            <span class="help-block" th:errors="*{selectType}"
+                                  th:if="${#fields.hasErrors('selectType')}">error!</span>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <input th:id="selectLevel" th:name="selectLevel" th:value="easy"
+                                   type="hidden"/>
+                            <button class="btn btn-warning" id="reset" type="reset">リセット</button>
+                            <button class="btn btn-success" id="submit" type="submit">メイク！</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <script th:inline="javascript" type="text/javascript">
+        /*<![CDATA[*/
+            $('#selectType').tooltip({
+                title: [[#{selectType.default.message}]]
+            }).on({
+                "hide.bs.tooltip": function() {
+                if ($(this).is(":focus")) return false;
+              },
+                "blur": function() {
+                $(this).tooltip('hide');
+              }
+            });
+        /*]]>*/
+
+        </script>
+    </div>
+</div>
+</body>
+</html>
