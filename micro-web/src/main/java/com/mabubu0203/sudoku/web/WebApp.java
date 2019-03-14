@@ -1,7 +1,6 @@
-package jp.co.valtech.sudoku.web;
+package com.mabubu0203.sudoku.web;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import com.mabubu0203.sudoku.rdb.RdbCore;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
