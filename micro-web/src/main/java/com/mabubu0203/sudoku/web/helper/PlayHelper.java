@@ -9,13 +9,12 @@ import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.ESMapWrapUtils;
 import com.mabubu0203.sudoku.utils.SudokuUtils;
-import com.mabubu0203.sudoku.web.deprecated.LogicHandleBean;
 import com.mabubu0203.sudoku.web.form.CreateForm;
 import com.mabubu0203.sudoku.web.form.PlayForm;
 import com.mabubu0203.sudoku.web.form.ScoreForm;
+import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import com.mabubu0203.sudoku.web.utils.CompareUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.collections.api.list.MutableList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
@@ -48,13 +47,13 @@ public class PlayHelper {
     private String sudokuUriApi;
 
     /**
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void createQuestion(final LogicHandleBean handleBean) {
+    public void createQuestion(final HelperBean bean) {
 
-        Model model = handleBean.getModel();
+        Model model = bean.getModel();
         if (Objects.isNull(model)) {
             throw new SudokuApplicationException();
         } else {
@@ -65,15 +64,15 @@ public class PlayHelper {
 
     /**
      * @param restOperations
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void playNumberPlace(final RestOperations restOperations, final LogicHandleBean handleBean) {
+    public void playNumberPlace(final RestOperations restOperations, final HelperBean bean) {
 
-        CreateForm form = (CreateForm) handleBean.getForm();
+        CreateForm form = (CreateForm) bean.getForm();
 
-        Model model = handleBean.getModel();
+        Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
@@ -103,15 +102,15 @@ public class PlayHelper {
 
     /**
      * @param restOperations
-     * @param handleBean
+     * @param bean
      * @return int
      * @author uratamanabu
      * @since 1.0
      */
-    public int isCheck(final RestOperations restOperations, final LogicHandleBean handleBean) {
+    public int isCheck(final RestOperations restOperations, final HelperBean bean) {
 
-        PlayForm form = (PlayForm) handleBean.getForm();
-        Model model = handleBean.getModel();
+        PlayForm form = (PlayForm) bean.getForm();
+        Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
@@ -161,42 +160,40 @@ public class PlayHelper {
         } else {
             // modelに詰め込みます。
             model.addAttribute("form", form);
-            List<Integer> SELECT_NUMS = ESListWrapUtils.getSelectNum(form.getType());
-            model.addAttribute("selectNums", SELECT_NUMS);
-            MutableList<MutableList<String>> SELECT_CELLS = ESListWrapUtils.createCells(form.getType());
-            model.addAttribute("selectCells", SELECT_CELLS);
+            model.addAttribute("selectNums", ESListWrapUtils.getSelectNum(form.getType()));
+            model.addAttribute("selectCells", ESListWrapUtils.createCells(form.getType()));
             return 3;
         }
     }
 
     /**
      * @param restOperations
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void bestScore(final RestOperations restOperations, final LogicHandleBean handleBean) {
+    public void bestScore(final RestOperations restOperations, final HelperBean bean) {
 
-        ScoreForm form = (ScoreForm) handleBean.getForm();
-        Model model = handleBean.getModel();
+        ScoreForm form = (ScoreForm) bean.getForm();
+        Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
-        Optional<Long> noOpt = Optional.ofNullable(updateScore(restOperations, handleBean));
+        Optional<Long> noOpt = Optional.ofNullable(updateScore(restOperations, form));
         if (noOpt.isPresent()) {
             // modelに詰め込みます。
             model.addAttribute("scoreForm", form);
             model.addAttribute("message", "登録完了です。");
             model.addAttribute("no", noOpt.get());
             List<RecordBean> list = new ArrayList<>();
-            RecordBean bean = new RecordBean();
-            bean.setNo(noOpt.get());
-            bean.setType(form.getType());
-            bean.setKeyHash(form.getKeyHash());
-            bean.setScore(form.getScore());
-            bean.setName(form.getName());
-            bean.setMemo(form.getMemo());
-            list.add(bean);
+            RecordBean rBean = new RecordBean();
+            rBean.setNo(noOpt.get().longValue());
+            rBean.setType(form.getType());
+            rBean.setKeyHash(form.getKeyHash());
+            rBean.setScore(form.getScore());
+            rBean.setName(form.getName());
+            rBean.setMemo(form.getMemo());
+            list.add(rBean);
             model.addAttribute("list", list);
         } else {
             model.addAttribute("message", "更新失敗です。");
@@ -206,16 +203,12 @@ public class PlayHelper {
 
     /**
      * @param restOperations
-     * @param handleBean
+     * @param form
      * @author uratamanabu
      * @since 1.0
      */
-    private Long updateScore(final RestOperations restOperations, final LogicHandleBean handleBean) {
+    private Long updateScore(final RestOperations restOperations, ScoreForm form) {
 
-        ScoreForm form = (ScoreForm) handleBean.getForm();
-        if (Objects.isNull(form)) {
-            throw new SudokuApplicationException();
-        }
         UpdateSudokuScoreRequestBean request =
                 new ModelMapper().map(form, UpdateSudokuScoreRequestBean.class);
         try {

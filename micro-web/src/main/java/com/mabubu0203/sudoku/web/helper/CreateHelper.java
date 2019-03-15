@@ -2,8 +2,8 @@ package com.mabubu0203.sudoku.web.helper;
 
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.utils.ESMapWrapUtils;
-import com.mabubu0203.sudoku.web.deprecated.LogicHandleBean;
 import com.mabubu0203.sudoku.web.form.CreateForm;
+import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -31,12 +31,12 @@ public class CreateHelper {
     private String sudokuUriApi;
 
     /**
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void createAnswer(final LogicHandleBean handleBean) {
-        Model model = handleBean.getModel();
+    public void createAnswer(final HelperBean bean) {
+        Model model = bean.getModel();
         if (Objects.isNull(model)) {
             throw new SudokuApplicationException();
         } else {
@@ -46,16 +46,15 @@ public class CreateHelper {
 
     /**
      * @param restOperations
-     * @param handleBean
+     * @param bean
      * @return HttpStatus
      * @author uratamanabu
      * @since 1.0
      */
-    public HttpStatus completeAnswer(
-            final RestOperations restOperations, final LogicHandleBean handleBean) {
+    public HttpStatus completeAnswer(final RestOperations restOperations, final HelperBean bean) {
 
-        CreateForm form = (CreateForm) handleBean.getForm();
-        Model model = handleBean.getModel();
+        CreateForm form = (CreateForm) bean.getForm();
+        Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }

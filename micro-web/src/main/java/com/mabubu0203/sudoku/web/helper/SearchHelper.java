@@ -8,10 +8,10 @@ import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.ESMapWrapUtils;
 import com.mabubu0203.sudoku.utils.SudokuUtils;
-import com.mabubu0203.sudoku.web.deprecated.LogicHandleBean;
 import com.mabubu0203.sudoku.web.form.DetailForm;
 import com.mabubu0203.sudoku.web.form.PlayForm;
 import com.mabubu0203.sudoku.web.form.SearchForm;
+import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,13 +42,13 @@ public class SearchHelper {
     private String sudokuUriApi;
 
     /**
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void searchAnswer(final LogicHandleBean handleBean) {
+    public void searchAnswer(final HelperBean bean) {
 
-        Model model = handleBean.getModel();
+        Model model = bean.getModel();
         if (Objects.isNull(model)) {
             throw new SudokuApplicationException();
         } else {
@@ -62,14 +62,14 @@ public class SearchHelper {
 
     /**
      * @param restOperations
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void isSearch(final RestOperations restOperations, final LogicHandleBean handleBean) {
+    public void isSearch(final RestOperations restOperations, final HelperBean bean) {
 
-        SearchForm form = (SearchForm) handleBean.getForm();
-        Model model = handleBean.getModel();
+        SearchForm form = (SearchForm) bean.getForm();
+        Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
@@ -98,14 +98,14 @@ public class SearchHelper {
     }
 
     /**
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void detail(final LogicHandleBean handleBean) {
+    public void detail(final HelperBean bean) {
 
-        DetailForm form = (DetailForm) handleBean.getForm();
-        Model model = handleBean.getModel();
+        DetailForm form = (DetailForm) bean.getForm();
+        Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
@@ -115,14 +115,14 @@ public class SearchHelper {
 
     /**
      * @param restOperations
-     * @param handleBean
+     * @param bean
      * @author uratamanabu
      * @since 1.0
      */
-    public void playNumberPlaceDetail(final RestOperations restOperations, final LogicHandleBean handleBean) {
+    public void playNumberPlaceDetail(final RestOperations restOperations, final HelperBean bean) {
 
-        DetailForm form = (DetailForm) handleBean.getForm();
-        Model model = handleBean.getModel();
+        DetailForm form = (DetailForm) bean.getForm();
+        Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }

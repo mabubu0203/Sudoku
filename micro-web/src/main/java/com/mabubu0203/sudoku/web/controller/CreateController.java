@@ -1,0 +1,110 @@
+package com.mabubu0203.sudoku.web.controller;
+
+import com.mabubu0203.sudoku.constants.WebUrlConstants;
+import com.mabubu0203.sudoku.web.form.CreateForm;
+import com.mabubu0203.sudoku.web.form.validator.CreateFormValidator;
+import com.mabubu0203.sudoku.web.helper.CreateHelper;
+import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestOperations;
+
+import java.util.Optional;
+
+/**
+ * @author uratamanabu
+ * @version 1.0
+ * @since 1.0
+ */
+@Slf4j
+@Controller
+@RequestMapping(value = {"/"})
+public class CreateController {
+
+    private final RestOperations restOperations;
+    private final CreateHelper createHelper;
+
+    public CreateController(
+            final RestTemplateBuilder restTemplateBuilder,
+            final CreateHelper createHelper) {
+        this.restOperations = restTemplateBuilder.build(); // Builderのbuildメソッドを呼び出しRestTemplateを生成
+        this.createHelper = createHelper;
+    }
+
+    /**
+     * @param binder
+     * @author uratamanabu
+     * @since 1.0
+     */
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+
+        Optional<Object> object = Optional.ofNullable(binder.getTarget());
+        object
+                .filter((notNullBinder) -> notNullBinder instanceof CreateForm)
+                .ifPresent(o -> binder.addValidators(new CreateFormValidator()));
+    }
+
+    /**
+     * /createAnswerの初期ページへ遷移します。
+     *
+     * @param form
+     * @param model
+     * @return String
+     * @author uratamanabu
+     * @since 1.0
+     */
+    @GetMapping(value = {WebUrlConstants.URL_CREATE_ANSWER})
+    public String okCreateAnswer(final CreateForm form, final Model model) {
+
+        HelperBean handleBean = new HelperBean().setModel(model);
+        this.createHelper.createAnswer(handleBean);
+        return WebUrlConstants.Forward.CREATE_ANSWER.getPath();
+    }
+
+    /**
+     * ANSWER_INFO_TBLとSCORE_INFO_TBLにレコードを追加し、作成完了ページへ遷移します。
+     * 一意制約等が発生しレコードが追加できなかった時は、エラーメッセージを作成完了ページへ表示します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return String
+     * @author uratamanabu
+     * @since 1.0
+     */
+    @PostMapping(value = {WebUrlConstants.URL_COMPLETE_ANSWER})
+    public String okCompleteAnswer(
+            @Validated @ModelAttribute final CreateForm form,
+            final BindingResult bindingResult,
+            final Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("validationError", "不正な値が入力されました。");
+            return okCreateAnswer(form, model);
+        } else {
+            HelperBean handleBean = new HelperBean().setForm(form).setModel(model);
+            HttpStatus result = this.createHelper.completeAnswer(restOperations, handleBean);
+            switch (result) {
+                case OK:
+                    return WebUrlConstants.Forward.COMPLETE_ANSWER.getPath();
+                case CONFLICT:
+                    return okCreateAnswer(form, model);
+                default:
+                    return okCreateAnswer(form, model);
+            }
+        }
+    }
+
+}
