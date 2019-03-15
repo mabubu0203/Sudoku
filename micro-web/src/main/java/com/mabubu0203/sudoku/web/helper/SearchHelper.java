@@ -1,8 +1,12 @@
 package com.mabubu0203.sudoku.web.helper;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
+import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
+import com.mabubu0203.sudoku.interfaces.PageImplBean;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
+import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
@@ -15,6 +19,8 @@ import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -68,6 +74,7 @@ public class SearchHelper {
      */
     public void isSearch(final RestOperations restOperations, final HelperBean bean) {
 
+        final String searchMaster = sudokuUriApi + CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
         SearchForm form = (SearchForm) bean.getForm();
         Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
@@ -81,16 +88,15 @@ public class SearchHelper {
         SearchSudokuRecordRequestBean request =
                 new ModelMapper().map(form, SearchSudokuRecordRequestBean.class);
         try {
-            URI uri = new URI(sudokuUriApi + "/searchMaster/");
+            URI uri = new URI(searchMaster);
             RequestEntity requestEntity = RequestEntity.post(uri).body(request);
             ResponseEntity<SearchSudokuRecordResponseBean> generateEntity =
                     restOperations.exchange(requestEntity, SearchSudokuRecordResponseBean.class);
-            // TODO:移植中
-//            Page page = generateEntity.getBody().getPage();
-//            // ページ番号を設定し直す
-//            form.setPageNumber(page.getNumber());
-//            model.addAttribute("page", page);
-//            model.addAttribute("ph", generateEntity.getBody().getPh());
+            Page page = generateEntity.getBody().getPage();
+            // ページ番号を設定し直す
+            form.setPageNumber(page.getNumber());
+            model.addAttribute("page", page);
+            model.addAttribute("ph", generateEntity.getBody().getPh());
         } catch (URISyntaxException | RestClientException e) {
             e.printStackTrace();
             throw new SudokuApplicationException();
@@ -121,6 +127,7 @@ public class SearchHelper {
      */
     public void playNumberPlaceDetail(final RestOperations restOperations, final HelperBean bean) {
 
+        final String searchMaster = sudokuUriApi + CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
         DetailForm form = (DetailForm) bean.getForm();
         Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
@@ -129,7 +136,7 @@ public class SearchHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
-        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
+        URI uri = new UriTemplate(searchMaster + "sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity = RequestEntity.get(uri).build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =

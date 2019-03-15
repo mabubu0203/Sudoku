@@ -25,7 +25,7 @@ name   | Front | Batch | Admin
     `$ docker-compose -f docker-compose.yml build`  
     `$ docker-compose -f docker-compose.yml up -d`  
 3. GradleタスクよりbootRun(`:micro-api -> Tasks -> application -> bootRun`)
-4. GradleタスクよりbootRun(`:micro-admin -> Tasks -> application -> bootRun`)
+4. GradleタスクよりbootRun(`:micro-web -> Tasks -> application -> bootRun`)
 
 ## 停止方法
 
@@ -39,6 +39,7 @@ name   | Front | Batch | Admin
 ## Endpoints
 
 [HAL Browser][] 
+[SudokuWeb][] 
     
 ## 環境
 
@@ -50,4 +51,5 @@ name   | Front | Batch | Admin
 | DockerCompose     | 1.21.2
 | Gradle            | 5.10 
 
-[HAL Browser]: http://localhost:8075/     "HAL Browser"
+[HAL Browser]: http://localhost:8085/     "HAL Browser"
+[SudokuWeb]: http://localhost:8081/linkList     "SudokuWeb"

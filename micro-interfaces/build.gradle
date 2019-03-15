@@ -1,7 +1,9 @@
 dependencies {
 
     // SpringBoot projects
+    implementation("org.springframework.boot:spring-boot-starter-json")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.data:spring-data-commons")
 
     // lombok
     annotationProcessor("org.projectlombok:lombok")

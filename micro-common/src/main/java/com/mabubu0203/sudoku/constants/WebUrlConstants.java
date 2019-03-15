@@ -2,11 +2,18 @@ package com.mabubu0203.sudoku.constants;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import static lombok.AccessLevel.PRIVATE;
 
+/**
+ * @author uratamanabu
+ * @version 1.0
+ * @since 1.0
+ */
 @NoArgsConstructor(access = PRIVATE)
 public class WebUrlConstants {
+
     public static final String URL_TOP = "top";
     public static final String URL_CHOICE_QUESTION = "choiceQuestion";
     public static final String URL_CREATE_ANSWER = "createAnswer";
@@ -20,9 +27,10 @@ public class WebUrlConstants {
     public static final String URL_DETAIL = "detail";
     public static final String URL_INTRODUCE = "introduce";
     public static final String URL_LINK_LIST = "linkList";
+    public static final String URL_IS_SEARCH = "isSearch";
 
     /**
-     * ページを列挙型で定義します。
+     * ページを列挙型で定義します。<br>
      *
      * @author uratamanabu
      * @version 1.0
@@ -42,36 +50,42 @@ public class WebUrlConstants {
         DETAIL(URL_DETAIL),
         INTRODUCE(URL_INTRODUCE),
         LINK_LIST(URL_LINK_LIST),
+        IS_SEARCH(URL_IS_SEARCH),
         ;
 
         @Getter
         private String path;
 
         /**
-         * コンストラクタ
+         * コンストラクタ<br>
+         *
+         * @param value
+         * @author uratamanabu
+         * @since 1.0
          */
         Forward(String value) {
             this.path = value;
         }
 
         /**
-         * 列挙型を返却します。
+         * 列挙型を返却します。<br>
          *
-         * @author uratamanabu
-         * @version 1.0
+         * @param key
          * @return　難易度
+         * @author uratamanabu
          * @since 1.0
          */
         public static Forward getForward(String key) {
-            if (key == null) {
+            if (StringUtils.isEmpty(key)) {
                 return null;
             }
             for (Forward forward : Forward.values()) {
-                if (forward.toString().equals(key)) {
+                if (forward.getPath().equals(key)) {
                     return forward;
                 }
             }
             return null;
         }
     }
+
 }
