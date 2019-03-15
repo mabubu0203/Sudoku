@@ -14,8 +14,8 @@ import org.springframework.validation.Errors;
 public class SearchFromValidator extends BaseFormValidator {
 
     /**
+     * @param paramClass
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Override
@@ -24,12 +24,16 @@ public class SearchFromValidator extends BaseFormValidator {
     }
 
     /**
+     * @param paramObject
+     * @param errors
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Override
     public void validate(Object paramObject, Errors errors) {
+        if (errors.hasErrors()) {
+            return;
+        }
         SearchForm form = (SearchForm) paramObject;
         Long no = form.getNo();
         int selectType = form.getSelectType();

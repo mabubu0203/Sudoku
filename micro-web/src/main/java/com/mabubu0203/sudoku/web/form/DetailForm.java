@@ -4,6 +4,7 @@ import com.mabubu0203.sudoku.form.BaseForm;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class DetailForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = -2616500675152025057L;

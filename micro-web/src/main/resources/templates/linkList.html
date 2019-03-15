@@ -42,88 +42,80 @@
 <div class="container">
     <div th:replace="./common/_temp :: nav"/>
     <div class="bs-docs-section">
-        <div class="col-lg-12">
-            <ul class="breadcrumb">
-                <li class="active">リンク</li>
-            </ul>
-        </div>
-        <div class="col-lg-12">
-            <div class="well bs-component">
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/autoconfig}">
-                    autoconfig
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/auditevents}">
-                    auditevents
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/beans}">
-                    beans
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/configprops}">
-                    configprops
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/dump}">
-                    dump
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/env}">
-                    env
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/heapdump}">
-                    heapdump
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/health}">
-                    health
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/loggers}">
-                    loggers
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/metrics}">
-                    metrics
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/mappings}">
-                    mappings
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/trace}">
-                    trace
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/flyway}">
-                    flyway
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/logfile}">
-                    logfile
-                </a>
-                <a charset="UTF-8" href="linkList.html"
-                   hreflang="ja"
-                   th:href="@{/info}">
-                    info
-                </a>
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">リンク</li>
+                </ol>
+            </div>
+            <div class="col-lg-12">
+                <div class="well bs-component">
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/auditevents}">
+                        auditevents
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/beans}">
+                        beans
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/conditions}">
+                        conditions
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/configprops}">
+                        configprops
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/env}">
+                        env
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/health}">
+                        health
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/heapdump}">
+                        heapdump
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/info}">
+                        info
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/logfile}">
+                        logfile
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/loggers}">
+                        loggers
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/mappings}">
+                        mappings
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/metrics}">
+                        metrics
+                    </a>
+                    <a charset="UTF-8" href="linkList.html"
+                       hreflang="ja"
+                       th:href="@{/actuator/trace}">
+                        trace
+                    </a>
+                </div>
             </div>
         </div>
     </div>

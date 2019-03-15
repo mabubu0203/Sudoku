@@ -39,15 +39,15 @@
 <body>
 <div th:replace="./common/_temp :: script"/>
 <div class="container">
-    <div th:replace="./common/_temp :: nav"/>
+    <nav th:replace="./common/_temp :: nav"/>
     <div class="bs-docs-section">
         <div class="row">
             <div class="col-lg-12">
-                <ul class="breadcrumb">
-                    <li class="active">セレクト</li>
-                    <li>プレイ</li>
-                    <li>スコア</li>
-                </ul>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">セレクト</li>
+                    <li class="breadcrumb-item">プレイ</li>
+                    <li class="breadcrumb-item">スコア</li>
+                </ol>
             </div>
         </div>
         <div class="well bs-component">
@@ -56,9 +56,9 @@
                   method="post" th:action="@{/playNumberPlace}" th:object="${createForm}">
                 <fieldset>
                     <div class="row form-group">
-                        <div class="col-lg-2"></div>
-                        <label class="col-lg-2 control-label" for="selectType">タイプ</label>
+                        <div class="col-lg-4"></div>
                         <div class="col-lg-4">
+                            <label class="control-label" for="selectType">タイプ</label>
                             <select class="form-control" data-error="セレクトボックスは必須選択です。" id="selectType"
                                     required
                                     th:data-error="#{selectType.input.required}"
@@ -77,9 +77,9 @@
                         <div class="col-lg-4"></div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-lg-2"></div>
-                        <label class="col-lg-2 control-label" for="selectLevel">レベル</label>
+                        <div class="col-lg-4"></div>
                         <div class="col-lg-4">
+                            <label class="control-label" for="selectLevel">レベル</label>
                             <select class="form-control" data-error="セレクトボックスは必須選択です。" id="selectLevel"
                                     required
                                     th:data-error="#{selectLevel.input.required}"
@@ -129,6 +129,10 @@
                 }
             });
         /*]]>*/
+
+
+
+
 
         </script>
     </div>
