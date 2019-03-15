@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import static lombok.AccessLevel.PUBLIC;
 
+@Deprecated
 @Getter
 @NoArgsConstructor(access = PUBLIC)
 public class PagenationHelper implements Serializable {

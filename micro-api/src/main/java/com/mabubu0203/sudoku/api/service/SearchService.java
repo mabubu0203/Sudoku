@@ -5,7 +5,6 @@ import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import ma.glasnost.orika.MapperFacade;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -41,7 +40,6 @@ public interface SearchService {
             final int pageSize);
 
     /**
-     *
      * @param type
      * @return ResponseEntity
      * @author uratamanabu
@@ -50,7 +48,6 @@ public interface SearchService {
     ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type);
 
     /**
-     *
      * @param type
      * @param keyHash
      * @return ResponseEntity
@@ -60,7 +57,6 @@ public interface SearchService {
     ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type, final String keyHash);
 
     /**
-     *
      * @param type
      * @param keyHash
      * @param facade

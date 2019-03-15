@@ -2,7 +2,6 @@ package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.SearchService;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.PageImplBean;
 import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
@@ -15,6 +14,7 @@ import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -75,7 +75,7 @@ public class SearchServiceImpl implements SearchService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<AnswerInfoTbl> page = answerInfoService.findRecords(conditionBean, pageable);
         if (Objects.nonNull(page) && page.hasContent()) {
-            Page modiftyPage = convertJacksonFile(page);
+            Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
             SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
             response.setPage(modiftyPage);
             response.setPh(new PagenationHelper(modiftyPage));
@@ -112,7 +112,7 @@ public class SearchServiceImpl implements SearchService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private Page convertJacksonFile(final Page<AnswerInfoTbl> page) {
+    private Page<SearchResultBean> convertJacksonFile(final Page<AnswerInfoTbl> page) {
 
         Pageable pageable = PageRequest.of(page.getNumber(), page.getSize());
         List<AnswerInfoTbl> content = page.getContent();
@@ -128,7 +128,7 @@ public class SearchServiceImpl implements SearchService {
             bean.setMemo(scoreInfoTbl.getMemo());
             modifyContent.add(bean);
         }
-        Page result = new PageImplBean(modifyContent, pageable, page.getTotalElements());
+        Page<SearchResultBean> result = new PageImpl(modifyContent, pageable, page.getTotalElements());
         return result;
     }
 
