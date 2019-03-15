@@ -1,5 +1,7 @@
 package com.mabubu0203.sudoku.web.helper;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
+import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
@@ -68,6 +70,7 @@ public class SearchHelper {
      */
     public void isSearch(final RestOperations restOperations, final HelperBean bean) {
 
+        final String searchMaster = sudokuUriApi + CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
         SearchForm form = (SearchForm) bean.getForm();
         Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
@@ -81,7 +84,7 @@ public class SearchHelper {
         SearchSudokuRecordRequestBean request =
                 new ModelMapper().map(form, SearchSudokuRecordRequestBean.class);
         try {
-            URI uri = new URI(sudokuUriApi + "/searchMaster/");
+            URI uri = new URI(searchMaster);
             RequestEntity requestEntity = RequestEntity.post(uri).body(request);
             ResponseEntity<SearchSudokuRecordResponseBean> generateEntity =
                     restOperations.exchange(requestEntity, SearchSudokuRecordResponseBean.class);
@@ -121,6 +124,7 @@ public class SearchHelper {
      */
     public void playNumberPlaceDetail(final RestOperations restOperations, final HelperBean bean) {
 
+        final String searchMaster = sudokuUriApi + CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
         DetailForm form = (DetailForm) bean.getForm();
         Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
@@ -129,7 +133,7 @@ public class SearchHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
-        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
+        URI uri = new UriTemplate(searchMaster + "sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity = RequestEntity.get(uri).build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =

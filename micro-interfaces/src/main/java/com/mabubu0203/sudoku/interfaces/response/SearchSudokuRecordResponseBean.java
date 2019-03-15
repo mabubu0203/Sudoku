@@ -1,16 +1,18 @@
 package com.mabubu0203.sudoku.interfaces.response;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.mabubu0203.sudoku.interfaces.PageImplBean;
+import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import lombok.Data;
+import org.springframework.data.domain.Page;
 
-/**
- * Created by uratamanabu on 2017/07/04.
- */
 @Data
 @Deprecated
 public class SearchSudokuRecordResponseBean {
 
-//  private PagenationHelper ph;
-//
-//  @JsonTypeInfo(use = Id.NAME, defaultImpl = PageImplBean.class)
-//  private Page page;
+    private PagenationHelper ph;
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, defaultImpl = PageImplBean.class)
+    private Page page;
+
 }
