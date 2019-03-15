@@ -114,10 +114,6 @@ management:
       enabled: true
     jmx:
       enabled: false
-    jolokia:
-      enabled: true
-      path: /jolokia
-      sensitive: true
     liquibase:
       enabled: false
     logfile:
@@ -142,12 +138,10 @@ management:
       enabled: false
     trace:
       enabled: false
-    web:
-      enabled: true
   endpoints:
     web:
       exposure:
-        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,jolokia,logfile,loggers,mappings,metrics,web
+        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,logfile,loggers,mappings,metrics
   health:
     db:
       enabled: true
@@ -162,7 +156,5 @@ management:
       enabled: true
     git:
       enabled: true
-  jolokia:
-    enabled: true
   security:
     enabled: false
