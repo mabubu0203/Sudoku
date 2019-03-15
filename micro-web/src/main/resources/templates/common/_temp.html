@@ -93,6 +93,8 @@
 
 
 
+
+
     </style>
 </head>
 <body>
@@ -122,33 +124,37 @@
 
 
 
+
+
     </script>
 </div>
 <div class="container">
-    <div th:fragment="nav" 　class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="./top">数独</a>
-                <button class="navbar-toggle" data-target="#navbar-main" data-toggle="collapse"
-                        type="button">
-                    <span class="icon-bar">作成</span>
-                    <span class="icon-bar">遊ぶ</span>
-                    <span class="icon-bar">検索</span>
-                    <span class="icon-bar">紹介</span>
-                    <span class="icon-bar">ACTOR</span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar-main">
-                <ul class="nav navbar-nav">
-                    <li><a href="./createAnswer">作成</a></li>
-                    <li><a href="./createQuestion">遊ぶ</a></li>
-                    <li><a href="./searchAnswer">検索</a></li>
-                    <li><a href="./introduce">紹介</a></li>
-                    <li><a href="./linkList">ACTOR</a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav">
+        <a class="navbar-brand" href="./top" th:href="@{/top}">数独</a>
+        <button aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarColor" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="./createAnswer" th:href="@{/createAnswer}">作成</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./createQuestion" th:href="@{/createQuestion}">遊ぶ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./searchAnswer" th:href="@{/searchAnswer}">検索</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./introduce" th:href="@{/introduce}">紹介</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./linkList" th:href="@{/linkList}">Actuator</a>
+                </li>
+            </ul>
         </div>
-    </div>
+    </nav>
 </div>
 <footer th:fragment="footer"></footer>
 </body>
