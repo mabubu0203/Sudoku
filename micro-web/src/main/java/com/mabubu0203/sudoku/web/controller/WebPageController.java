@@ -71,8 +71,8 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
+     * @param binder
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @InitBinder
@@ -97,8 +97,8 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
+     * @return Topページ
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @GetMapping(value = {WebUrlConstants.URL_TOP})
@@ -107,18 +107,8 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
+     * @return
      * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    @PostMapping(value = {WebUrlConstants.URL_TOP})
-    public String notTop() {
-        return "error";
-    }
-
-    /**
-     * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @GetMapping(value = {WebUrlConstants.URL_CHOICE_QUESTION})
@@ -127,20 +117,12 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    @PostMapping(value = {WebUrlConstants.URL_CHOICE_QUESTION})
-    public String notChoice() {
-        return "error";
-    }
-
-    /**
      * /createAnswerの初期ページへ遷移します。
      *
+     * @param form
+     * @param model
+     * @return
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @GetMapping(value = {WebUrlConstants.URL_CREATE_ANSWER})
@@ -152,31 +134,15 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    @PostMapping(value = {WebUrlConstants.URL_CREATE_ANSWER})
-    public String notCreateAnswer() {
-        return "error";
-    }
-
-    /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    @GetMapping(value = {WebUrlConstants.URL_COMPLETE_ANSWER})
-    public String notCompleteAnswer() {
-        return "error";
-    }
-
-    /**
      * ANSWER_INFO_TBLとSCORE_INFO_TBLにレコードを追加し、作成完了ページへ遷移します。
      * 一意制約等が発生しレコードが追加できなかった時は、エラーメッセージを作成完了ページへ表示します。
      *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @throws SudokuApplicationException
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @PostMapping(value = {WebUrlConstants.URL_COMPLETE_ANSWER})
@@ -211,8 +177,10 @@ public class WebPageController extends WebBaseController {
     /**
      * /createQuestionの初期ページへ遷移します。
      *
+     * @param form
+     * @param model
+     * @return
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @GetMapping(value = {WebUrlConstants.URL_CREATE_QUESTION})
@@ -224,27 +192,14 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    @PostMapping(value = {WebUrlConstants.URL_CREATE_QUESTION})
-    public String notCreateQuestion() {
-        return "error";
-    }
-
-    /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    @GetMapping(value = {WebUrlConstants.URL_PLAY_NUMBER_PLACE})
-    public String notPlayNumberPlace() {
-        return "error";
-    }
-
-    /**
      * /playNumberPlaceの初期ページへ遷移します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @PostMapping(value = {WebUrlConstants.URL_PLAY_NUMBER_PLACE})
     public String okPlayNumberPlace(
@@ -269,17 +224,14 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    @GetMapping(value = {"isCheck"})
-    public String notIsCheck() {
-        return "error";
-    }
-
-    /**
      * /isCheckの初期ページへ遷移します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @PostMapping(value = {"isCheck"})
     public String okIsCheck(
@@ -309,6 +261,13 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /bestScoreの初期ページへ遷移します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @PostMapping(value = {WebUrlConstants.URL_BEST_SCORE})
     public String bestScore(
@@ -333,6 +292,13 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /completeNumberPlaceの初期ページへ遷移します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @PostMapping(value = {WebUrlConstants.URL_BEST_SCORE_COMPLETE})
     public String bestScoreComplete(
@@ -345,6 +311,13 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /completeNumberPlaceの初期ページへ遷移します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @PostMapping(value = {WebUrlConstants.URL_COMPLETE_NUMBER_PLACE})
     public String completeNumberPlace(
@@ -362,6 +335,12 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /searchAnswerの初期ページへ遷移します。
+     *
+     * @param form
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @GetMapping(value = {WebUrlConstants.URL_SEARCH_ANSWER})
     public String searchAnswer(@ModelAttribute final SearchForm form, final Model model) {
@@ -373,6 +352,13 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /isSearchの初期ページへ遷移します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @PostMapping(value = {"isSearch"})
     public String isSearch(
@@ -396,6 +382,13 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /detailの初期ページへ遷移します。
+     *
+     * @param type
+     * @param keyHash
+     * @param model
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @GetMapping(
             value = {WebUrlConstants.URL_DETAIL},
@@ -420,6 +413,14 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /playNumberPlaceDetailの初期ページへ遷移します。
+     *
+     * @param form
+     * @param bindingResult
+     * @param model
+     * @return
+     * @throws SudokuApplicationException
+     * @author uratamanabu
+     * @since 1.0
      */
     @PostMapping(value = {"playNumberPlaceDetail"})
     public String playNumberPlaceDetail(
@@ -445,6 +446,10 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /introduceの初期ページへ遷移します。
+     *
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @GetMapping(value = {WebUrlConstants.URL_INTRODUCE})
     public String introduce() {
@@ -453,6 +458,10 @@ public class WebPageController extends WebBaseController {
 
     /**
      * /linkListの初期ページへ遷移します。
+     *
+     * @return
+     * @author uratamanabu
+     * @since 1.0
      */
     @GetMapping(value = {WebUrlConstants.URL_LINK_LIST})
     public String linkList() {
