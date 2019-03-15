@@ -43,11 +43,11 @@
     <div th:replace="./common/_temp :: nav"/>
     <div class="bs-docs-section">
         <div class="col-lg-12">
-            <ul class="breadcrumb">
-                <li>セレクト</li>
-                <li>プレイ</li>
-                <li class="active">スコア</li>
-            </ul>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">セレクト</li>
+                <li class="breadcrumb-item">プレイ</li>
+                <li class="breadcrumb-item active">スコア</li>
+            </ol>
         </div>
         <div class="col-lg-12">
             <div class="well bs-component">
@@ -57,14 +57,16 @@
                     <fieldset>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-4">
-                                <ul class="breadcrumb">
-                                    <li th:text="'スコア:'+${scoreForm.score}+'点'">スコア:2000点</li>
-                                    <li th:text="'カウント:'+${scoreForm.count}+'回'">カウント:1回</li>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item" th:text="'スコア:'+${scoreForm.score}+'点'">スコア:2000点
+                                    </li>
+                                    <li class="breadcrumb-item" th:text="'カウント:'+${scoreForm.count}+'回'">カウント:1回
+                                    </li>
                                     <input th:id="score" th:name="score" th:value="*{score}"
                                            type="hidden"/>
                                     <input th:id="count" th:name="count" th:value="*{count}"
                                            type="hidden"/>
-                                </ul>
+                                </ol>
                             </div>
                         </div>
                         <div class="form-group">
@@ -77,7 +79,8 @@
                                 <div class="col-lg-2"></div>
                                 <label class="col-lg-2 control-label" for="name">名前</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" data-error="Nameに不要な記号が入力されています。" id="name" maxlength="64"
+                                    <input class="form-control" data-error="Nameに不要な記号が入力されています。" id="name"
+                                           maxlength="64"
                                            pattern="[^\x22\x27]*"
                                            placeholder="Nameを入力してください。" required
                                            th:data-error="#{name.input.error}" th:field="*{name}"
@@ -92,7 +95,8 @@
                                 <div class="col-lg-2"></div>
                                 <label class="col-lg-2 control-label" for="memo">一言メモ</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" data-error="Memoに不要な記号が入力されています。" id="memo" maxlength="64"
+                                    <input class="form-control" data-error="Memoに不要な記号が入力されています。" id="memo"
+                                           maxlength="64"
                                            pattern="[^\x22\x27]*"
                                            placeholder="Memoを入力してください。" th:data-error="#{memo.input.error}"
                                            th:field="*{memo}" th:name="memo"

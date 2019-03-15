@@ -43,9 +43,9 @@
     <div class="bs-docs-section">
         <div class="row">
             <div class="col-lg-12">
-                <ul class="breadcrumb">
-                    <li class="active">セレクト</li>
-                </ul>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">セレクト</li>
+                </ol>
             </div>
         </div>
         <div class="well bs-component">
@@ -190,7 +190,8 @@
                                         th:data-error="#{selectorName.input.required}">
                                     <option value="0">---</option>
                                     <option th:each="nameCompare : ${selectorName}"
-                                            th:selected="${nameCompare.value} == *{selectorName}" th:text="${nameCompare.key}"
+                                            th:selected="${nameCompare.value} == *{selectorName}"
+                                            th:text="${nameCompare.key}"
                                             th:value="${nameCompare.value}">pulldown
                                     </option>
                                 </select>
@@ -267,6 +268,8 @@
                 }
             });
         /*]]>*/
+
+
 
         </script>
     </div>

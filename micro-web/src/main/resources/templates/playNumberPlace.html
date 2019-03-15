@@ -41,11 +41,11 @@
     <div th:replace="./common/_temp :: nav"/>
     <div class="bs-docs-section">
         <div class="col-lg-12">
-            <ul class="breadcrumb">
-                <li>セレクト</li>
-                <li class="active">プレイ</li>
-                <li>スコア</li>
-            </ul>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">セレクト</li>
+                <li class="breadcrumb-item active">プレイ</li>
+                <li class="breadcrumb-item">スコア</li>
+            </ol>
         </div>
         <div class="col-lg-12">
             <div class="well bs-component">
@@ -53,12 +53,12 @@
                       method="post" th:action="@{/isCheck}" th:object="${playForm}">
                     <fieldset>
                         <div class="col-lg-8 col-lg-offset-4">
-                            <ul class="breadcrumb">
-                                <li th:text="'スコア:' + ${playForm.score} + '点'">スコア:2000点</li>
-                                <li th:text="'カウント:' + ${playForm.count} + '回'">カウント:1回</li>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item" th:text="'スコア:' + ${playForm.score} + '点'">スコア:2000点</li>
+                                <li class="breadcrumb-item" th:text="'カウント:' + ${playForm.count} + '回'">カウント:1回</li>
                                 <input th:id="score" th:name="score" th:value="*{score}" type="hidden"/>
                                 <input th:id="count" th:name="count" th:value="*{count}" type="hidden"/>
-                            </ul>
+                            </ol>
                         </div>
                         <div th:replace="./common/_NumberPlace :: base"></div>
                         <div class="col-lg-8 col-lg-offset-4">
@@ -91,6 +91,8 @@
                         )
                 }
             );
+
+
 
         </script>
     </div>
