@@ -17,8 +17,10 @@ import com.mabubu0203.sudoku.web.utils.CompareUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.collections.api.list.MutableList;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
@@ -39,7 +41,11 @@ import java.util.Optional;
  * @since 1.0
  */
 @Slf4j
+@Component
 public class PlayHelper {
+
+    @Value("${sudoku.uri.api}")
+    private String sudokuUriApi;
 
     /**
      * @param handleBean
@@ -74,9 +80,7 @@ public class PlayHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getSelectType()));
         uriVariables.put("keyHash", "");
-        URI uri =
-                new UriTemplate("http://localhost:8085/SudokuApi/searchMaster/sudoku?type={type}&keyHash={keyHash}")
-                        .expand(uriVariables);
+        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity = RequestEntity.get(uri).build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =
@@ -114,10 +118,7 @@ public class PlayHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
-        URI uri =
-                new UriTemplate(
-                        "http://localhost:8085/SudokuApi/searchMaster/sudoku?type={type}&keyHash={keyHash}")
-                        .expand(uriVariables);
+        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity = RequestEntity.get(uri).build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =
@@ -129,10 +130,7 @@ public class PlayHelper {
             throw new SudokuApplicationException();
         }
         if (form.isCompareFlg()) {
-            uri =
-                    new UriTemplate(
-                            "http://localhost:8085/SudokuApi/searchMaster/score?type={type}&keyHash={keyHash}")
-                            .expand(uriVariables);
+            uri = new UriTemplate(sudokuUriApi + "/searchMaster/score?type={type}&keyHash={keyHash}").expand(uriVariables);
             requestEntity = RequestEntity.get(uri).build();
             try {
                 ResponseEntity<ScoreResponseBean> generateEntity2 =
@@ -221,7 +219,7 @@ public class PlayHelper {
         UpdateSudokuScoreRequestBean request =
                 new ModelMapper().map(form, UpdateSudokuScoreRequestBean.class);
         try {
-            URI uri = new URI("http://localhost:8085/SudokuApi/updateMaster/score/");
+            URI uri = new URI(sudokuUriApi + "/updateMaster/score/");
             RequestEntity requestEntity = RequestEntity.put(uri).body(request);
             ResponseEntity<Long> generateEntity = restOperations.exchange(requestEntity, Long.class);
             return generateEntity.getBody();

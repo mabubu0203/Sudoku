@@ -47,9 +47,19 @@ import java.util.Optional;
 public class WebPageController extends WebBaseController {
 
     private final RestOperations restOperations;
+    private final CreateHelper createHelper;
+    private final PlayHelper playHelper;
+    private final SearchHelper searchHelper;
 
-    public WebPageController(RestTemplateBuilder restTemplateBuilder) {
+    public WebPageController(
+            final RestTemplateBuilder restTemplateBuilder,
+            final CreateHelper createHelper,
+            final PlayHelper playHelper,
+            final SearchHelper searchHelper) {
         this.restOperations = restTemplateBuilder.build(); // Builderのbuildメソッドを呼び出しRestTemplateを生成
+        this.createHelper = createHelper;
+        this.playHelper = playHelper;
+        this.searchHelper = searchHelper;
     }
 
     /**
@@ -62,19 +72,19 @@ public class WebPageController extends WebBaseController {
 
         Optional<Object> object = Optional.ofNullable(binder.getTarget());
         object
-                .filter((notNullBinder) -> CreateForm.class.equals(notNullBinder.getClass()))
+                .filter((notNullBinder) -> notNullBinder instanceof CreateForm)
                 .ifPresent(o -> binder.addValidators(new CreateFormValidator()));
         object
-                .filter((notNullBinder) -> DetailForm.class.equals(notNullBinder.getClass()))
+                .filter((notNullBinder) -> notNullBinder instanceof DetailForm)
                 .ifPresent(o -> binder.addValidators(new DetailFormValidator()));
         object
-                .filter((notNullBinder) -> PlayForm.class.equals(notNullBinder.getClass()))
+                .filter((notNullBinder) -> notNullBinder instanceof PlayForm)
                 .ifPresent(o -> binder.addValidators(new PlayFormValidator()));
         object
-                .filter((notNullBinder) -> ScoreForm.class.equals(notNullBinder.getClass()))
+                .filter((notNullBinder) -> notNullBinder instanceof ScoreForm)
                 .ifPresent(o -> binder.addValidators(new ScoreFormValidator()));
         object
-                .filter((notNullBinder) -> SearchForm.class.equals(notNullBinder.getClass()))
+                .filter((notNullBinder) -> notNullBinder instanceof SearchForm)
                 .ifPresent(o -> binder.addValidators(new SearchFromValidator()));
     }
 
@@ -111,7 +121,7 @@ public class WebPageController extends WebBaseController {
     public String okCreateAnswer(final CreateForm form, final Model model) {
 
         LogicHandleBean handleBean = new LogicHandleBean().setModel(model);
-        new CreateHelper().createAnswer(handleBean);
+        this.createHelper.createAnswer(handleBean);
         return WebUrlConstants.Forward.CREATE_ANSWER.getPath();
     }
 
@@ -140,7 +150,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            HttpStatus result = new CreateHelper().completeAnswer(restOperations, handleBean);
+            HttpStatus result = this.createHelper.completeAnswer(restOperations, handleBean);
             if (result == HttpStatus.OK) {
                 return WebUrlConstants.Forward.COMPLETE_ANSWER.getPath();
             } else if (result == HttpStatus.CONFLICT) {
@@ -164,7 +174,7 @@ public class WebPageController extends WebBaseController {
     public String okCreateQuestion(final CreateForm form, final Model model) {
 
         LogicHandleBean handleBean = new LogicHandleBean().setModel(model);
-        new PlayHelper().createQuestion(handleBean);
+        this.playHelper.createQuestion(handleBean);
         return WebUrlConstants.Forward.CREATE_QUESTION.getPath();
     }
 
@@ -192,7 +202,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            new PlayHelper().playNumberPlace(restOperations, handleBean);
+            this.playHelper.playNumberPlace(restOperations, handleBean);
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         }
     }
@@ -219,7 +229,8 @@ public class WebPageController extends WebBaseController {
         } else {
             LogicHandleBean handleBean = new LogicHandleBean().setForm(form).setModel(model);
             log.info(form.toString());
-            switch (new PlayHelper().isCheck(restOperations, handleBean)) {
+            int result = this.playHelper.isCheck(restOperations, handleBean);
+            switch (result) {
                 case 1:
                     return WebUrlConstants.Forward.BEST_SCORE.getPath();
                 case 2:
@@ -256,7 +267,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            new PlayHelper().bestScore(restOperations, handleBean);
+            this.playHelper.bestScore(restOperations, handleBean);
             return WebUrlConstants.Forward.BEST_SCORE_COMPLETE.getPath();
         }
     }
@@ -317,7 +328,7 @@ public class WebPageController extends WebBaseController {
     public String searchAnswer(@ModelAttribute final SearchForm form, final Model model) {
 
         LogicHandleBean handleBean = new LogicHandleBean().setModel(model);
-        new SearchHelper().searchAnswer(handleBean);
+        this.searchHelper.searchAnswer(handleBean);
         return WebUrlConstants.Forward.SEARCH_ANSWER.getPath();
     }
 
@@ -344,7 +355,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            new SearchHelper().isSearch(restOperations, handleBean);
+            this.searchHelper.isSearch(restOperations, handleBean);
         }
         return searchAnswer(form, model);
     }
@@ -373,7 +384,7 @@ public class WebPageController extends WebBaseController {
             form.setType(type);
             form.setKeyHash(keyHash);
             LogicHandleBean handleBean = new LogicHandleBean().setForm(form).setModel(model);
-            new SearchHelper().detail(handleBean);
+            this.searchHelper.detail(handleBean);
             return WebUrlConstants.Forward.DETAIL.getPath();
         } else {
             return "error";
@@ -404,7 +415,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            new SearchHelper().playNumberPlaceDetail(restOperations, handleBean);
+            this.searchHelper.playNumberPlaceDetail(restOperations, handleBean);
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         }
     }

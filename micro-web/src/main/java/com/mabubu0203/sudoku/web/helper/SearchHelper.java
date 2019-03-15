@@ -14,8 +14,10 @@ import com.mabubu0203.sudoku.web.form.PlayForm;
 import com.mabubu0203.sudoku.web.form.SearchForm;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
@@ -33,7 +35,11 @@ import java.util.Objects;
  * @since 1.0
  */
 @Slf4j
+@Component
 public class SearchHelper {
+
+    @Value("${sudoku.uri.api}")
+    private String sudokuUriApi;
 
     /**
      * @param handleBean
@@ -75,7 +81,7 @@ public class SearchHelper {
         SearchSudokuRecordRequestBean request =
                 new ModelMapper().map(form, SearchSudokuRecordRequestBean.class);
         try {
-            URI uri = new URI("http://localhost:8085/SudokuApi/searchMaster/");
+            URI uri = new URI(sudokuUriApi + "/searchMaster/");
             RequestEntity requestEntity = RequestEntity.post(uri).body(request);
             ResponseEntity<SearchSudokuRecordResponseBean> generateEntity =
                     restOperations.exchange(requestEntity, SearchSudokuRecordResponseBean.class);
@@ -123,10 +129,7 @@ public class SearchHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
-        URI uri =
-                new UriTemplate(
-                        "http://localhost:8085/SudokuApi/searchMaster/sudoku?type={type}&keyHash={keyHash}")
-                        .expand(uriVariables);
+        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity = RequestEntity.get(uri).build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =

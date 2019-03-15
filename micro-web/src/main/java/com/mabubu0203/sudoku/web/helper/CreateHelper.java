@@ -5,9 +5,11 @@ import com.mabubu0203.sudoku.utils.ESMapWrapUtils;
 import com.mabubu0203.sudoku.web.deprecated.LogicHandleBean;
 import com.mabubu0203.sudoku.web.form.CreateForm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
@@ -22,7 +24,11 @@ import java.util.Objects;
  * @since 1.0
  */
 @Slf4j
+@Component
 public class CreateHelper {
+
+    @Value("${sudoku.uri.api}")
+    private String sudokuUriApi;
 
     /**
      * @param handleBean
@@ -53,9 +59,7 @@ public class CreateHelper {
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
-        URI uri =
-                new UriTemplate("http://localhost:8085/SudokuApi/createMaster/{type}")
-                        .expand(form.getSelectType());
+        URI uri = new UriTemplate(sudokuUriApi + "/createMaster/{type}").expand(form.getSelectType());
         RequestEntity requestEntity = RequestEntity.get(uri).build();
         try {
             ResponseEntity<String> generateEntity = restOperations.exchange(requestEntity, String.class);

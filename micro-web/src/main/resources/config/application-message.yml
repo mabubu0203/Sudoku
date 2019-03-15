@@ -1,0 +1,3 @@
+sudoku:
+  uri:
+    api: http://localhost:8085/
