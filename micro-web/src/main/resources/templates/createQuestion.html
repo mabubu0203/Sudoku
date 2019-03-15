@@ -56,9 +56,9 @@
                   method="post" th:action="@{/playNumberPlace}" th:object="${createForm}">
                 <fieldset>
                     <div class="row form-group">
-                        <div class="col-lg-2"></div>
-                        <label class="col-lg-2 control-label" for="selectType">タイプ</label>
+                        <div class="col-lg-4"></div>
                         <div class="col-lg-4">
+                            <label class="control-label" for="selectType">タイプ</label>
                             <select class="form-control" data-error="セレクトボックスは必須選択です。" id="selectType"
                                     required
                                     th:data-error="#{selectType.input.required}"
@@ -77,9 +77,9 @@
                         <div class="col-lg-4"></div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-lg-2"></div>
-                        <label class="col-lg-2 control-label" for="selectLevel">レベル</label>
+                        <div class="col-lg-4"></div>
                         <div class="col-lg-4">
+                            <label class="control-label" for="selectLevel">レベル</label>
                             <select class="form-control" data-error="セレクトボックスは必須選択です。" id="selectLevel"
                                     required
                                     th:data-error="#{selectLevel.input.required}"

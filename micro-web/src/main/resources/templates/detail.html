@@ -56,8 +56,9 @@
                 <fieldset>
                     <div>
                         <div class="row form-group">
-                            <label class="col-lg-3 control-label" for="selectLevel">レベル</label>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4">
+                                <label class="control-label" for="selectLevel">レベル</label>
                                 <select class="form-control" data-error="セレクトボックスは必須選択です。" id="selectLevel"
                                         required
                                         th:data-error="#{selectLevel.input.required}"
@@ -73,7 +74,7 @@
                                       th:if="${#fields.hasErrors('selectLevel')}">error!</span>
                                 <div class="help-block with-errors"></div>
                             </div>
-                            <div class="col-lg-6"></div>
+                            <div class="col-lg-4"></div>
                         </div>
                     </div>
                     <div>
@@ -81,9 +82,9 @@
                             <div class="col-lg-8 col-lg-offset-4">
                                 <input th:id="type" th:name="type" th:value="*{type}" type="hidden"/>
                                 <input th:id="keyHash" th:name="keyHash" th:value="*{keyHash}" type="hidden"/>
-                                <button class="btn btn-default" id="reset" type="reset">リセット
+                                <button class="btn btn-warning" id="reset" type="reset">リセット
                                 </button>
-                                <button class="btn btn-primary" id="submit" type="submit">プレイ！
+                                <button class="btn btn-success" id="submit" type="submit">プレイ！
                                 </button>
                             </div>
                         </div>
