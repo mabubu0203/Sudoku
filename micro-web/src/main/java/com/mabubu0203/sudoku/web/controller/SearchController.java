@@ -39,6 +39,14 @@ public class SearchController {
     private final RestOperations restOperations;
     private final SearchHelper searchHelper;
 
+    /**
+     * コンストラクタ<br>
+     *
+     * @param restTemplateBuilder
+     * @param searchHelper
+     * @author uratamanabu
+     * @since 1.0
+     */
     public SearchController(
             final RestTemplateBuilder restTemplateBuilder,
             final SearchHelper searchHelper) {
@@ -64,11 +72,11 @@ public class SearchController {
     }
 
     /**
-     * /searchAnswerの初期ページへ遷移します。
+     * {@code "/searchAnswer"}の初期ページへ遷移します。<br>
      *
      * @param form
      * @param model
-     * @return String
+     * @return /searchAnswer
      * @author uratamanabu
      * @since 1.0
      */
@@ -81,16 +89,16 @@ public class SearchController {
     }
 
     /**
-     * /isSearchの初期ページへ遷移します。
+     * {@code "/isSearch"}の初期ページへ遷移します。<br>
      *
      * @param form
      * @param bindingResult
      * @param model
-     * @return String
+     * @return /isSearch
      * @author uratamanabu
      * @since 1.0
      */
-    @PostMapping(value = {"isSearch"})
+    @PostMapping(value = {WebUrlConstants.URL_IS_SEARCH})
     public String isSearch(
             @Validated @ModelAttribute final SearchForm form,
             final BindingResult bindingResult,
@@ -106,12 +114,12 @@ public class SearchController {
     }
 
     /**
-     * /detailの初期ページへ遷移します。
+     * {@code "/detail"}の初期ページへ遷移します。<br>
      *
      * @param type
      * @param keyHash
      * @param model
-     * @return String
+     * @return /detail
      * @author uratamanabu
      * @since 1.0
      */
@@ -135,12 +143,12 @@ public class SearchController {
     }
 
     /**
-     * /playNumberPlaceDetailの初期ページへ遷移します。
+     * {@code "/playNumberPlaceDetail"}の初期ページへ遷移します。
      *
      * @param form
      * @param bindingResult
      * @param model
-     * @return String
+     * @return /playNumberPlaceDetail
      * @author uratamanabu
      * @since 1.0
      */
