@@ -67,8 +67,12 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public ResponseEntity<SearchSudokuRecordResponseBean> search(
-            final SearchConditionBean conditionBean, final Pageable pageable) {
+            final SearchConditionBean conditionBean,
+            final int pageNumber,
+            final int pageSize) {
 
+        Sort sort = Sort.by(Sort.Direction.DESC, "no");
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<AnswerInfoTbl> page = answerInfoService.findRecords(conditionBean, pageable);
         if (Objects.nonNull(page) && page.hasContent()) {
             Page modiftyPage = convertJacksonFile(page);
@@ -84,6 +88,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type) {
+
         AnswerInfoTbl answerInfoTbl = answerInfoService.findByType(type);
         NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTbl);
         return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
@@ -92,6 +97,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
             final int type, final String keyHash) {
+
         AnswerInfoTbl answerInfoTbl = answerInfoService.findByTypeAndKeyHash(type, keyHash);
         NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTbl);
         return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
@@ -108,7 +114,7 @@ public class SearchServiceImpl implements SearchService {
 
     private Page convertJacksonFile(final Page<AnswerInfoTbl> page) {
 
-        Pageable pageable = PageRequest.of(page.getNumber(), page.getSize(), Sort.Direction.DESC);
+        Pageable pageable = PageRequest.of(page.getNumber(), page.getSize());
         List<AnswerInfoTbl> content = page.getContent();
         List<SearchResultBean> modifyContent = new ArrayList<>();
         for (AnswerInfoTbl record : content) {

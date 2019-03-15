@@ -15,9 +15,6 @@ import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -72,10 +69,9 @@ public class RestApiSearchController extends RestBaseController {
             @RequestBody @Validated final SearchSudokuRecordRequestBean request) {
 
         log.info("search");
-        Pageable pageable = PageRequest.of(request.getPageNumber(), request.getPageSize(), Sort.Direction.DESC);
         SearchConditionBean conditionBean = facade.map(request, SearchConditionBean.class);
         conditionBean.setType(request.getSelectType());
-        return service.search(conditionBean, pageable);
+        return service.search(conditionBean, request.getPageNumber(), request.getPageSize());
     }
 
     /**

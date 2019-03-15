@@ -29,12 +29,16 @@ public interface SearchService {
      * 検索画面からの検索をpageオブジェクトに格納し返却します。<br>
      *
      * @param conditionBean
-     * @param pageable
+     * @param pageNumber
+     * @param pageSize
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    ResponseEntity<SearchSudokuRecordResponseBean> search(final SearchConditionBean conditionBean, final Pageable pageable);
+    ResponseEntity<SearchSudokuRecordResponseBean> search(
+            final SearchConditionBean conditionBean,
+            final int pageNumber,
+            final int pageSize);
 
     /**
      *

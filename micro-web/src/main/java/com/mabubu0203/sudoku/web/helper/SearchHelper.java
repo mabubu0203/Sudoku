@@ -17,6 +17,7 @@ import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -88,12 +89,11 @@ public class SearchHelper {
             RequestEntity requestEntity = RequestEntity.post(uri).body(request);
             ResponseEntity<SearchSudokuRecordResponseBean> generateEntity =
                     restOperations.exchange(requestEntity, SearchSudokuRecordResponseBean.class);
-            // TODO:移植中
-//            Page page = generateEntity.getBody().getPage();
-//            // ページ番号を設定し直す
-//            form.setPageNumber(page.getNumber());
-//            model.addAttribute("page", page);
-//            model.addAttribute("ph", generateEntity.getBody().getPh());
+            Page page = generateEntity.getBody().getPage();
+            // ページ番号を設定し直す
+            form.setPageNumber(page.getNumber());
+            model.addAttribute("page", page);
+            model.addAttribute("ph", generateEntity.getBody().getPh());
         } catch (URISyntaxException | RestClientException e) {
             e.printStackTrace();
             throw new SudokuApplicationException();
