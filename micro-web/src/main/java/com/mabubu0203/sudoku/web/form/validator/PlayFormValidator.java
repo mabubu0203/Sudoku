@@ -14,8 +14,8 @@ import org.springframework.validation.Errors;
 public class PlayFormValidator extends BaseFormValidator {
 
     /**
+     * @param paramClass
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Override
@@ -24,8 +24,9 @@ public class PlayFormValidator extends BaseFormValidator {
     }
 
     /**
+     * @param paramObject
+     * @param errors
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Override

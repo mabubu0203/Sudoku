@@ -13,6 +13,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ListIterator;
+import java.util.Objects;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -26,13 +27,14 @@ import static lombok.AccessLevel.PRIVATE;
 public class CompareUtil {
 
     /**
+     * @param form
+     * @param bean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
-    public static void playFormCompareAnswer(PlayForm form, NumberPlaceBean bean)
-            throws SudokuApplicationException {
-        if (bean.getType() != form.getType()) {
+    public static void playFormCompareAnswer(PlayForm form, NumberPlaceBean bean) {
+
+        if (!Objects.equals(bean.getType(), form.getType())) {
             throw new SudokuApplicationException();
         } else if (!bean.getKeyHash().equals(form.getKeyHash())) {
             throw new SudokuApplicationException();
@@ -47,24 +49,22 @@ public class CompareUtil {
                 PropertyDescriptor beanProperties = new PropertyDescriptor(property, bean.getClass());
                 Method formGetter = formProperties.getReadMethod();
                 Method beanGetter = beanProperties.getReadMethod();
-                if (formGetter == null || beanGetter == null) {
+                if (Objects.isNull(formGetter) || Objects.isNull(beanGetter)) {
                     throw new SudokuApplicationException();
                 }
                 Integer formValue = (int) formGetter.invoke(form, (Object[]) null);
                 Integer beanValue = (int) beanGetter.invoke(bean, (Object[]) null);
-                if (formValue == null || beanValue == null) {
+                if (Objects.isNull(formValue) || Objects.isNull(beanValue)) {
                     throw new SudokuApplicationException();
-                } else if (formValue != beanValue) {
+                } else if (!Objects.equals(formValue, beanValue)) {
                     Method formSetter = formProperties.getWriteMethod();
-                    if (formSetter == null) {
+                    if (Objects.isNull(formSetter)) {
                         throw new SudokuApplicationException();
                     } else {
                         formSetter.invoke(form, CommonConstants.ZERO);
                         form.subtractionScore(50);
                         form.setCompareFlg(false);
                     }
-                } else {
-
                 }
             }
         } catch (IntrospectionException

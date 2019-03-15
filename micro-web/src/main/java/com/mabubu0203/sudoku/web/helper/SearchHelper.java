@@ -1,4 +1,4 @@
-package com.mabubu0203.sudoku.web.logic;
+package com.mabubu0203.sudoku.web.helper;
 
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
@@ -25,6 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author uratamanabu
@@ -32,17 +33,17 @@ import java.util.Map;
  * @since 1.0
  */
 @Slf4j
-public class SearchLogic {
+public class SearchHelper {
 
     /**
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     public void searchAnswer(final LogicHandleBean handleBean) {
 
         Model model = handleBean.getModel();
-        if (model == null) {
+        if (Objects.isNull(model)) {
             throw new SudokuApplicationException();
         } else {
             model.addAttribute("selectTypes", ESMapWrapUtils.getSelectTypes());
@@ -54,18 +55,16 @@ public class SearchLogic {
     }
 
     /**
+     * @param restOperations
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     public void isSearch(final RestOperations restOperations, final LogicHandleBean handleBean) {
 
         SearchForm form = (SearchForm) handleBean.getForm();
-        if (form == null) {
-            throw new SudokuApplicationException();
-        }
         Model model = handleBean.getModel();
-        if (model == null) {
+        if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
         model.addAttribute("selectTypes", ESMapWrapUtils.getSelectTypes());
@@ -88,22 +87,20 @@ public class SearchLogic {
 //            model.addAttribute("ph", generateEntity.getBody().getPh());
         } catch (URISyntaxException | RestClientException e) {
             e.printStackTrace();
+            throw new SudokuApplicationException();
         }
     }
 
     /**
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     public void detail(final LogicHandleBean handleBean) {
 
         DetailForm form = (DetailForm) handleBean.getForm();
-        if (form == null) {
-            throw new SudokuApplicationException();
-        }
         Model model = handleBean.getModel();
-        if (model == null) {
+        if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
         model.addAttribute("detailForm", form);
@@ -111,20 +108,16 @@ public class SearchLogic {
     }
 
     /**
+     * @param restOperations
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
-    public void playNumberPlaceDetail(
-            final RestOperations restOperations, final LogicHandleBean handleBean)
-            throws SudokuApplicationException {
+    public void playNumberPlaceDetail(final RestOperations restOperations, final LogicHandleBean handleBean) {
 
         DetailForm form = (DetailForm) handleBean.getForm();
-        if (form == null) {
-            throw new SudokuApplicationException();
-        }
         Model model = handleBean.getModel();
-        if (model == null) {
+        if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
         Map<String, String> uriVariables = new HashMap<>();
@@ -150,6 +143,7 @@ public class SearchLogic {
             model.addAttribute("selectCells", ESListWrapUtils.createCells(form.getType()));
         } catch (RestClientException e) {
             e.printStackTrace();
+            throw new SudokuApplicationException();
         }
     }
 

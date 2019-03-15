@@ -14,8 +14,8 @@ import org.springframework.validation.Errors;
 public class ScoreFormValidator extends BaseFormValidator {
 
     /**
+     * @param paramClass
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Override
@@ -24,12 +24,16 @@ public class ScoreFormValidator extends BaseFormValidator {
     }
 
     /**
+     * @param paramObject
+     * @param errors
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Override
     public void validate(Object paramObject, Errors errors) {
+        if (errors.hasErrors()) {
+            return;
+        }
         ScoreForm form = (ScoreForm) paramObject;
         int score = form.getScore();
         String keyHash = form.getKeyHash();

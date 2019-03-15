@@ -1,4 +1,4 @@
-package com.mabubu0203.sudoku.web.logic;
+package com.mabubu0203.sudoku.web.helper;
 
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -38,17 +39,17 @@ import java.util.Optional;
  * @since 1.0
  */
 @Slf4j
-public class PlayLogic {
+public class PlayHelper {
 
     /**
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
-    public void createQuestion(final LogicHandleBean handleBean) throws SudokuApplicationException {
+    public void createQuestion(final LogicHandleBean handleBean) {
 
         Model model = handleBean.getModel();
-        if (model == null) {
+        if (Objects.isNull(model)) {
             throw new SudokuApplicationException();
         } else {
             model.addAttribute("selectTypes", ESMapWrapUtils.getSelectTypes());
@@ -57,30 +58,27 @@ public class PlayLogic {
     }
 
     /**
+     * @param restOperations
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
-    public void playNumberPlace(final RestOperations restOperations, final LogicHandleBean handleBean)
-            throws SudokuApplicationException {
+    public void playNumberPlace(final RestOperations restOperations, final LogicHandleBean handleBean) {
 
         CreateForm form = (CreateForm) handleBean.getForm();
-        if (form == null) {
-            throw new SudokuApplicationException();
-        }
+
         Model model = handleBean.getModel();
-        if (model == null) {
+        if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getSelectType()));
         uriVariables.put("keyHash", "");
         URI uri =
-                new UriTemplate(
-                        "http://localhost:8085/SudokuApi/searchMaster/sudoku?type={type}&keyHash={keyHash}")
+                new UriTemplate("http://localhost:8085/SudokuApi/searchMaster/sudoku?type={type}&keyHash={keyHash}")
                         .expand(uriVariables);
+        RequestEntity requestEntity = RequestEntity.get(uri).build();
         try {
-            RequestEntity requestEntity = RequestEntity.get(uri).build();
             ResponseEntity<NumberPlaceBean> generateEntity =
                     restOperations.exchange(requestEntity, NumberPlaceBean.class);
             NumberPlaceBean numberPlaceBean = generateEntity.getBody();
@@ -91,25 +89,26 @@ public class PlayLogic {
             playForm.setCount(0);
             playForm.setScore(SudokuUtils.calculationScore(form.getSelectType(), form.getSelectLevel()));
             model.addAttribute("playForm", playForm);
+            model.addAttribute("selectNums", ESListWrapUtils.getSelectNum(form.getSelectType()));
+            model.addAttribute("selectCells", ESListWrapUtils.createCells(form.getSelectType()));
         } catch (RestClientException e) {
             e.printStackTrace();
             throw new SudokuApplicationException();
         }
-        model.addAttribute("selectNums", ESListWrapUtils.getSelectNum(form.getSelectType()));
-        model.addAttribute("selectCells", ESListWrapUtils.createCells(form.getSelectType()));
     }
 
     /**
+     * @param restOperations
+     * @param handleBean
+     * @return int
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
-    public int isCheck(final RestOperations restOperations, final LogicHandleBean handleBean)
-            throws SudokuApplicationException {
+    public int isCheck(final RestOperations restOperations, final LogicHandleBean handleBean) {
 
         PlayForm form = (PlayForm) handleBean.getForm();
         Model model = handleBean.getModel();
-        if (form == null || model == null) {
+        if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
         Map<String, String> uriVariables = new HashMap<>();
@@ -173,19 +172,16 @@ public class PlayLogic {
     }
 
     /**
+     * @param restOperations
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
-    public void bestScore(final RestOperations restOperations, final LogicHandleBean handleBean)
-            throws SudokuApplicationException {
+    public void bestScore(final RestOperations restOperations, final LogicHandleBean handleBean) {
 
         ScoreForm form = (ScoreForm) handleBean.getForm();
-        if (form == null) {
-            throw new SudokuApplicationException();
-        }
         Model model = handleBean.getModel();
-        if (model == null) {
+        if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
         Optional<Long> noOpt = Optional.ofNullable(updateScore(restOperations, handleBean));
@@ -211,15 +207,15 @@ public class PlayLogic {
     }
 
     /**
+     * @param restOperations
+     * @param handleBean
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
-    private Long updateScore(final RestOperations restOperations, final LogicHandleBean handleBean)
-            throws SudokuApplicationException {
+    private Long updateScore(final RestOperations restOperations, final LogicHandleBean handleBean) {
 
         ScoreForm form = (ScoreForm) handleBean.getForm();
-        if (form == null) {
+        if (Objects.isNull(form)) {
             throw new SudokuApplicationException();
         }
         UpdateSudokuScoreRequestBean request =

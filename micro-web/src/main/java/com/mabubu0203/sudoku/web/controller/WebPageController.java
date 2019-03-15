@@ -1,11 +1,7 @@
 package com.mabubu0203.sudoku.web.controller;
 
-
 import com.mabubu0203.sudoku.constants.WebUrlConstants;
 import com.mabubu0203.sudoku.controller.WebBaseController;
-import com.mabubu0203.sudoku.exception.SudokuApplicationException;
-import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
-import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import com.mabubu0203.sudoku.web.deprecated.LogicHandleBean;
@@ -19,9 +15,9 @@ import com.mabubu0203.sudoku.web.form.validator.DetailFormValidator;
 import com.mabubu0203.sudoku.web.form.validator.PlayFormValidator;
 import com.mabubu0203.sudoku.web.form.validator.ScoreFormValidator;
 import com.mabubu0203.sudoku.web.form.validator.SearchFromValidator;
-import com.mabubu0203.sudoku.web.logic.CreateLogic;
-import com.mabubu0203.sudoku.web.logic.PlayLogic;
-import com.mabubu0203.sudoku.web.logic.SearchLogic;
+import com.mabubu0203.sudoku.web.helper.CreateHelper;
+import com.mabubu0203.sudoku.web.helper.PlayHelper;
+import com.mabubu0203.sudoku.web.helper.SearchHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
@@ -51,23 +47,9 @@ import java.util.Optional;
 public class WebPageController extends WebBaseController {
 
     private final RestOperations restOperations;
-    /**
-     * AnswerInfoServiceを配備します。
-     */
-    private final AnswerInfoService answerInfoService;
-    /**
-     * ScoreInfoServiceを配備します。
-     */
-    private final ScoreInfoService scoreInfoService;
 
-    public WebPageController(
-            RestTemplateBuilder restTemplateBuilder,
-            AnswerInfoService answerInfoService,
-            ScoreInfoService scoreInfoService) {
-        // コンストラクタインジェクション！！
+    public WebPageController(RestTemplateBuilder restTemplateBuilder) {
         this.restOperations = restTemplateBuilder.build(); // Builderのbuildメソッドを呼び出しRestTemplateを生成
-        this.answerInfoService = answerInfoService;
-        this.scoreInfoService = scoreInfoService;
     }
 
     /**
@@ -107,7 +89,7 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -121,7 +103,7 @@ public class WebPageController extends WebBaseController {
      *
      * @param form
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -129,7 +111,7 @@ public class WebPageController extends WebBaseController {
     public String okCreateAnswer(final CreateForm form, final Model model) {
 
         LogicHandleBean handleBean = new LogicHandleBean().setModel(model);
-        new CreateLogic().createAnswer(handleBean);
+        new CreateHelper().createAnswer(handleBean);
         return WebUrlConstants.Forward.CREATE_ANSWER.getPath();
     }
 
@@ -140,8 +122,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
-     * @throws SudokuApplicationException
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -149,8 +130,7 @@ public class WebPageController extends WebBaseController {
     public String okCompleteAnswer(
             @Validated @ModelAttribute final CreateForm form,
             final BindingResult bindingResult,
-            final Model model)
-            throws SudokuApplicationException {
+            final Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
@@ -160,10 +140,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            // TODO:移植中
-//                            .setService(Tables.ANSWER_INFO_TBL, answerInfoService)
-//                            .setService(Tables.SCORE_INFO_TBL, scoreInfoService);
-            HttpStatus result = new CreateLogic().completeAnswer(restOperations, handleBean);
+            HttpStatus result = new CreateHelper().completeAnswer(restOperations, handleBean);
             if (result == HttpStatus.OK) {
                 return WebUrlConstants.Forward.COMPLETE_ANSWER.getPath();
             } else if (result == HttpStatus.CONFLICT) {
@@ -179,7 +156,7 @@ public class WebPageController extends WebBaseController {
      *
      * @param form
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -187,7 +164,7 @@ public class WebPageController extends WebBaseController {
     public String okCreateQuestion(final CreateForm form, final Model model) {
 
         LogicHandleBean handleBean = new LogicHandleBean().setModel(model);
-        new PlayLogic().createQuestion(handleBean);
+        new PlayHelper().createQuestion(handleBean);
         return WebUrlConstants.Forward.CREATE_QUESTION.getPath();
     }
 
@@ -197,7 +174,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -205,8 +182,7 @@ public class WebPageController extends WebBaseController {
     public String okPlayNumberPlace(
             @Validated @ModelAttribute final CreateForm form,
             final BindingResult bindingResult,
-            final Model model)
-            throws SudokuApplicationException {
+            final Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
@@ -216,9 +192,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            // TODO:移植中
-//                            .setService(Tables.ANSWER_INFO_TBL, answerInfoService);
-            new PlayLogic().playNumberPlace(restOperations, handleBean);
+            new PlayHelper().playNumberPlace(restOperations, handleBean);
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         }
     }
@@ -229,7 +203,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -237,8 +211,7 @@ public class WebPageController extends WebBaseController {
     public String okIsCheck(
             @Validated @ModelAttribute final PlayForm form,
             final BindingResult bindingResult,
-            final Model model)
-            throws SudokuApplicationException {
+            final Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
@@ -246,7 +219,7 @@ public class WebPageController extends WebBaseController {
         } else {
             LogicHandleBean handleBean = new LogicHandleBean().setForm(form).setModel(model);
             log.info(form.toString());
-            switch (new PlayLogic().isCheck(restOperations, handleBean)) {
+            switch (new PlayHelper().isCheck(restOperations, handleBean)) {
                 case 1:
                     return WebUrlConstants.Forward.BEST_SCORE.getPath();
                 case 2:
@@ -265,7 +238,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -283,9 +256,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            // TODO:移植中
-//                            .setService(Tables.SCORE_INFO_TBL, scoreInfoService);
-            new PlayLogic().bestScore(restOperations, handleBean);
+            new PlayHelper().bestScore(restOperations, handleBean);
             return WebUrlConstants.Forward.BEST_SCORE_COMPLETE.getPath();
         }
     }
@@ -296,7 +267,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -315,7 +286,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -338,7 +309,7 @@ public class WebPageController extends WebBaseController {
      *
      * @param form
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -346,7 +317,7 @@ public class WebPageController extends WebBaseController {
     public String searchAnswer(@ModelAttribute final SearchForm form, final Model model) {
 
         LogicHandleBean handleBean = new LogicHandleBean().setModel(model);
-        new SearchLogic().searchAnswer(handleBean);
+        new SearchHelper().searchAnswer(handleBean);
         return WebUrlConstants.Forward.SEARCH_ANSWER.getPath();
     }
 
@@ -356,7 +327,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -373,9 +344,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            // TODO:移植中
-//                            .setService(Tables.ANSWER_INFO_TBL, answerInfoService);
-            new SearchLogic().isSearch(restOperations, handleBean);
+            new SearchHelper().isSearch(restOperations, handleBean);
         }
         return searchAnswer(form, model);
     }
@@ -386,7 +355,7 @@ public class WebPageController extends WebBaseController {
      * @param type
      * @param keyHash
      * @param model
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -404,7 +373,7 @@ public class WebPageController extends WebBaseController {
             form.setType(type);
             form.setKeyHash(keyHash);
             LogicHandleBean handleBean = new LogicHandleBean().setForm(form).setModel(model);
-            new SearchLogic().detail(handleBean);
+            new SearchHelper().detail(handleBean);
             return WebUrlConstants.Forward.DETAIL.getPath();
         } else {
             return "error";
@@ -417,8 +386,7 @@ public class WebPageController extends WebBaseController {
      * @param form
      * @param bindingResult
      * @param model
-     * @return
-     * @throws SudokuApplicationException
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -426,8 +394,7 @@ public class WebPageController extends WebBaseController {
     public String playNumberPlaceDetail(
             @Validated @ModelAttribute final DetailForm form,
             final BindingResult bindingResult,
-            final Model model)
-            throws SudokuApplicationException {
+            final Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
@@ -437,9 +404,7 @@ public class WebPageController extends WebBaseController {
                     new LogicHandleBean()
                             .setForm(form)
                             .setModel(model);
-            // TODO:移植中
-//                            .setService(Tables.ANSWER_INFO_TBL, answerInfoService);
-            new SearchLogic().playNumberPlaceDetail(restOperations, handleBean);
+            new SearchHelper().playNumberPlaceDetail(restOperations, handleBean);
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         }
     }
@@ -447,7 +412,7 @@ public class WebPageController extends WebBaseController {
     /**
      * /introduceの初期ページへ遷移します。
      *
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
@@ -459,7 +424,7 @@ public class WebPageController extends WebBaseController {
     /**
      * /linkListの初期ページへ遷移します。
      *
-     * @return
+     * @return String
      * @author uratamanabu
      * @since 1.0
      */
