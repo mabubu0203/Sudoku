@@ -10,6 +10,7 @@ import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -42,10 +43,8 @@ public class SudokuUtils {
      * @param selectType
      * @param selectLevel
      * @return
-     * @throws SudokuApplicationException
      */
-    public static int calculationScore(int selectType, String selectLevel)
-            throws SudokuApplicationException {
+    public static int calculationScore(int selectType, String selectLevel) {
         String key = selectLevel.toUpperCase().concat(Integer.toString(selectType));
         Difficulty difficulty = Difficulty.getDifficulty(key);
         if (difficulty == null) {
@@ -73,14 +72,12 @@ public class SudokuUtils {
      * @param numberPlaceBean
      * @param key
      * @param value
-     * @throws SudokuApplicationException
      */
-    public static void setCell(NumberPlaceBean numberPlaceBean, String key, int value)
-            throws SudokuApplicationException {
+    public static void setCell(NumberPlaceBean numberPlaceBean, String key, int value) {
         try {
             PropertyDescriptor properties = new PropertyDescriptor(key, numberPlaceBean.getClass());
             Method setter = properties.getWriteMethod();
-            if (setter != null) {
+            if (Objects.nonNull(setter)) {
                 setter.invoke(numberPlaceBean, value);
             }
         } catch (IntrospectionException
