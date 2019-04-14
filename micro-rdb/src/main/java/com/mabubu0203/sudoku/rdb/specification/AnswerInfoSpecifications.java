@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import static lombok.AccessLevel.PRIVATE;
 
 /**
- * ANSWER_INFO_TBLへの検索条件をSpecificationで返却するクラスです。
+ * ANSWER_INFO_TBLへの検索条件をSpecificationで返却するクラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -24,6 +24,10 @@ public class AnswerInfoSpecifications {
     private static final String KEYHASH = "keyHash";
 
     /**
+     * <br>
+     *
+     * @param selectType
+     * @return Specification
      * @author uratamanabu
      * @since 1.0
      */
@@ -32,6 +36,11 @@ public class AnswerInfoSpecifications {
     }
 
     /**
+     * <br>
+     *
+     * @param no
+     * @param selectorNo
+     * @return Specification
      * @author uratamanabu
      * @since 1.0
      */
@@ -61,6 +70,11 @@ public class AnswerInfoSpecifications {
     }
 
     /**
+     * <br>
+     *
+     * @param keyHash
+     * @param selectorKeyHash
+     * @return Specification
      * @author uratamanabu
      * @since 1.0
      */

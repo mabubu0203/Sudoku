@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * ANSWER_INFO_TBLへのサービスクラスです。 このクラスを経由してCRUD操作を実行してください。
+ * ANSWER_INFO_TBLへのサービスクラスです。 <br>
+ * このクラスを経由してCRUD操作を実行してください。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -109,8 +110,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl)
-            throws SudokuApplicationException {
+    public NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl) {
         NumberPlaceBean numberPlaceBean = new ModelMapper().map(answerInfoTbl, NumberPlaceBean.class);
         String answerKey = numberPlaceBean.getAnswerKey();
         String[] valueArray = answerKey.split("");

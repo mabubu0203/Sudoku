@@ -5,7 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
- * SpringBoot起動クラスです。
+ * SpringBoot起動クラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -15,7 +15,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class RdbApp extends SpringBootServletInitializer {
 
     /**
-     * SpringBoot起動methodです。
+     * SpringBoot起動methodです。<br>
      *
      * @param args 起動引数
      * @author uratamanabu

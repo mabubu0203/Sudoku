@@ -13,7 +13,7 @@ import java.util.Optional;
 import static lombok.AccessLevel.PRIVATE;
 
 /**
- * SCORE_INFO_TBLへの検索条件をSpecificationで返却するクラスです。
+ * SCORE_INFO_TBLへの検索条件をSpecificationで返却するクラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -29,6 +29,11 @@ public class ScoreInfoSpecifications {
     private static final String SCOREINFOTBL = "scoreInfoTbl";
 
     /**
+     * <br>
+     *
+     * @param score
+     * @param selectorScore
+     * @return Specification
      * @author uratamanabu
      * @since 1.0
      */
@@ -60,11 +65,15 @@ public class ScoreInfoSpecifications {
     }
 
     /**
+     * <br>
+     *
+     * @param name
+     * @param selectorName
+     * @return Specification
      * @author uratamanabu
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> nameContains(String name, int selectorName) {
-
         if (name == null) {
             return null;
         }
@@ -95,6 +104,11 @@ public class ScoreInfoSpecifications {
     }
 
     /**
+     * <br>
+     *
+     * @param dateStart
+     * @param dateEnd
+     * @return Specification
      * @author uratamanabu
      * @since 1.0
      */

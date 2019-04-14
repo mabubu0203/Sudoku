@@ -13,6 +13,8 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import java.util.concurrent.Executor;
 
 /**
+ * SpringBoot起動クラスです。<br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -23,7 +25,9 @@ import java.util.concurrent.Executor;
 public class WebApp extends SpringBootServletInitializer implements SchedulingConfigurer {
 
     /**
-     * @param args
+     * SpringBoot起動methodです。<br>
+     *
+     * @param args 起動引数
      * @author uratamanabu
      * @since 1.0
      */
@@ -42,11 +46,13 @@ public class WebApp extends SpringBootServletInitializer implements SchedulingCo
     }
 
     /**
+     * <br>
+     *
      * @return Executor
      * @author uratamanabu
      * @since 1.0
      */
-    @Bean(destroyMethod = "shutdown")
+    @Bean(destroyMethod = "")
     public Executor taskScheduler() {
         ThreadPoolTaskScheduler threadPool = new ThreadPoolTaskScheduler();
         threadPool.setPoolSize(5);
