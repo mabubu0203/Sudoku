@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -29,17 +31,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApiUpdateController extends RestBaseController {
 
     private final UpdateService service;
-
     private final MapperFacade orikaMapperFacade;
 
+    /**
+     * コンストラクタ<br>
+     *
+     * @param service
+     * @param orikaMapperFacade
+     * @author uratamanabu
+     * @since 1.0
+     */
     public RestApiUpdateController(UpdateService service, MapperFacade orikaMapperFacade) {
         this.service = service;
         this.orikaMapperFacade = orikaMapperFacade;
     }
 
     /**
-     * スコアをRDBに保存します。
+     * スコアをRDBに保存します。<br>
      *
+     * @param request
+     * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */

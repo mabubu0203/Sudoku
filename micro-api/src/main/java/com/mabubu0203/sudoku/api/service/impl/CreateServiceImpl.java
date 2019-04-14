@@ -19,16 +19,17 @@ import java.util.Optional;
 @Service
 public class CreateServiceImpl implements CreateService {
 
-    /**
-     * AnswerInfoServiceを配備します。
-     */
     private final AnswerInfoService answerInfoService;
-
-    /**
-     * ScoreInfoServiceを配備します。
-     */
     private final ScoreInfoService scoreInfoService;
 
+    /**
+     * コンストラクタ<br>
+     *
+     * @param answerInfoService
+     * @param scoreInfoService
+     * @author uratamanabu
+     * @since 1.0
+     */
     public CreateServiceImpl(AnswerInfoService answerInfoService, ScoreInfoService scoreInfoService) {
         this.answerInfoService = answerInfoService;
         this.scoreInfoService = scoreInfoService;

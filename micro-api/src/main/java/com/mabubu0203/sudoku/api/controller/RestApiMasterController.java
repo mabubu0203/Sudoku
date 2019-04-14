@@ -22,6 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -41,8 +43,11 @@ public class RestApiMasterController extends RestBaseController {
     }
 
     /**
-     * Web側から呼び出されます。
+     * Web側から呼び出されます。<br>
      *
+     * @param type
+     * @param uriComponentsBuilder
+     * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
