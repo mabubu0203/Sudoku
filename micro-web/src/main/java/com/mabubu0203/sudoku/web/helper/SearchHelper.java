@@ -33,6 +33,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -45,6 +47,8 @@ public class SearchHelper {
     private String sudokuUriApi;
 
     /**
+     * <br>
+     *
      * @param bean
      * @author uratamanabu
      * @since 1.0
@@ -64,6 +68,8 @@ public class SearchHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @author uratamanabu
@@ -101,6 +107,8 @@ public class SearchHelper {
     }
 
     /**
+     * <br>
+     *
      * @param bean
      * @author uratamanabu
      * @since 1.0
@@ -117,6 +125,8 @@ public class SearchHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @author uratamanabu

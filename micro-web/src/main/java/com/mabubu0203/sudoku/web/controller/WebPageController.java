@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -29,6 +31,8 @@ import java.util.Optional;
 public class WebPageController extends WebBaseController {
 
     /**
+     * <br>
+     *
      * @param binder
      * @author uratamanabu
      * @since 1.0
@@ -43,6 +47,8 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
+     * <br>
+     *
      * @return Topページ
      * @author uratamanabu
      * @since 1.0
@@ -53,6 +59,8 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
+     * <br>
+     *
      * @return String
      * @author uratamanabu
      * @since 1.0
@@ -63,7 +71,7 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * /completeNumberPlaceの初期ページへ遷移します。
+     * /completeNumberPlaceの初期ページへ遷移します。<br>
      *
      * @param form
      * @param bindingResult
@@ -86,7 +94,7 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * /completeNumberPlaceの初期ページへ遷移します。
+     * /completeNumberPlaceの初期ページへ遷移します。<br>
      *
      * @param form
      * @param bindingResult
@@ -110,7 +118,7 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * /introduceの初期ページへ遷移します。
+     * /introduceの初期ページへ遷移します。<br>
      *
      * @return String
      * @author uratamanabu
@@ -122,7 +130,7 @@ public class WebPageController extends WebBaseController {
     }
 
     /**
-     * /linkListの初期ページへ遷移します。
+     * /linkListの初期ページへ遷移します。<br>
      *
      * @return String
      * @author uratamanabu

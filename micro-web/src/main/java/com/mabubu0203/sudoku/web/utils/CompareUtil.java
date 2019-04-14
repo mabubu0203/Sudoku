@@ -18,6 +18,8 @@ import java.util.Objects;
 import static lombok.AccessLevel.PRIVATE;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -27,6 +29,8 @@ import static lombok.AccessLevel.PRIVATE;
 public class CompareUtil {
 
     /**
+     * <br>
+     *
      * @param form
      * @param bean
      * @author uratamanabu
@@ -52,8 +56,8 @@ public class CompareUtil {
                 if (Objects.isNull(formGetter) || Objects.isNull(beanGetter)) {
                     throw new SudokuApplicationException();
                 }
-                Integer formValue = (int) formGetter.invoke(form, (Object[]) null);
-                Integer beanValue = (int) beanGetter.invoke(bean, (Object[]) null);
+                Integer formValue = (Integer) formGetter.invoke(form, (Object[]) null);
+                Integer beanValue = (Integer) beanGetter.invoke(bean, (Object[]) null);
                 if (Objects.isNull(formValue) || Objects.isNull(beanValue)) {
                     throw new SudokuApplicationException();
                 } else if (!Objects.equals(formValue, beanValue)) {
@@ -71,7 +75,6 @@ public class CompareUtil {
                 | IllegalAccessException
                 | IllegalArgumentException
                 | InvocationTargetException e) {
-            // TODO 自動生成された catch ブロック
             e.printStackTrace();
             throw new SudokuApplicationException();
         }

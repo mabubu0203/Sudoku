@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0

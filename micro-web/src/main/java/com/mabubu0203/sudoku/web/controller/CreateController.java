@@ -23,6 +23,8 @@ import org.springframework.web.client.RestOperations;
 import java.util.Optional;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -43,6 +45,8 @@ public class CreateController {
     }
 
     /**
+     * <br>
+     *
      * @param binder
      * @author uratamanabu
      * @since 1.0
@@ -57,7 +61,7 @@ public class CreateController {
     }
 
     /**
-     * /createAnswerの初期ページへ遷移します。
+     * /createAnswerの初期ページへ遷移します。<br>
      *
      * @param form
      * @param model
@@ -74,8 +78,8 @@ public class CreateController {
     }
 
     /**
-     * ANSWER_INFO_TBLとSCORE_INFO_TBLにレコードを追加し、作成完了ページへ遷移します。
-     * 一意制約等が発生しレコードが追加できなかった時は、エラーメッセージを作成完了ページへ表示します。
+     * ANSWER_INFO_TBLとSCORE_INFO_TBLにレコードを追加し、作成完了ページへ遷移します。<br>
+     * 一意制約等が発生しレコードが追加できなかった時は、エラーメッセージを作成完了ページへ表示します。<br>
      *
      * @param form
      * @param bindingResult
@@ -100,7 +104,6 @@ public class CreateController {
                 case OK:
                     return WebUrlConstants.Forward.COMPLETE_ANSWER.getPath();
                 case CONFLICT:
-                    return okCreateAnswer(form, model);
                 default:
                     return okCreateAnswer(form, model);
             }

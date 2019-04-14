@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -283,6 +285,9 @@ public class PlayForm extends BaseForm implements NumberPlaceDefine, Serializabl
     private int i9;
 
     /**
+     * <br>
+     *
+     * @param num
      * @author uratamanabu
      * @since 1.0
      */
@@ -294,8 +299,9 @@ public class PlayForm extends BaseForm implements NumberPlaceDefine, Serializabl
     }
 
     /**
+     * カウントを1加算する<br>
+     *
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     public void addCount() {

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -18,20 +20,11 @@ import java.io.IOException;
 @WebFilter("/*")
 public class MetaFilter implements Filter {
 
-    /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
-    /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
+    @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
@@ -40,11 +33,6 @@ public class MetaFilter implements Filter {
         chain.doFilter(req, res);
     }
 
-    /**
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
     @Override
     public void destroy() {
     }

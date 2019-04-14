@@ -25,6 +25,8 @@ import org.springframework.web.client.RestOperations;
 import java.util.Optional;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -45,6 +47,8 @@ public class PlayController {
     }
 
     /**
+     * <br>
+     *
      * @param binder
      * @author uratamanabu
      * @since 1.0
@@ -62,7 +66,7 @@ public class PlayController {
     }
 
     /**
-     * /createQuestionの初期ページへ遷移します。
+     * /createQuestionの初期ページへ遷移します。<br>
      *
      * @param form
      * @param model
@@ -79,7 +83,7 @@ public class PlayController {
     }
 
     /**
-     * /playNumberPlaceの初期ページへ遷移します。
+     * /playNumberPlaceの初期ページへ遷移します。<br>
      *
      * @param form
      * @param bindingResult
@@ -105,7 +109,7 @@ public class PlayController {
     }
 
     /**
-     * /isCheckの初期ページへ遷移します。
+     * /isCheckの初期ページへ遷移します。<br>
      *
      * @param form
      * @param bindingResult
@@ -140,7 +144,7 @@ public class PlayController {
     }
 
     /**
-     * /bestScoreの初期ページへ遷移します。
+     * /bestScoreの初期ページへ遷移します。<br>
      *
      * @param form
      * @param bindingResult

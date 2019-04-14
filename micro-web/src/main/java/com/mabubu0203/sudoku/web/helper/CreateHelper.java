@@ -19,6 +19,8 @@ import java.net.URI;
 import java.util.Objects;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -31,6 +33,8 @@ public class CreateHelper {
     private String sudokuUriApi;
 
     /**
+     * <br>
+     *
      * @param bean
      * @author uratamanabu
      * @since 1.0
@@ -45,6 +49,8 @@ public class CreateHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @return HttpStatus
@@ -69,9 +75,6 @@ public class CreateHelper {
                     model.addAttribute("keyHash", generateEntity.getBody());
                     break;
                 case CONFLICT:
-                    model.addAttribute("selectTypes", ESMapWrapUtils.getSelectTypes());
-                    model.addAttribute("message", "新規追加失敗です。");
-                    break;
                 default:
                     model.addAttribute("selectTypes", ESMapWrapUtils.getSelectTypes());
                     model.addAttribute("message", "新規追加失敗です。");
