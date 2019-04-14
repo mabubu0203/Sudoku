@@ -53,11 +53,9 @@ public class SudokuUtils {
         }
         switch (difficulty) {
             case EASY4:
-                return 2000;
             case EASY9:
                 return 2000;
             case NORMAL4:
-                return 5000;
             case NORMAL9:
                 return 5000;
             case HARD4:
