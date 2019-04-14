@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UpdateServiceImpl implements UpdateService {
 
-    /**
-     * ScoreInfoServiceを配備します。
-     */
     private final ScoreInfoService scoreInfoService;
 
+    /**
+     * コンストラクタ<br>
+     *
+     * @param scoreInfoService
+     * @author uratamanabu
+     * @since 1.0
+     */
     public UpdateServiceImpl(ScoreInfoService scoreInfoService) {
         this.scoreInfoService = scoreInfoService;
     }

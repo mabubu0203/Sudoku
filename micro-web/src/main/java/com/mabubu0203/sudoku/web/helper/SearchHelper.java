@@ -4,9 +4,7 @@ import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.PageImplBean;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
-import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
@@ -19,7 +17,6 @@ import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +33,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -48,6 +47,8 @@ public class SearchHelper {
     private String sudokuUriApi;
 
     /**
+     * <br>
+     *
      * @param bean
      * @author uratamanabu
      * @since 1.0
@@ -67,6 +68,8 @@ public class SearchHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @author uratamanabu
@@ -104,6 +107,8 @@ public class SearchHelper {
     }
 
     /**
+     * <br>
+     *
      * @param bean
      * @author uratamanabu
      * @since 1.0
@@ -120,6 +125,8 @@ public class SearchHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @author uratamanabu

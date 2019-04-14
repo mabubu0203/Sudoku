@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 /**
- * SCORE_INFO_TBLへのサービスクラスです。 このクラスを経由してCRUD操作を実行してください。
+ * SCORE_INFO_TBLへのサービスクラスです。<br>
+ * このクラスを経由してCRUD操作を実行してください。<br>
  *
  * @author uratamanabu
  * @version 1.0

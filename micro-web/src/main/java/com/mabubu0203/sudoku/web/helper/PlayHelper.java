@@ -35,6 +35,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -47,6 +49,8 @@ public class PlayHelper {
     private String sudokuUriApi;
 
     /**
+     * <br>
+     *
      * @param bean
      * @author uratamanabu
      * @since 1.0
@@ -63,6 +67,8 @@ public class PlayHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @author uratamanabu
@@ -101,6 +107,8 @@ public class PlayHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @return int
@@ -167,6 +175,8 @@ public class PlayHelper {
     }
 
     /**
+     * <br>
+     *
      * @param restOperations
      * @param bean
      * @author uratamanabu
@@ -201,12 +211,6 @@ public class PlayHelper {
         }
     }
 
-    /**
-     * @param restOperations
-     * @param form
-     * @author uratamanabu
-     * @since 1.0
-     */
     private Long updateScore(final RestOperations restOperations, ScoreForm form) {
 
         UpdateSudokuScoreRequestBean request =
@@ -214,8 +218,12 @@ public class PlayHelper {
         try {
             URI uri = new URI(sudokuUriApi + "/updateMaster/score/");
             RequestEntity requestEntity = RequestEntity.put(uri).body(request);
-            ResponseEntity<Long> generateEntity = restOperations.exchange(requestEntity, Long.class);
-            return generateEntity.getBody();
+            Optional<ResponseEntity<Long>> generateEntityOpt = Optional.ofNullable(restOperations.exchange(requestEntity, Long.class));
+            if (generateEntityOpt.isPresent()) {
+                return generateEntityOpt.get().getBody();
+            } else {
+                return null;
+            }
         } catch (RestClientException | URISyntaxException e) {
             e.printStackTrace();
             return null;

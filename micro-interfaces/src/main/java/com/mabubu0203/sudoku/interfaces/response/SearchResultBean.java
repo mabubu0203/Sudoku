@@ -5,8 +5,17 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * <br>
+ *
+ * @author uratamanabu
+ * @version 1.0
+ * @since 1.0
+ */
 @Data
 public class SearchResultBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private long no;
     private int type;

@@ -15,7 +15,7 @@ import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 public interface ScoreInfoService {
 
     /**
-     * SCORE_INFO_TBLへ空スコア情報をインサートします。
+     * SCORE_INFO_TBLへ空スコア情報をインサートします。<br>
      *
      * @param numberplaceBean 数独
      * @return ScoreInfoTbl
@@ -25,7 +25,7 @@ public interface ScoreInfoService {
     ScoreInfoTbl insert(NumberPlaceBean numberplaceBean);
 
     /**
-     * SCORE_INFO_TBLへTypeとKeyHashで検索を行います。
+     * SCORE_INFO_TBLへTypeとKeyHashで検索を行います。<br>
      *
      * @param type    タイプ
      * @param keyHash KeyHash
@@ -36,7 +36,7 @@ public interface ScoreInfoService {
     ScoreInfoTbl findByTypeAndKeyHash(int type, String keyHash);
 
     /**
-     * SCORE_INFO_TBLへスコア情報をアップデートします。
+     * SCORE_INFO_TBLへスコア情報をアップデートします。<br>
      *
      * @param numberplaceBean 数独
      * @return ScoreInfoTbl
@@ -46,7 +46,7 @@ public interface ScoreInfoService {
     ScoreInfoTbl update(NumberPlaceBean numberplaceBean);
 
     /**
-     * SCORE_INFO_TBLへスコア情報をアップデートします。
+     * SCORE_INFO_TBLへスコア情報をアップデートします。<br>
      *
      * @param scoreInfoTbl スコア情報
      * @return ScoreInfoTbl

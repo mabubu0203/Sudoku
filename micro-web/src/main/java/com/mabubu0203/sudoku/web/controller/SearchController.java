@@ -27,6 +27,8 @@ import org.springframework.web.client.RestOperations;
 import java.util.Optional;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -55,6 +57,8 @@ public class SearchController {
     }
 
     /**
+     * <br>
+     *
      * @param binder
      * @author uratamanabu
      * @since 1.0
@@ -143,7 +147,7 @@ public class SearchController {
     }
 
     /**
-     * {@code "/playNumberPlaceDetail"}の初期ページへ遷移します。
+     * {@code "/playNumberPlaceDetail"}の初期ページへ遷移します。<br>
      *
      * @param form
      * @param bindingResult

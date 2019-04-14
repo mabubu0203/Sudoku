@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0

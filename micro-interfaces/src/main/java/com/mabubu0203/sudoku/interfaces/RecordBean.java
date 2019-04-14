@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import java.time.LocalDate;
 
 /**
- * 数独の検索結果を保持するBeanです。
+ * 数独の検索結果を保持するBeanです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -23,4 +23,5 @@ public class RecordBean {
     private int score;
     private String memo;
     private LocalDate updateDate;
+
 }

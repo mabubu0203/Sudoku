@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -39,8 +41,10 @@ public class RestApiCreateController extends RestBaseController {
     }
 
     /**
-     * 数独をRDBに保存します。
+     * 数独をRDBに保存します。<br>
      *
+     * @param request
+     * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
@@ -53,8 +57,10 @@ public class RestApiCreateController extends RestBaseController {
     }
 
     /**
-     * タイプに従い数独を作成します。
+     * タイプに従い数独を作成します。<br>
      *
+     * @param type
+     * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */

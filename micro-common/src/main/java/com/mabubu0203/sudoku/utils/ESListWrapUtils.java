@@ -28,11 +28,11 @@ import static lombok.AccessLevel.PRIVATE;
 public class ESListWrapUtils {
 
     /**
-     * .
+     * <br>
      *
      * @param size
      * @param warmEaten
-     * @return
+     * @return MutableList
      */
     public static MutableList<String> createCells(int size, int warmEaten) {
         MutableList<String> result = Lists.mutable.empty();
@@ -48,10 +48,10 @@ public class ESListWrapUtils {
     }
 
     /**
-     * .
+     * <br>
      *
      * @param selectType
-     * @return
+     * @return MutableList
      */
     public static MutableList<MutableList<String>> createCells(int selectType) {
         MutableList<MutableList<String>> resultList = Lists.mutable.empty();
@@ -68,7 +68,7 @@ public class ESListWrapUtils {
     }
 
     /**
-     * .
+     * <br>
      *
      * @param size    リストのサイズ
      * @param count
@@ -97,8 +97,8 @@ public class ESListWrapUtils {
 
     /**
      * リストボックスに表示する数独の値を保持するListを返却します。<br>
-     * . @@param selectType
      *
+     * @param selectType
      * @return 連番のListを返却します
      */
     public static List<Integer> getSelectNum(int selectType) {

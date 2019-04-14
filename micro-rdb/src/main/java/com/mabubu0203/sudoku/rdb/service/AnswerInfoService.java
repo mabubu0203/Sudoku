@@ -1,6 +1,5 @@
 package com.mabubu0203.sudoku.rdb.service;
 
-import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
@@ -21,7 +20,7 @@ import java.util.List;
 public interface AnswerInfoService {
 
     /**
-     * ANSWER_INFO_TBLへ数独をインサートします。
+     * ANSWER_INFO_TBLへ数独をインサートします。<br>
      *
      * @param numberplaceBean 数独
      * @return AnswerInfoTbl
@@ -31,7 +30,7 @@ public interface AnswerInfoService {
     AnswerInfoTbl insert(NumberPlaceBean numberplaceBean);
 
     /**
-     * ANSWER_INFO_TBLへAnswerKeyで検索を行います。
+     * ANSWER_INFO_TBLへAnswerKeyで検索を行います。<br>
      *
      * @param numberplaceBean 数独
      * @return List
@@ -41,7 +40,7 @@ public interface AnswerInfoService {
     List<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean);
 
     /**
-     * ANSWER_INFO_TBLへanswerKeyで検索を行います。
+     * ANSWER_INFO_TBLへanswerKeyで検索を行います。<br>
      *
      * @param answerKey answerKey
      * @return List
@@ -51,7 +50,7 @@ public interface AnswerInfoService {
     List<AnswerInfoTbl> findByAnswerKey(String answerKey);
 
     /**
-     * ANSWER_INFO_TBLへTypeで検索を行います。
+     * ANSWER_INFO_TBLへTypeで検索を行います。<br>
      *
      * @param type タイプ
      * @return AnswerInfoTbl
@@ -61,7 +60,7 @@ public interface AnswerInfoService {
     AnswerInfoTbl findByType(int type);
 
     /**
-     * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。
+     * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。<br>
      *
      * @param type    タイプ
      * @param keyHash KeyHash
@@ -72,7 +71,7 @@ public interface AnswerInfoService {
     AnswerInfoTbl findByTypeAndKeyHash(int type, String keyHash);
 
     /**
-     * ANSWER_INFO_TBLとScore_INFO_TBLの結合テーブルへ検索画面から入力された条件で検索します。
+     * ANSWER_INFO_TBLとScore_INFO_TBLの結合テーブルへ検索画面から入力された条件で検索します。<br>
      *
      * @param condition 検索条件
      * @param pageable  ページ情報
@@ -87,9 +86,7 @@ public interface AnswerInfoService {
      *
      * @param answerInfoTbl
      * @return NumberPlaceBean
-     * @throws SudokuApplicationException
      */
-    NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl)
-            throws SudokuApplicationException;
+    NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl);
 
 }

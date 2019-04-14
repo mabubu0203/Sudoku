@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.enums;
 
 /**
- * テーブル名を列挙型で定義します。
+ * テーブル名を列挙型で定義します。<br>
  *
  * @author uratamanabu
  * @version 1.0

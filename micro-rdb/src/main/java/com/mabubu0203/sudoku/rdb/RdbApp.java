@@ -1,23 +1,21 @@
 package com.mabubu0203.sudoku.rdb;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
- * SpringBoot起動クラスです。
+ * SpringBoot起動クラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
  */
 @SpringBootApplication
-@EnableAutoConfiguration
 public class RdbApp extends SpringBootServletInitializer {
 
     /**
-     * SpringBoot起動methodです。
+     * SpringBoot起動methodです。<br>
      *
      * @param args 起動引数
      * @author uratamanabu

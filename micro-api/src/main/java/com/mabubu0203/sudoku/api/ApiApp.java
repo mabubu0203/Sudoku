@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * SpringBoot起動クラスです。
+ * SpringBoot起動クラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -25,7 +25,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class ApiApp extends SpringBootServletInitializer {
 
     /**
-     * SpringBoot起動methodです。
+     * SpringBoot起動methodです。<br>
      *
      * @param args 起動引数
      * @author uratamanabu

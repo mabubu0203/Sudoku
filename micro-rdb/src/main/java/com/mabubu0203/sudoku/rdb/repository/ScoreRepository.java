@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * SCORE_INFO_TBLへのRepositoryクラスです。 このクラスでCRUD操作を実装してください。
+ * SCORE_INFO_TBLへのRepositoryクラスです。<br>
+ * このクラスでCRUD操作を実装してください。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -16,11 +17,12 @@ import org.springframework.data.repository.query.Param;
 public interface ScoreRepository extends JpaRepository<ScoreInfoTbl, Long> {
 
     /**
-     * SCORE_INFO_TBLへTypeとKeyHashで検索を行います。
+     * SCORE_INFO_TBLへTypeとKeyHashで検索を行います。<br>
      *
+     * @param type
+     * @param keyHash
      * @return ScoreInfoTbl
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     @Query(
@@ -29,4 +31,5 @@ public interface ScoreRepository extends JpaRepository<ScoreInfoTbl, Long> {
             nativeQuery = true
     )
     ScoreInfoTbl findByTypeAndKeyHash(@Param("TYPE") int type, @Param("KEYHASH") String keyHash);
+
 }

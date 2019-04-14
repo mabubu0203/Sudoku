@@ -8,6 +8,8 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.http.ResponseEntity;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -40,6 +42,8 @@ public interface SearchService {
             final int pageSize);
 
     /**
+     * <br>
+     *
      * @param type
      * @return ResponseEntity
      * @author uratamanabu
@@ -48,6 +52,8 @@ public interface SearchService {
     ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type);
 
     /**
+     * <br>
+     *
      * @param type
      * @param keyHash
      * @return ResponseEntity
@@ -57,6 +63,8 @@ public interface SearchService {
     ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type, final String keyHash);
 
     /**
+     * <br>
+     *
      * @param type
      * @param keyHash
      * @param facade

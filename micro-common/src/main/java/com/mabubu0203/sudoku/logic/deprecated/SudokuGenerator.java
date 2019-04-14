@@ -90,7 +90,7 @@ public interface SudokuGenerator {
      * @param size
      * @return
      */
-    default boolean isCheck(int numberPlace[][], int x, int y, int column, int size) {
+    default boolean isCheck(int[][] numberPlace, int x, int y, int column, int size) {
         // y軸判定
         int[] copyY = new int[y];
         for (int k = 0; k < y; k++) {
@@ -126,7 +126,7 @@ public interface SudokuGenerator {
      * @param copyArray
      * @return
      */
-    default boolean isNotEqualNumber(int numberPlace[][], int y, int column, int[] copyArray) {
+    default boolean isNotEqualNumber(int[][] numberPlace, int y, int column, int[] copyArray) {
         if (Arrays.stream(copyArray).sorted().anyMatch(s -> s == column)) {
             Arrays.fill(numberPlace[y], 0);
             return false;

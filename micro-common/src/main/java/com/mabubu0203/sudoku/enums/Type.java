@@ -3,7 +3,7 @@ package com.mabubu0203.sudoku.enums;
 import lombok.Getter;
 
 /**
- * 数独のサイズを列挙型で定義します。
+ * 数独のサイズを列挙型で定義します。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -25,17 +25,19 @@ public enum Type {
 
     /**
      * コンストラクタ
+     *
+     * @param size
      */
-    Type(int size) {
+    Type(final int size) {
         this.size = size;
     }
 
     /**
      * 列挙型を返却します。
      *
+     * @param size
      * @return 数独のサイズ
      * @author uratamanabu
-     * @version 1.0
      * @since 1.0
      */
     public static Type getType(final int size) {

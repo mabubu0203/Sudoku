@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * <br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -92,6 +94,8 @@ public class RestApiSearchController extends RestBaseController {
     }
 
     /**
+     * <br>
+     *
      * @param type
      * @param keyHash
      * @return ResponseEntity
@@ -112,6 +116,8 @@ public class RestApiSearchController extends RestBaseController {
     }
 
     /**
+     * <br>
+     *
      * @param type
      * @param keyHash
      * @return ResponseEntity
