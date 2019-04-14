@@ -3,7 +3,7 @@ package com.mabubu0203.sudoku.enums;
 import lombok.Getter;
 
 /**
- * 数独の難易度を列挙型で定義します。
+ * 数独の難易度を列挙型で定義します。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -43,6 +43,8 @@ public enum Difficulty {
 
     /**
      * コンストラクタ
+     *
+     * @param value
      */
     Difficulty(final int value) {
         this.value = value;
@@ -51,9 +53,9 @@ public enum Difficulty {
     /**
      * 列挙型を返却します。
      *
-     * @author uratamanabu
-     * @version 1.0
+     * @param key
      * @return　難易度
+     * @author uratamanabu
      * @since 1.0
      */
     public static Difficulty getDifficulty(final String key) {

@@ -7,12 +7,14 @@ import org.springframework.validation.Validator;
 
 
 /**
- * フォームバリデーションクラスのベースクラスです。 このクラスを継承して実装してください。
+ * フォームバリデーションクラスのベースクラスです。<br>
+ * このクラスを継承して実装してください。<br>
  *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
  */
+@Deprecated
 public abstract class BaseFormValidator implements Validator {
 
     @Override

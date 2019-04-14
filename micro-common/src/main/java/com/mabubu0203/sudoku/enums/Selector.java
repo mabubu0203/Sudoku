@@ -3,7 +3,7 @@ package com.mabubu0203.sudoku.enums;
 import lombok.Getter;
 
 /**
- * セレクトボックスを列挙型で定義します。
+ * セレクトボックスを列挙型で定義します。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -26,6 +26,9 @@ public enum Selector {
 
     /**
      * コンストラクタ
+     *
+     * @param label
+     * @param value
      */
     Selector(final String label, final int value) {
         this.label = label;
@@ -33,11 +36,11 @@ public enum Selector {
     }
 
     /**
-     * 列挙型を返却します。
+     * 列挙型を返却します。<br>
      *
-     * @author uratamanabu
-     * @version 1.0
+     * @param value
      * @return　セレクトボックス
+     * @author uratamanabu
      * @since 1.0
      */
     public static Selector getSelector(final int value) {
