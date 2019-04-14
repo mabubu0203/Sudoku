@@ -5,10 +5,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Digits;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * 数独の検索条件を保持するBeanです。
+ * 数独の検索条件を保持するBeanです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -17,7 +18,9 @@ import java.time.LocalDate;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-public class SearchConditionBean extends RecordBean {
+public class SearchConditionBean extends RecordBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Digits(integer = 1, fraction = 0)
     private int selectorNo;
@@ -33,4 +36,5 @@ public class SearchConditionBean extends RecordBean {
 
     private LocalDate dateStart;
     private LocalDate dateEnd;
+
 }

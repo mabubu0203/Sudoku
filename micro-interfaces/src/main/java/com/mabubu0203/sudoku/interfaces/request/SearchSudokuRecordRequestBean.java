@@ -5,10 +5,20 @@ import lombok.Data;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * <br>
+ *
+ * @author uratamanabu
+ * @version 1.0
+ * @since 1.0
+ */
 @Data
-public class SearchSudokuRecordRequestBean {
+public class SearchSudokuRecordRequestBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @NotNull
     private int selectType;

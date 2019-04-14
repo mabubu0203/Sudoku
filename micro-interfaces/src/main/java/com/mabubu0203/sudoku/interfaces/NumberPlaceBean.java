@@ -3,16 +3,19 @@ package com.mabubu0203.sudoku.interfaces;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
- * 数独を保持するBeanです。
+ * 数独を保持するBeanです。<br>
  *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
  */
 @Data
-public class NumberPlaceBean implements NumberPlaceDefine {
+public class NumberPlaceBean implements NumberPlaceDefine, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private long no;
     private int type;
@@ -110,4 +113,5 @@ public class NumberPlaceBean implements NumberPlaceDefine {
     private int i7;
     private int i8;
     private int i9;
+
 }

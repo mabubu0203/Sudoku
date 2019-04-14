@@ -7,6 +7,7 @@ import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 
+
 @Data
 @Deprecated
 public class SearchSudokuRecordResponseBean {

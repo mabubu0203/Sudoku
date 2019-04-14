@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.interfaces;
 
 /**
- * 数独の情報を定義する。
+ * 数独の情報を定義する。<br>
  *
  * @author uratamanabu
  * @version 1.0
