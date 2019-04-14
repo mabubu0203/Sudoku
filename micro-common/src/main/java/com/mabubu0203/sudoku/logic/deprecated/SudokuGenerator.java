@@ -1,6 +1,7 @@
 package com.mabubu0203.sudoku.logic.deprecated;
 
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
+import com.mabubu0203.sudoku.utils.SudokuUtils;
 import org.eclipse.collections.api.iterator.IntIterator;
 import org.eclipse.collections.api.list.primitive.ImmutableIntList;
 
@@ -99,9 +100,8 @@ public interface SudokuGenerator {
             return false;
         }
         // 正方形の縦・横のサイズを平方根より求めます。
-        // TODO:移植中
-        int squareRoot = 0;
-//    int squareRoot = SudokuUtils.convertSquareRoot(size);
+        int squareRoot = SudokuUtils.convertSquareRoot(size);
+
         // 区画判定
         if (y % squareRoot == 0) {
             return true;
