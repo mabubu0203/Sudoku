@@ -15,21 +15,12 @@ import org.springframework.validation.Validator;
  */
 public abstract class BaseFormValidator implements Validator {
 
-  /**
-   * @author uratamanabu
-   * @version 1.0
-   * @since 1.0
-   */
-  @Override
-  public boolean supports(Class<?> paramClass) {
-    return BaseForm.class.isAssignableFrom(paramClass);
-  }
+    @Override
+    public boolean supports(Class<?> paramClass) {
+        return BaseForm.class.isAssignableFrom(paramClass);
+    }
 
-  /**
-   * @author uratamanabu
-   * @version 1.0
-   * @since 1.0
-   */
-  @Override
-  public void validate(Object paramObject, Errors errors) {}
+    @Override
+    public void validate(Object paramObject, Errors errors) {
+    }
 }

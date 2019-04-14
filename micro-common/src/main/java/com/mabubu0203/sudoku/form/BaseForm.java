@@ -12,4 +12,5 @@ import lombok.ToString;
  * @since 1.0
  */
 @ToString
-public abstract class BaseForm {}
+public abstract class BaseForm {
+}

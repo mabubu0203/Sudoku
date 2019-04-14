@@ -7,4 +7,5 @@ package com.mabubu0203.sudoku.service;
  * @version 1.0
  * @since 1.0
  */
-public class ServiceBase {}
+public class ServiceBase {
+}
