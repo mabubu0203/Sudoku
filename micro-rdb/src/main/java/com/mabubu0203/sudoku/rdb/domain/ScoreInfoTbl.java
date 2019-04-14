@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * SCORE_INFO_TBLのEntityクラスです。
+ * SCORE_INFO_TBLのEntityクラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -30,9 +30,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "SCORE_INFO_TBL", catalog = "SUDOKU")
 public class ScoreInfoTbl implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -5665962434247119049L;
 
     @Id

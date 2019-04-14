@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * ANSWER_INFO_TBLのEntityクラスです。
+ * ANSWER_INFO_TBLのEntityクラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -26,9 +26,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 )
 public class AnswerInfoTbl implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -5665962434247119049L;
 
     @Id
