@@ -4,7 +4,7 @@ import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
-import ma.glasnost.orika.MapperFacade;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -67,11 +67,11 @@ public interface SearchService {
      *
      * @param type
      * @param keyHash
-     * @param facade
+     * @param modelMapper
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    ResponseEntity<ScoreResponseBean> getScore(final int type, final String keyHash, final MapperFacade facade);
+    ResponseEntity<ScoreResponseBean> getScore(final int type, final String keyHash, final ModelMapper modelMapper);
 
 }

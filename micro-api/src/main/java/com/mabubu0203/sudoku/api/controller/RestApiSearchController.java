@@ -14,7 +14,7 @@ import com.mabubu0203.sudoku.validator.constraint.AnswerKey;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -43,19 +43,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApiSearchController extends RestBaseController {
 
     private final SearchService service;
-    private final MapperFacade facade;
+    private final ModelMapper modelMapper;
 
     /**
      * コンストラクタ<br>
      *
      * @param service
-     * @param facade
+     * @param modelMapper
      * @author uratamanabu
      * @since 1.0
      */
-    public RestApiSearchController(final SearchService service, final MapperFacade facade) {
+    public RestApiSearchController(final SearchService service, final ModelMapper modelMapper) {
         this.service = service;
-        this.facade = facade;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -71,7 +71,7 @@ public class RestApiSearchController extends RestBaseController {
             @RequestBody @Validated final SearchSudokuRecordRequestBean request) {
 
         log.info("search");
-        SearchConditionBean conditionBean = facade.map(request, SearchConditionBean.class);
+        SearchConditionBean conditionBean = modelMapper.map(request, SearchConditionBean.class);
         conditionBean.setType(request.getSelectType());
         return service.search(conditionBean, request.getPageNumber(), request.getPageSize());
     }
@@ -130,7 +130,7 @@ public class RestApiSearchController extends RestBaseController {
             @RequestParam(name = "keyHash") @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
 
         log.info("getScore");
-        return service.getScore(type.intValue(), keyHash, facade);
+        return service.getScore(type.intValue(), keyHash, modelMapper);
     }
 
 }

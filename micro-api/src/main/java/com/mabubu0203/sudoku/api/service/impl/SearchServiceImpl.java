@@ -12,12 +12,8 @@ import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
 import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -105,10 +101,10 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public ResponseEntity<ScoreResponseBean> getScore(
-            final int type, final String keyHash, final MapperFacade facade) {
+            final int type, final String keyHash, final ModelMapper modelMapper) {
 
         ScoreInfoTbl scoreInfoTbl = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
-        ScoreResponseBean response = facade.map(scoreInfoTbl, ScoreResponseBean.class);
+        ScoreResponseBean response = modelMapper.map(scoreInfoTbl, ScoreResponseBean.class);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

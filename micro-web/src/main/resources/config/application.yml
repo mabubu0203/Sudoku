@@ -10,7 +10,7 @@ banner:
 # ----------------------------------------
 logging:
   config: classpath:logback-spring.xml
-  file: micro-api.log
+  file: micro-web.log
   level:
     org:
       hibernate:
