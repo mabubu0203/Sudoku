@@ -7,7 +7,7 @@ import com.mabubu0203.sudoku.controller.RestBaseController;
 import com.mabubu0203.sudoku.interfaces.request.UpdateSudokuScoreRequestBean;
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,19 +31,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApiUpdateController extends RestBaseController {
 
     private final UpdateService service;
-    private final MapperFacade orikaMapperFacade;
+    private final ModelMapper modelMapper;
 
     /**
      * コンストラクタ<br>
      *
      * @param service
-     * @param orikaMapperFacade
+     * @param modelMapper
      * @author uratamanabu
      * @since 1.0
      */
-    public RestApiUpdateController(UpdateService service, MapperFacade orikaMapperFacade) {
+    public RestApiUpdateController(UpdateService service, ModelMapper modelMapper) {
         this.service = service;
-        this.orikaMapperFacade = orikaMapperFacade;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -59,7 +59,7 @@ public class RestApiUpdateController extends RestBaseController {
             @RequestBody @Validated final UpdateSudokuScoreRequestBean request) {
 
         log.info("updateScore");
-        ScoreInfoTbl updateScoreBean = orikaMapperFacade.map(request, ScoreInfoTbl.class);
+        ScoreInfoTbl updateScoreBean = modelMapper.map(request, ScoreInfoTbl.class);
         return service.updateScore(updateScoreBean, request.getType(), request.getKeyHash());
     }
 
