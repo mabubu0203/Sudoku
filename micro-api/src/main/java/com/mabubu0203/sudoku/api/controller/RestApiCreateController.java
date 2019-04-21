@@ -9,6 +9,7 @@ import com.mabubu0203.sudoku.controller.RestBaseController;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.request.ResisterSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.validator.constraint.Type;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH},
@@ -35,10 +37,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApiCreateController extends RestBaseController {
 
     private final CreateService service;
-
-    public RestApiCreateController(CreateService service) {
-        this.service = service;
-    }
 
     /**
      * 数独をRDBに保存します。<br>

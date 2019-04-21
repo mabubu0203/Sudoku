@@ -11,6 +11,7 @@ import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
@@ -28,27 +29,12 @@ import java.util.Objects;
  * @since 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @Service
 public class SearchServiceImpl implements SearchService {
 
     private final AnswerInfoService answerInfoService;
     private final ScoreInfoService scoreInfoService;
-
-    /**
-     * コンストラクタ<br>
-     *
-     * @param answerInfoService
-     * @param scoreInfoService
-     * @author uratamanabu
-     * @since 1.0
-     */
-    public SearchServiceImpl(
-            final AnswerInfoService answerInfoService,
-            final ScoreInfoService scoreInfoService) {
-
-        this.answerInfoService = answerInfoService;
-        this.scoreInfoService = scoreInfoService;
-    }
 
     @Override
     public ResponseEntity<Boolean> isExist(final String answerKey) {

@@ -13,6 +13,7 @@ import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.validator.constraint.AnswerKey;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH},
@@ -44,19 +46,6 @@ public class RestApiSearchController extends RestBaseController {
 
     private final SearchService service;
     private final ModelMapper modelMapper;
-
-    /**
-     * コンストラクタ<br>
-     *
-     * @param service
-     * @param modelMapper
-     * @author uratamanabu
-     * @since 1.0
-     */
-    public RestApiSearchController(final SearchService service, final ModelMapper modelMapper) {
-        this.service = service;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * 数独の検索を実施します。<br>
