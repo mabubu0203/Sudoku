@@ -6,6 +6,7 @@ import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.controller.RestBaseController;
 import com.mabubu0203.sudoku.interfaces.request.UpdateSudokuScoreRequestBean;
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_UPDATE_MASTER + CommonConstants.SLASH},
@@ -32,19 +34,6 @@ public class RestApiUpdateController extends RestBaseController {
 
     private final UpdateService service;
     private final ModelMapper modelMapper;
-
-    /**
-     * コンストラクタ<br>
-     *
-     * @param service
-     * @param modelMapper
-     * @author uratamanabu
-     * @since 1.0
-     */
-    public RestApiUpdateController(UpdateService service, ModelMapper modelMapper) {
-        this.service = service;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * スコアをRDBに保存します。<br>

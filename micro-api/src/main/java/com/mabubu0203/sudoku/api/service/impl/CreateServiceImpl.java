@@ -7,6 +7,7 @@ import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,24 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Slf4j
+@AllArgsConstructor
 @Service
 public class CreateServiceImpl implements CreateService {
 
     private final AnswerInfoService answerInfoService;
     private final ScoreInfoService scoreInfoService;
-
-    /**
-     * コンストラクタ<br>
-     *
-     * @param answerInfoService
-     * @param scoreInfoService
-     * @author uratamanabu
-     * @since 1.0
-     */
-    public CreateServiceImpl(AnswerInfoService answerInfoService, ScoreInfoService scoreInfoService) {
-        this.answerInfoService = answerInfoService;
-        this.scoreInfoService = scoreInfoService;
-    }
 
     @Override
     public ResponseEntity<NumberPlaceBean> generate(final int type)
