@@ -11,6 +11,7 @@ import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;
 import com.mabubu0203.sudoku.rdb.specification.ScoreInfoSpecifications;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.SudokuUtils;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,7 @@ import java.util.ListIterator;
  * @since 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @Service
 public class AnswerInfoServiceImpl implements AnswerInfoService {
 
@@ -39,11 +41,6 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
 
     private final AnswerInfoRepository answerInfoRepository;
     private final ModelMapper modelMapper;
-
-    public AnswerInfoServiceImpl(AnswerInfoRepository answerInfoRepository, ModelMapper modelMapper) {
-        this.answerInfoRepository = answerInfoRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public AnswerInfoTbl insert(NumberPlaceBean numberplaceBean) {
