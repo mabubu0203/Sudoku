@@ -21,14 +21,14 @@ public class SearchSudokuRecordRequestBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    private int selectType;
+    private Integer selectType;
 
     @Digits(integer = 10, fraction = 0, message = "数値10桁を入力しましょう。")
-    private long no;
+    private Long no;
 
     private String keyHash;
 
-    private int score;
+    private Integer score;
 
     private String name;
 
@@ -36,22 +36,22 @@ public class SearchSudokuRecordRequestBean implements Serializable {
     private LocalDate dateEnd;
 
     @NotNull
-    private int selectorNo;
+    private Integer selectorNo;
 
     @NotNull
-    private int selectorKeyHash;
+    private Integer selectorKeyHash;
 
     @NotNull
-    private int selectorScore;
+    private Integer selectorScore;
     @NotNull
-    private int selectorName;
-
-    @NotNull
-    @Digits(integer = 7, fraction = 0)
-    private int pageNumber;
+    private Integer selectorName;
 
     @NotNull
     @Digits(integer = 7, fraction = 0)
-    private int pageSize;
+    private Integer pageNumber;
+
+    @NotNull
+    @Digits(integer = 7, fraction = 0)
+    private Integer pageSize;
 
 }

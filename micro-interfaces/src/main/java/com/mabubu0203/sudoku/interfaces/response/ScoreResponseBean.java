@@ -16,7 +16,7 @@ public class ScoreResponseBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int score;
+    private Integer score;
     private String name;
     private String memo;
 
