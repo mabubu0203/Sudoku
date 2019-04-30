@@ -37,7 +37,7 @@ public class AnswerInfoTbl implements Serializable {
             nullable = false,
             columnDefinition = "BIGINT"
     )
-    private long no;
+    private Long no;
 
     @Column(
             name = "TYPE",
@@ -45,7 +45,7 @@ public class AnswerInfoTbl implements Serializable {
             nullable = false,
             columnDefinition = "TINYINT"
     )
-    private int type;
+    private Integer type;
 
     @Column(
             name = "ANSWERKEY",

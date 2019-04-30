@@ -41,7 +41,7 @@ public class ScoreInfoTbl implements Serializable {
             nullable = false,
             columnDefinition = "BIGINT"
     )
-    private long no;
+    private Long no;
 
     @Column(
             name = "SCORE",
@@ -49,7 +49,7 @@ public class ScoreInfoTbl implements Serializable {
             nullable = false,
             columnDefinition = "MEDIUMINT"
     )
-    private int score;
+    private Integer score;
 
     @Column(
             name = "NAME",

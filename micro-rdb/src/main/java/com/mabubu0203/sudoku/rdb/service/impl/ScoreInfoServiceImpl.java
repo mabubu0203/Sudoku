@@ -39,7 +39,7 @@ public class ScoreInfoServiceImpl implements ScoreInfoService {
     }
 
     @Override
-    public ScoreInfoTbl findByTypeAndKeyHash(int type, String keyHash) {
+    public ScoreInfoTbl findByTypeAndKeyHash(Integer type, String keyHash) {
         return scoreRepository.findByTypeAndKeyHash(type, keyHash);
     }
 

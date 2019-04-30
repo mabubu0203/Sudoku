@@ -60,12 +60,12 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public AnswerInfoTbl findByType(int type) {
+    public AnswerInfoTbl findByType(Integer type) {
         return answerInfoRepository.findByType(type);
     }
 
     @Override
-    public AnswerInfoTbl findByTypeAndKeyHash(int type, String keyHash) {
+    public AnswerInfoTbl findByTypeAndKeyHash(Integer type, String keyHash) {
         return answerInfoRepository.findByTypeAndKeyHash(type, keyHash);
     }
 
