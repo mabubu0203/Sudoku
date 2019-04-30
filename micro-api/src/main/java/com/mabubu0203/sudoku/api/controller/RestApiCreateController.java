@@ -68,7 +68,7 @@ public class RestApiCreateController extends RestBaseController {
             }
     )
     public ResponseEntity<NumberPlaceBean> generateSudoku(
-            @PathVariable(name = "type") @Type final int type) {
+            @PathVariable(name = "type") @Type final Integer type) {
 
         log.info("generateSudoku");
         return service.generate(type);

@@ -53,7 +53,7 @@ public class RestApiMasterController extends RestBaseController {
      */
     @GetMapping(value = {PathParameterConstants.PATH_TYPE})
     public ResponseEntity<String> createFromWeb(
-            @PathVariable(name = "type") @Type final int type,
+            @PathVariable(name = "type") @Type final Integer type,
             final UriComponentsBuilder uriComponentsBuilder) {
 
         log.info("Creating From Web");

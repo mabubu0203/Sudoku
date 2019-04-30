@@ -17,7 +17,7 @@ public class UpdateSudokuScoreRequestBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int score;
+    private Integer score;
 
     private String name;
 
@@ -26,6 +26,6 @@ public class UpdateSudokuScoreRequestBean implements Serializable {
     private String keyHash;
 
     @NotNull
-    private int type;
+    private Integer type;
 
 }

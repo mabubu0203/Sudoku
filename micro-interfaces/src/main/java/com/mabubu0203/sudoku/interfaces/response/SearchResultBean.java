@@ -17,12 +17,12 @@ public class SearchResultBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private long no;
-    private int type;
+    private Long no;
+    private Integer type;
     private String answerKey;
     private String keyHash;
     private String name;
-    private int score;
+    private Integer score;
     private String memo;
     private LocalDateTime createDate;
 

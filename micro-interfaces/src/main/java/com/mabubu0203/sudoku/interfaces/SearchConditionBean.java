@@ -23,16 +23,16 @@ public class SearchConditionBean extends RecordBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Digits(integer = 1, fraction = 0)
-    private int selectorNo;
+    private Integer selectorNo;
 
     @Digits(integer = 1, fraction = 0)
-    private int selectorScore;
+    private Integer selectorScore;
 
     @Digits(integer = 1, fraction = 0)
-    private int selectorKeyHash;
+    private Integer selectorKeyHash;
 
     @Digits(integer = 1, fraction = 0)
-    private int selectorName;
+    private Integer selectorName;
 
     private LocalDate dateStart;
     private LocalDate dateEnd;
