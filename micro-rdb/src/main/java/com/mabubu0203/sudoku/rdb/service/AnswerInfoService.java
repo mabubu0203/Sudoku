@@ -57,7 +57,7 @@ public interface AnswerInfoService {
      * @author uratamanabu
      * @since 1.0
      */
-    AnswerInfoTbl findByType(int type);
+    AnswerInfoTbl findByType(Integer type);
 
     /**
      * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。<br>
@@ -68,7 +68,7 @@ public interface AnswerInfoService {
      * @author uratamanabu
      * @since 1.0
      */
-    AnswerInfoTbl findByTypeAndKeyHash(int type, String keyHash);
+    AnswerInfoTbl findByTypeAndKeyHash(Integer type, String keyHash);
 
     /**
      * ANSWER_INFO_TBLとScore_INFO_TBLの結合テーブルへ検索画面から入力された条件で検索します。<br>

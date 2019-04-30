@@ -1,5 +1,6 @@
 package com.mabubu0203.sudoku.rdb.specification;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Selector;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.JoinType;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -37,9 +39,8 @@ public class ScoreInfoSpecifications {
      * @author uratamanabu
      * @since 1.0
      */
-    @SuppressWarnings("unchecked")
-    public static Specification<AnswerInfoTbl> scoreContains(int score, int selectorScore) {
-        if (score == 0) {
+    public static Specification<AnswerInfoTbl> scoreContains(Integer score, Integer selectorScore) {
+        if (CommonConstants.INTEGER_ZERO.equals(score)) {
             return null;
         } else {
             Selector selector = Selector.getSelector(selectorScore);
@@ -68,17 +69,17 @@ public class ScoreInfoSpecifications {
      * <br>
      *
      * @param name
-     * @param selectorName
+     * @param selectorNo
      * @return Specification
      * @author uratamanabu
      * @since 1.0
      */
-    public static Specification<AnswerInfoTbl> nameContains(String name, int selectorName) {
-        if (name == null) {
+    public static Specification<AnswerInfoTbl> nameContains(String name, Integer selectorNo) {
+        if (Objects.isNull(name)) {
             return null;
         }
         final String field = name;
-        Selector selector = Selector.getSelector(selectorName);
+        Selector selector = Selector.getSelector(selectorNo);
         if (selector == null) {
             return (root, query, builder) ->
                     builder.equal(root.join(SCOREINFOTBL, JoinType.INNER).get(NAME), field);

@@ -1,10 +1,13 @@
 package com.mabubu0203.sudoku.rdb.specification;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Selector;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.Objects;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -31,7 +34,7 @@ public class AnswerInfoSpecifications {
      * @author uratamanabu
      * @since 1.0
      */
-    public static Specification<AnswerInfoTbl> typeContains(int selectType) {
+    public static Specification<AnswerInfoTbl> typeContains(Integer selectType) {
         return (root, query, builder) -> builder.equal(root.get(TYPE), selectType);
     }
 
@@ -44,8 +47,8 @@ public class AnswerInfoSpecifications {
      * @author uratamanabu
      * @since 1.0
      */
-    public static Specification<AnswerInfoTbl> noContains(long no, int selectorNo) {
-        if (no == 0) {
+    public static Specification<AnswerInfoTbl> noContains(Long no, Integer selectorNo) {
+        if (CommonConstants.LONG_ZERO.equals(no)) {
             return null;
         } else {
             Selector selector = Selector.getSelector(selectorNo);
@@ -79,7 +82,7 @@ public class AnswerInfoSpecifications {
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> keyHashContains(String keyHash, int selectorKeyHash) {
-        if (keyHash == null) {
+        if (Objects.isNull(keyHash)) {
             return null;
         } else {
             Selector selector = Selector.getSelector(selectorKeyHash);

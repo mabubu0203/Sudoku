@@ -39,7 +39,7 @@ public interface AnswerInfoRepository
      * @author uratamanabu
      * @since 1.0
      */
-    AnswerInfoTbl findByTypeAndKeyHash(int type, String keyHash);
+    AnswerInfoTbl findByTypeAndKeyHash(Integer type, String keyHash);
 
     /**
      * ANSWER_INFO_TBLへTypeで検索を行います。<br>
@@ -53,6 +53,6 @@ public interface AnswerInfoRepository
             nativeQuery = true,
             value = "SELECT * FROM ANSWER_INFO_TBL WHERE TYPE = :TYPE ORDER BY NO DESC LIMIT 1"
     )
-    AnswerInfoTbl findByType(@Param("TYPE") int type);
+    AnswerInfoTbl findByType(@Param("TYPE") Integer type);
 
 }

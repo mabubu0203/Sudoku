@@ -33,7 +33,7 @@ public interface ScoreInfoService {
      * @author uratamanabu
      * @since 1.0
      */
-    ScoreInfoTbl findByTypeAndKeyHash(int type, String keyHash);
+    ScoreInfoTbl findByTypeAndKeyHash(Integer type, String keyHash);
 
     /**
      * SCORE_INFO_TBLへスコア情報をアップデートします。<br>
