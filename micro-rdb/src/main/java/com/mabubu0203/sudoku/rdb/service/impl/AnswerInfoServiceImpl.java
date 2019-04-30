@@ -21,8 +21,8 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -38,8 +38,6 @@ import java.util.stream.Stream;
 @Service
 public class AnswerInfoServiceImpl implements AnswerInfoService {
 
-    private static final String NO = "no";
-
     private final AnswerInfoRepository answerInfoRepository;
     private final ModelMapper modelMapper;
 
@@ -51,22 +49,17 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public Stream<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean) {
-        return answerInfoRepository.findByAnswerKey(numberplaceBean.getAnswerKey());
-    }
-
-    @Override
-    public Stream<AnswerInfoTbl> findByAnswerKey(String answerKey) {
+    public Stream<AnswerInfoTbl> searchByAnswerKey(String answerKey) {
         return answerInfoRepository.findByAnswerKey(answerKey);
     }
 
     @Override
-    public AnswerInfoTbl findByType(Integer type) {
-        return answerInfoRepository.findByType(type);
+    public Optional<AnswerInfoTbl> findFirstByType(Integer type) {
+        return answerInfoRepository.findFirstByType(type);
     }
 
     @Override
-    public AnswerInfoTbl findByTypeAndKeyHash(Integer type, String keyHash) {
+    public Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash) {
         return answerInfoRepository.findByTypeAndKeyHash(type, keyHash);
     }
 

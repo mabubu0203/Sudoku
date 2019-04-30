@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * SCORE_INFO_TBLへのサービスクラスです。<br>
@@ -39,7 +40,7 @@ public class ScoreInfoServiceImpl implements ScoreInfoService {
     }
 
     @Override
-    public ScoreInfoTbl findByTypeAndKeyHash(Integer type, String keyHash) {
+    public Optional<ScoreInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash) {
         return scoreRepository.findByTypeAndKeyHash(type, keyHash);
     }
 

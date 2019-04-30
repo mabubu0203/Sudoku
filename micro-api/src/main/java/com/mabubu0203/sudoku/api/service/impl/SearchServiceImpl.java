@@ -18,10 +18,12 @@ import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -37,10 +39,11 @@ public class SearchServiceImpl implements SearchService {
     private final AnswerInfoService answerInfoService;
     private final ScoreInfoService scoreInfoService;
 
+    @Transactional(readOnly = true)
     @Override
     public ResponseEntity<Boolean> isExist(final String answerKey) {
 
-        try (Stream<AnswerInfoTbl> stream = answerInfoService.findByAnswerKey(answerKey);) {
+        try (Stream<AnswerInfoTbl> stream = answerInfoService.searchByAnswerKey(answerKey)) {
             if (stream.count() == 0) {
                 return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
             } else {
@@ -73,27 +76,39 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type) {
 
-        AnswerInfoTbl answerInfoTbl = answerInfoService.findByType(type);
-        NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTbl);
-        return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
+        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findFirstByType(type);
+        if (answerInfoTblOpt.isPresent()) {
+            NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
+            return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
             final int type, final String keyHash) {
 
-        AnswerInfoTbl answerInfoTbl = answerInfoService.findByTypeAndKeyHash(type, keyHash);
-        NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTbl);
-        return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
+        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findByTypeAndKeyHash(type, keyHash);
+        if (answerInfoTblOpt.isPresent()) {
+            NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
+            return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
     public ResponseEntity<ScoreResponseBean> getScore(
             final int type, final String keyHash, final ModelMapper modelMapper) {
 
-        ScoreInfoTbl scoreInfoTbl = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
-        ScoreResponseBean response = modelMapper.map(scoreInfoTbl, ScoreResponseBean.class);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
+        if (scoreInfoTblOpt.isPresent()) {
+            ScoreResponseBean response = modelMapper.map(scoreInfoTblOpt.get(), ScoreResponseBean.class);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     private Page<SearchResultBean> convertJacksonFile(final Page<AnswerInfoTbl> page) {

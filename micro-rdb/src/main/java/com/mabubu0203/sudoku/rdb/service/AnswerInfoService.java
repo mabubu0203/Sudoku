@@ -6,7 +6,7 @@ import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -31,45 +31,38 @@ public interface AnswerInfoService {
     AnswerInfoTbl insert(NumberPlaceBean numberplaceBean);
 
     /**
-     * ANSWER_INFO_TBLへAnswerKeyで検索を行います。<br>
-     *
-     * @param numberplaceBean 数独
-     * @return List
-     * @author uratamanabu
-     * @since 1.0
-     */
-    Stream<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean);
-
-    /**
      * ANSWER_INFO_TBLへanswerKeyで検索を行います。<br>
+     * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param answerKey answerKey
-     * @return List
+     * @return N件
      * @author uratamanabu
      * @since 1.0
      */
-    Stream<AnswerInfoTbl> findByAnswerKey(String answerKey);
+    Stream<AnswerInfoTbl> searchByAnswerKey(String answerKey);
 
     /**
      * ANSWER_INFO_TBLへTypeで検索を行います。<br>
+     * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type タイプ
-     * @return AnswerInfoTbl
+     * @return 0/1件
      * @author uratamanabu
      * @since 1.0
      */
-    AnswerInfoTbl findByType(Integer type);
+    Optional<AnswerInfoTbl> findFirstByType(Integer type);
 
     /**
      * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。<br>
+     * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type    タイプ
      * @param keyHash KeyHash
-     * @return AnswerInfoTbl
+     * @return 0/1件
      * @author uratamanabu
      * @since 1.0
      */
-    AnswerInfoTbl findByTypeAndKeyHash(Integer type, String keyHash);
+    Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
 
     /**
      * ANSWER_INFO_TBLとScore_INFO_TBLの結合テーブルへ検索画面から入力された条件で検索します。<br>

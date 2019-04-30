@@ -3,6 +3,8 @@ package com.mabubu0203.sudoku.rdb.service;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 
+import java.util.Optional;
+
 /**
  * SCORE_INFO_TBLへのinterfaceです。<br>
  * このinterfaceを経由してCRUD操作を実行してください。<br>
@@ -26,14 +28,15 @@ public interface ScoreInfoService {
 
     /**
      * SCORE_INFO_TBLへTypeとKeyHashで検索を行います。<br>
+     * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type    タイプ
      * @param keyHash KeyHash
-     * @return ScoreInfoTbl
+     * @return 0/1件
      * @author uratamanabu
      * @since 1.0
      */
-    ScoreInfoTbl findByTypeAndKeyHash(Integer type, String keyHash);
+    Optional<ScoreInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
 
     /**
      * SCORE_INFO_TBLへスコア情報をアップデートします。<br>

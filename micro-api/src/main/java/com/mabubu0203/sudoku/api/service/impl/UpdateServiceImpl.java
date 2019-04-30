@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Slf4j
 @AllArgsConstructor
 @Service
@@ -22,14 +24,19 @@ public class UpdateServiceImpl implements UpdateService {
     public ResponseEntity<Long> updateScore(
             final ScoreInfoTbl updateScoreBean, final int type, final String keyHash) {
 
-        ScoreInfoTbl scoreInfoTbl = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
-        scoreInfoTbl.setName(updateScoreBean.getName());
-        scoreInfoTbl.setMemo(updateScoreBean.getMemo());
-        scoreInfoTbl.setScore(updateScoreBean.getScore());
-        try {
-            scoreInfoTbl = scoreInfoService.update(scoreInfoTbl);
-            return new ResponseEntity<>(scoreInfoTbl.getNo(), HttpStatus.OK);
-        } catch (Exception e) {
+        Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
+        if (scoreInfoTblOpt.isPresent()) {
+            ScoreInfoTbl scoreInfoTbl = scoreInfoTblOpt.get();
+            scoreInfoTbl.setName(updateScoreBean.getName());
+            scoreInfoTbl.setMemo(updateScoreBean.getMemo());
+            scoreInfoTbl.setScore(updateScoreBean.getScore());
+            try {
+                scoreInfoTbl = scoreInfoService.update(scoreInfoTbl);
+                return new ResponseEntity<>(scoreInfoTbl.getNo(), HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
+            }
+        } else {
             return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
         }
     }

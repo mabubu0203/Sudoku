@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -23,9 +23,10 @@ public interface AnswerInfoRepository
 
     /**
      * ANSWER_INFO_TBLへAnswerKeyで検索を行います。<br>
+     * 返却はN件を表すStreamで返却します。<br>
      *
      * @param answerKey
-     * @return List
+     * @return N件
      * @author uratamanabu
      * @since 1.0
      */
@@ -33,20 +34,22 @@ public interface AnswerInfoRepository
 
     /**
      * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。<br>
+     * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type
      * @param keyHash
-     * @return AnswerInfoTbl
+     * @return 0/1件
      * @author uratamanabu
      * @since 1.0
      */
-    AnswerInfoTbl findByTypeAndKeyHash(Integer type, String keyHash);
+    Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
 
     /**
      * ANSWER_INFO_TBLへTypeで検索を行います。<br>
+     * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type
-     * @return AnswerInfoTbl
+     * @return 0/1件
      * @author uratamanabu
      * @since 1.0
      */
@@ -54,6 +57,6 @@ public interface AnswerInfoRepository
             nativeQuery = true,
             value = "SELECT * FROM ANSWER_INFO_TBL WHERE TYPE = :TYPE ORDER BY NO DESC LIMIT 1"
     )
-    AnswerInfoTbl findByType(@Param("TYPE") Integer type);
+    Optional<AnswerInfoTbl> findFirstByType(@Param("TYPE") Integer type);
 
 }
