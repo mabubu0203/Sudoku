@@ -1,5 +1,6 @@
 package com.mabubu0203.sudoku.rdb.service.impl;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Type;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
@@ -17,11 +18,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -64,38 +65,8 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public Page<AnswerInfoTbl> findRecords(SearchConditionBean condition, Pageable pageable) {
-
-        Specification<AnswerInfoTbl> typeContains =
-                AnswerInfoSpecifications.typeContains(condition.getType());
-        Specification<AnswerInfoTbl> noContains =
-                AnswerInfoSpecifications.noContains(condition.getNo(), condition.getSelectorNo());
-        Specification<AnswerInfoTbl> keyHashContains =
-                AnswerInfoSpecifications.keyHashContains(
-                        condition.getKeyHash(), condition.getSelectorKeyHash());
-        Specification<AnswerInfoTbl> scoreContains =
-                ScoreInfoSpecifications.scoreContains(condition.getScore(), condition.getSelectorScore());
-        Specification<AnswerInfoTbl> nameContains =
-                ScoreInfoSpecifications.nameContains(condition.getName(), condition.getSelectorName());
-        Specification<AnswerInfoTbl> dateContains =
-                ScoreInfoSpecifications.dateContains(condition.getDateStart(), condition.getDateEnd());
-
-        Specifications<AnswerInfoTbl> answerSpecification = Specifications.where(typeContains);
-        if (noContains != null) {
-            answerSpecification.and(noContains);
-        }
-        if (keyHashContains != null) {
-            answerSpecification.and(keyHashContains);
-        }
-        if (scoreContains != null) {
-            answerSpecification.and(scoreContains);
-        }
-        if (nameContains != null) {
-            answerSpecification.and(nameContains);
-        }
-        if (dateContains != null) {
-            answerSpecification.and(dateContains);
-        }
+    public Page<AnswerInfoTbl> searchRecords(SearchConditionBean condition, Pageable pageable) {
+        Specification<AnswerInfoTbl> answerSpecification = createSpecification(condition);
         Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
         return page;
     }
@@ -105,14 +76,11 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
         NumberPlaceBean numberPlaceBean = new ModelMapper().map(answerInfoTbl, NumberPlaceBean.class);
         String answerKey = numberPlaceBean.getAnswerKey();
         String[] valueArray = answerKey.split("");
-        int size = 0;
         Type type = Type.getType(numberPlaceBean.getType());
         if (type == null) {
             throw new SudokuApplicationException();
-        } else {
-            size = type.getSize();
         }
-        ListIterator<String> itr = ESListWrapUtils.createCells(size, 0).listIterator();
+        ListIterator<String> itr = ESListWrapUtils.createCells(type.getSize(), CommonConstants.INTEGER_ZERO).listIterator();
         try {
             for (String value : valueArray) {
                 SudokuUtils.setCell(numberPlaceBean, itr.next(), Integer.valueOf(value));
@@ -125,5 +93,40 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
         return numberPlaceBean;
     }
 
+    private Specification<AnswerInfoTbl> createSpecification(SearchConditionBean condition) {
+        Specification<AnswerInfoTbl> specification = Specification.where(AnswerInfoSpecifications.typeContains(condition.getType()));
+
+        Specification<AnswerInfoTbl> noContains =
+                AnswerInfoSpecifications.noContains(condition.getNo(), condition.getSelectorNo());
+        if (Objects.nonNull(noContains)) {
+            specification.and(noContains);
+        }
+
+        Specification<AnswerInfoTbl> keyHashContains =
+                AnswerInfoSpecifications.keyHashContains(condition.getKeyHash(), condition.getSelectorKeyHash());
+        if (Objects.nonNull(keyHashContains)) {
+            specification.and(keyHashContains);
+        }
+
+        Specification<AnswerInfoTbl> scoreContains =
+                ScoreInfoSpecifications.scoreContains(condition.getScore(), condition.getSelectorScore());
+        if (Objects.nonNull(scoreContains)) {
+            specification.and(scoreContains);
+        }
+
+        Specification<AnswerInfoTbl> nameContains =
+                ScoreInfoSpecifications.nameContains(condition.getName(), condition.getSelectorName());
+        if (Objects.nonNull(nameContains)) {
+            specification.and(nameContains);
+        }
+
+        Specification<AnswerInfoTbl> dateContains =
+                ScoreInfoSpecifications.dateContains(condition.getDateStart(), condition.getDateEnd());
+        if (Objects.nonNull(dateContains)) {
+            specification.and(dateContains);
+        }
+
+        return specification;
+    }
 
 }

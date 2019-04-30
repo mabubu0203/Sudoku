@@ -52,6 +52,7 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ResponseEntity<SearchSudokuRecordResponseBean> search(
             final SearchConditionBean conditionBean,
@@ -60,7 +61,7 @@ public class SearchServiceImpl implements SearchService {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        Page<AnswerInfoTbl> page = answerInfoService.findRecords(conditionBean, pageable);
+        Page<AnswerInfoTbl> page = answerInfoService.searchRecords(conditionBean, pageable);
         if (Objects.nonNull(page) && page.hasContent()) {
             Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
             SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();

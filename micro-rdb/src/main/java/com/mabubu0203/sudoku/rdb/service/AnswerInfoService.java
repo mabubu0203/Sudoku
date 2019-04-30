@@ -32,7 +32,7 @@ public interface AnswerInfoService {
 
     /**
      * ANSWER_INFO_TBLへanswerKeyで検索を行います。<br>
-     * 返却は0/1件を表すOptionalで返却します。<br>
+     * 返却はN件を表すStreamで返却します。<br>
      *
      * @param answerKey answerKey
      * @return N件
@@ -66,13 +66,15 @@ public interface AnswerInfoService {
 
     /**
      * ANSWER_INFO_TBLとScore_INFO_TBLの結合テーブルへ検索画面から入力された条件で検索します。<br>
+     * 返却はN件を表すPageで返却します。<br>
      *
      * @param condition 検索条件
      * @param pageable  ページ情報
+     * @return N件
      * @author uratamanabu
      * @since 1.0
      */
-    Page<AnswerInfoTbl> findRecords(SearchConditionBean condition, Pageable pageable);
+    Page<AnswerInfoTbl> searchRecords(SearchConditionBean condition, Pageable pageable);
 
     /**
      * EntityをBeanに変換して返却します。<br>
@@ -80,6 +82,8 @@ public interface AnswerInfoService {
      *
      * @param answerInfoTbl
      * @return NumberPlaceBean
+     * @author uratamanabu
+     * @since 1.0
      */
     NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl);
 
