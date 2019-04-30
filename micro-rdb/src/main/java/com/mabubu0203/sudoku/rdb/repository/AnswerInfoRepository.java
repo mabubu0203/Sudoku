@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * ANSWER_INFO_TBLへのRepositoryクラスです。<br>
@@ -28,7 +29,7 @@ public interface AnswerInfoRepository
      * @author uratamanabu
      * @since 1.0
      */
-    List<AnswerInfoTbl> findByAnswerKey(String answerKey);
+    Stream<AnswerInfoTbl> findByAnswerKey(String answerKey);
 
     /**
      * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。<br>

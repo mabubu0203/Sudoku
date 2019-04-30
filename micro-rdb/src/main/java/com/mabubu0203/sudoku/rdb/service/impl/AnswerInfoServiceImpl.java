@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.stream.Stream;
 
 /**
  * ANSWER_INFO_TBLへのサービスクラスです。 <br>
@@ -50,12 +51,12 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public List<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean) {
+    public Stream<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean) {
         return answerInfoRepository.findByAnswerKey(numberplaceBean.getAnswerKey());
     }
 
     @Override
-    public List<AnswerInfoTbl> findByAnswerKey(String answerKey) {
+    public Stream<AnswerInfoTbl> findByAnswerKey(String answerKey) {
         return answerInfoRepository.findByAnswerKey(answerKey);
     }
 

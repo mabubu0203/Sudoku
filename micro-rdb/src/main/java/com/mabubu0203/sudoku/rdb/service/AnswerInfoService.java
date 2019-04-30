@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * ANSWER_INFO_TBLへのinterfaceです。<br>
@@ -37,7 +38,7 @@ public interface AnswerInfoService {
      * @author uratamanabu
      * @since 1.0
      */
-    List<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean);
+    Stream<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean);
 
     /**
      * ANSWER_INFO_TBLへanswerKeyで検索を行います。<br>
@@ -47,7 +48,7 @@ public interface AnswerInfoService {
      * @author uratamanabu
      * @since 1.0
      */
-    List<AnswerInfoTbl> findByAnswerKey(String answerKey);
+    Stream<AnswerInfoTbl> findByAnswerKey(String answerKey);
 
     /**
      * ANSWER_INFO_TBLへTypeで検索を行います。<br>

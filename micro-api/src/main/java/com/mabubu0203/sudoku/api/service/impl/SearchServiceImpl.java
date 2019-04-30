@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * @author uratamanabu
@@ -39,11 +40,12 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<Boolean> isExist(final String answerKey) {
 
-        List<AnswerInfoTbl> list = answerInfoService.findByAnswerKey(answerKey);
-        if (list.isEmpty()) {
-            return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        try (Stream<AnswerInfoTbl> stream = answerInfoService.findByAnswerKey(answerKey);) {
+            if (stream.count() == 0) {
+                return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+            }
         }
     }
 
