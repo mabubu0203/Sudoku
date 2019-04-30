@@ -110,7 +110,7 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
             this.numberPlaceBean = new NumberPlaceBean();
         } else {
             this.numberPlaceBean.setType(this.size);
-            this.numberPlaceBean.setNo(CommonConstants.ZERO);
+            this.numberPlaceBean.setNo(CommonConstants.LONG_ZERO);
             this.numberPlaceBean.setAnswerKey(answerKey);
             this.numberPlaceBean.setKeyHash(keyHash);
             setCells();

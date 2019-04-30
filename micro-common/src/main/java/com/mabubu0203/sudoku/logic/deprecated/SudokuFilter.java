@@ -44,7 +44,7 @@ public interface SudokuFilter {
             PropertyDescriptor properties = new PropertyDescriptor(key, numberPlaceBean.getClass());
             Method setter = properties.getWriteMethod();
             if (setter != null) {
-                setter.invoke(numberPlaceBean, CommonConstants.ZERO);
+                setter.invoke(numberPlaceBean, CommonConstants.INTEGER_ZERO);
             }
         } catch (IntrospectionException
                 | IllegalAccessException

@@ -65,7 +65,7 @@ public class CompareUtil {
                     if (Objects.isNull(formSetter)) {
                         throw new SudokuApplicationException();
                     } else {
-                        formSetter.invoke(form, CommonConstants.ZERO);
+                        formSetter.invoke(form, CommonConstants.INTEGER_ZERO);
                         form.subtractionScore(50);
                         form.setCompareFlg(false);
                     }

@@ -31,7 +31,15 @@ public class CommonConstants {
      * @author uratamanabu
      * @since 1.0
      */
-    public static final int ZERO = 0;
+    public static final Integer INTEGER_ZERO = Integer.valueOf(0);
+
+    /**
+     * 数値の0を示します。<br>
+     *
+     * @author uratamanabu
+     * @since 1.0
+     */
+    public static final Long LONG_ZERO = Long.valueOf(0);
 
     /**
      * Linuxサーバーのデフォルトの文字コードを示します。<br>
