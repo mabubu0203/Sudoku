@@ -12,6 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * 更新する為のサービスクラスです。<br>
+ * このクラスを経由してロジックを実行してください。<br>
+ *
+ * @author uratamanabu
+ * @version 1.0
+ * @since 1.0
+ */
 @Slf4j
 @AllArgsConstructor
 @Service
