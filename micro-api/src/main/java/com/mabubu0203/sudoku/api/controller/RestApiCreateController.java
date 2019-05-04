@@ -11,12 +11,14 @@ import com.mabubu0203.sudoku.interfaces.request.ResisterSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * <br>
+ * 生成する為のcontrollerです。<br>
+ * このcontrollerを起点にエンドポイントが生成されます。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -27,14 +29,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH},
-        produces = "application/json"
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
 )
 public class RestApiCreateController extends RestBaseController {
 
     private final CreateService service;
 
     /**
-     * 数独をRDBに保存します。<br>
+     * 指定した数独をRDBに保存します。<br>
      *
      * @param request
      * @return ResponseEntity
@@ -46,11 +49,12 @@ public class RestApiCreateController extends RestBaseController {
             @RequestBody @Validated final ResisterSudokuRecordRequestBean request) {
 
         log.info("resisterSudoku");
+
         return service.insertAnswerAndScore(request.getNumberPlaceBean());
     }
 
     /**
-     * タイプに従い数独を作成します。<br>
+     * 指定した{@code type}に従い数独を作成します。<br>
      *
      * @param type
      * @return ResponseEntity
