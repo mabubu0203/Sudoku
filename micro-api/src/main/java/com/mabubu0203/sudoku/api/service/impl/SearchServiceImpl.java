@@ -27,6 +27,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
+ * 検索する為のサービスクラスです。<br>
+ * このクラスを経由してロジックを実行してください。<br>
+ *
  * @author uratamanabu
  * @version 1.0
  * @since 1.0
@@ -38,6 +41,7 @@ public class SearchServiceImpl implements SearchService {
 
     private final AnswerInfoService answerInfoService;
     private final ScoreInfoService scoreInfoService;
+    private final ModelMapper modelMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -82,33 +86,31 @@ public class SearchServiceImpl implements SearchService {
             NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 
     @Override
-    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
-            final int type, final String keyHash) {
+    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type, final String keyHash) {
 
         Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findByTypeAndKeyHash(type, keyHash);
         if (answerInfoTblOpt.isPresent()) {
             NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 
     @Override
-    public ResponseEntity<ScoreResponseBean> getScore(
-            final int type, final String keyHash, final ModelMapper modelMapper) {
+    public ResponseEntity<ScoreResponseBean> getScore(final int type, final String keyHash) {
 
         Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
         if (scoreInfoTblOpt.isPresent()) {
             ScoreResponseBean response = modelMapper.map(scoreInfoTblOpt.get(), ScoreResponseBean.class);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 

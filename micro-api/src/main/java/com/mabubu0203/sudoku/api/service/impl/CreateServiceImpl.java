@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.CreateService;
-import com.mabubu0203.sudoku.exception.SudokuApplicationException;
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
@@ -16,6 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * 生成する為のサービスクラスです。<br>
+ * このクラスを経由してロジックを実行してください。<br>
+ *
+ * @author uratamanabu
+ * @version 1.0
+ * @since 1.0
+ */
 @Slf4j
 @AllArgsConstructor
 @Service
@@ -25,15 +33,15 @@ public class CreateServiceImpl implements CreateService {
     private final ScoreInfoService scoreInfoService;
 
     @Override
-    public ResponseEntity<NumberPlaceBean> generate(final int type)
-            throws SudokuApplicationException {
+    public ResponseEntity<NumberPlaceBean> generate(final int type) {
 
         Optional<NumberPlaceBean> numberPlaceBeanOpt = Optional.ofNullable(new Sudoku(type).generate());
         if (numberPlaceBeanOpt.isPresent()) {
             return new ResponseEntity<>(numberPlaceBeanOpt.get(), HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(new NumberPlaceBean(), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
+
     }
 
     @Transactional
@@ -46,8 +54,9 @@ public class CreateServiceImpl implements CreateService {
             return new ResponseEntity<>(answerInfoTbl.getKeyHash(), HttpStatus.OK);
         } catch (Exception e) {
             log.debug("一意制約違反です。");
-            return new ResponseEntity<>("", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
         }
+
     }
 
 }

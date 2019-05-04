@@ -13,6 +13,7 @@ import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.validator.constraint.AnswerKey;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
+import io.micrometer.core.instrument.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,7 +23,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * <br>
+ * 検索する為のcontrollerです。<br>
+ * このcontrollerを起点にエンドポイントが生成されます。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -33,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH},
+        consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
         produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
 
 )
@@ -42,25 +45,47 @@ public class RestApiSearchController extends RestBaseController {
     private final ModelMapper modelMapper;
 
     /**
-     * 数独の検索を実施します。<br>
+     * 指定した{@code type}と{@code keyHash}より数独を取得します。<br>
      *
-     * @param request
+     * @param type
+     * @param keyHash
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    @PostMapping(value = {CommonConstants.EMPTY_STR})
-    public ResponseEntity<SearchSudokuRecordResponseBean> search(
-            @RequestBody @Validated final SearchSudokuRecordRequestBean request) {
+    @GetMapping(value = {RestUrlConstants.URL_SUDOKU})
+    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
+            @RequestParam(name = "type") @Type(message = "数値1桁を入力しましょう。") final Integer type,
+            @RequestParam(name = "keyHash", required = false) @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
 
-        log.info("search");
-        SearchConditionBean conditionBean = modelMapper.map(request, SearchConditionBean.class);
-        conditionBean.setType(request.getSelectType());
-        return service.search(conditionBean, request.getPageNumber(), request.getPageSize());
+        log.info("getNumberPlaceDetail");
+        if (StringUtils.isEmpty(keyHash)) {
+            return service.getNumberPlaceDetail(type.intValue());
+        } else {
+            return service.getNumberPlaceDetail(type.intValue(), keyHash);
+        }
     }
 
     /**
-     * 数独の存在確認をします。<br>
+     * 指定した{@code type}と{@code keyHash}より数独のスコアを取得します。<br>
+     *
+     * @param type
+     * @param keyHash
+     * @return ResponseEntity
+     * @author uratamanabu
+     * @since 1.0
+     */
+    @GetMapping(value = {RestUrlConstants.URL_SCORE})
+    public ResponseEntity<ScoreResponseBean> getScore(
+            @RequestParam(name = "type") @Type(message = "数値1桁を入力しましょう。") final Integer type,
+            @RequestParam(name = "keyHash") @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
+
+        log.info("getScore");
+        return service.getScore(type.intValue(), keyHash);
+    }
+
+    /**
+     * 指定した{@code answerKey}より数独の存在確認をします。<br>
      *
      * @param answerKey
      * @return ResponseEntity
@@ -77,43 +102,21 @@ public class RestApiSearchController extends RestBaseController {
     }
 
     /**
-     * <br>
+     * 数独の検索を実施します。<br>
      *
-     * @param type
-     * @param keyHash
+     * @param request 検索条件
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    @GetMapping(value = {RestUrlConstants.URL_SUDOKU})
-    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
-            @RequestParam(name = "type") @Type(message = "数値1桁を入力しましょう。") final Integer type,
-            @RequestParam(name = "keyHash", required = false) @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
+    @PostMapping(value = {CommonConstants.EMPTY_STR})
+    public ResponseEntity<SearchSudokuRecordResponseBean> search(
+            @RequestBody @Validated final SearchSudokuRecordRequestBean request) {
 
-        log.info("getNumberPlaceDetail");
-        if (keyHash.isEmpty()) {
-            return service.getNumberPlaceDetail(type.intValue());
-        } else {
-            return service.getNumberPlaceDetail(type.intValue(), keyHash);
-        }
-    }
-
-    /**
-     * <br>
-     *
-     * @param type
-     * @param keyHash
-     * @return ResponseEntity
-     * @author uratamanabu
-     * @since 1.0
-     */
-    @GetMapping(value = {RestUrlConstants.URL_SCORE})
-    public ResponseEntity<ScoreResponseBean> getScore(
-            @RequestParam(name = "type") @Type(message = "数値1桁を入力しましょう。") final Integer type,
-            @RequestParam(name = "keyHash") @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
-
-        log.info("getScore");
-        return service.getScore(type.intValue(), keyHash, modelMapper);
+        log.info("search");
+        SearchConditionBean conditionBean = modelMapper.map(request, SearchConditionBean.class);
+        conditionBean.setType(request.getSelectType());
+        return service.search(conditionBean, request.getPageNumber().intValue(), request.getPageSize().intValue());
     }
 
 }

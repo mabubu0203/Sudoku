@@ -9,9 +9,7 @@ import com.mabubu0203.sudoku.interfaces.request.ResisterSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 /**
- * <br>
+ * 独自仕様のcontrollerです。<br>
+ * このcontrollerを起点にエンドポイントが生成されます。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -32,7 +31,8 @@ import java.net.URI;
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH},
-        produces = "application/json"
+        consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+        produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
 )
 public class RestApiMasterController extends RestBaseController {
 
@@ -69,36 +69,64 @@ public class RestApiMasterController extends RestBaseController {
                                 PathParameterConstants.PATH_TYPE)
                         .buildAndExpand(type)
                         .toUri();
-        requestEntity = RequestEntity.get(uri).build();
+        requestEntity = RequestEntity
+                .get(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .build();
+        // 1. 生成します。
         ResponseEntity<NumberPlaceBean> generateEntity =
                 restOperations.exchange(requestEntity, NumberPlaceBean.class);
+
+        if (generateEntity.getStatusCode() != HttpStatus.CREATED) {
+            log.error("一意制約違反です。");
+            return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
+        }
+
         NumberPlaceBean numberPlaceBean = generateEntity.getBody();
         String answerKey = numberPlaceBean.getAnswerKey();
         uri =
                 uriComponentsBuilder
                         .cloneBuilder()
                         .pathSegment(
-                                RestUrlConstants.URL_SEARCH_MASTER, PathParameterConstants.PATH_TYPEANSWER_KEY)
+                                RestUrlConstants.URL_SEARCH_MASTER,
+                                PathParameterConstants.PATH_TYPEANSWER_KEY)
                         .buildAndExpand(answerKey)
                         .toUri();
-        requestEntity = RequestEntity.get(uri).build();
+        requestEntity = RequestEntity
+                .get(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .build();
+        // 2.存在確認します。
         ResponseEntity<Boolean> isSudokuExistEntity =
                 restOperations.exchange(requestEntity, Boolean.class);
+
         if (isSudokuExistEntity.getBody().booleanValue()) {
             log.error("一意制約違反です。");
-            return new ResponseEntity<>("", HttpStatus.CONFLICT);
-        } else {
-            ResisterSudokuRecordRequestBean request = new ResisterSudokuRecordRequestBean();
-            request.setNumberPlaceBean(numberPlaceBean);
-            uri =
-                    uriComponentsBuilder
-                            .cloneBuilder()
-                            .pathSegment(RestUrlConstants.URL_CREATE_MASTER, RestUrlConstants.URL_GENERATE)
-                            .build()
-                            .toUri();
-            requestEntity = RequestEntity.post(uri).body(request);
-            return restOperations.exchange(requestEntity, String.class);
+            return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
         }
+
+        ResisterSudokuRecordRequestBean request = new ResisterSudokuRecordRequestBean();
+        request.setNumberPlaceBean(numberPlaceBean);
+        uri =
+                uriComponentsBuilder
+                        .cloneBuilder()
+                        .pathSegment(
+                                RestUrlConstants.URL_CREATE_MASTER,
+                                RestUrlConstants.URL_GENERATE)
+                        .build()
+                        .toUri();
+        requestEntity = RequestEntity
+                .post(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(request);
+        // 3.保存します。
+        ResponseEntity<String> resisterEntity = restOperations.exchange(requestEntity, String.class);
+
+        return resisterEntity;
+
     }
 
 }

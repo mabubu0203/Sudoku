@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -92,7 +94,12 @@ public class SearchHelper {
                 new ModelMapper().map(form, SearchSudokuRecordRequestBean.class);
         try {
             URI uri = new URI(searchMaster);
-            RequestEntity requestEntity = RequestEntity.post(uri).body(request);
+            RequestEntity requestEntity =
+                    RequestEntity
+                            .post(uri)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .body(request);
             ResponseEntity<SearchSudokuRecordResponseBean> generateEntity =
                     restOperations.exchange(requestEntity, SearchSudokuRecordResponseBean.class);
             Page page = generateEntity.getBody().getPage();
@@ -144,7 +151,12 @@ public class SearchHelper {
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
         URI uri = new UriTemplate(searchMaster + "sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
-        RequestEntity requestEntity = RequestEntity.get(uri).build();
+        RequestEntity requestEntity =
+                RequestEntity
+                        .get(uri)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =
                     restOperations.exchange(requestEntity, NumberPlaceBean.class);

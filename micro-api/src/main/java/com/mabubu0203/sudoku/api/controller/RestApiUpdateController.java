@@ -9,6 +9,7 @@ import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <br>
+ * 更新する為のcontrollerです。<br>
+ * このcontrollerを起点にエンドポイントが生成されます。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -28,7 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_UPDATE_MASTER + CommonConstants.SLASH},
-        produces = "application/json"
+        consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+        produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
 )
 public class RestApiUpdateController extends RestBaseController {
 
@@ -36,7 +39,7 @@ public class RestApiUpdateController extends RestBaseController {
     private final ModelMapper modelMapper;
 
     /**
-     * スコアをRDBに保存します。<br>
+     * 指定したスコアをRDBに保存します。<br>
      *
      * @param request
      * @return ResponseEntity
@@ -49,7 +52,7 @@ public class RestApiUpdateController extends RestBaseController {
 
         log.info("updateScore");
         ScoreInfoTbl updateScoreBean = modelMapper.map(request, ScoreInfoTbl.class);
-        return service.updateScore(updateScoreBean, request.getType(), request.getKeyHash());
+        return service.updateScore(updateScoreBean, request.getType().intValue(), request.getKeyHash());
     }
 
 }

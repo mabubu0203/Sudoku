@@ -4,7 +4,9 @@ import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import org.springframework.http.ResponseEntity;
 
 /**
- * <br>
+ * 更新する為のinterfaceです。<br>
+ * このinterfaceを経由してロジックを実行してください。<br>
+ * 実装については実装クラスを参照してください。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -13,7 +15,10 @@ import org.springframework.http.ResponseEntity;
 public interface UpdateService {
 
     /**
-     * <br>
+     * スコアをRDBに保存します。<br>
+     * 更新した{@code no}を返却します。<br>
+     * ・200:正常時<br>
+     * ・400:異常時<br>
      *
      * @param updateScoreBean
      * @param type
