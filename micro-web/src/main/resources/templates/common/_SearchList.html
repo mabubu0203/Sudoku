@@ -109,7 +109,7 @@
                     <td align="right" th:text="${record.score}">Score</td>
                     <td align="left" th:text="${record.name}">Name</td>
                     <td align="left" th:text="${record.memo}">Memo</td>
-                    <td align="left" th:text="${record.memo}">Memo</td>
+                    <td align="left" th:text="${#temporals.format(record.updateDate,'yyyy年MM月dd日')}">Date</td>
                 </tr>
                 </tbody>
             </table>
