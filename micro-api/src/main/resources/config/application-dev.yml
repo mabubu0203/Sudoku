@@ -12,6 +12,8 @@ spring:
         enabled: true
     rest:
       base-path: /
+  jackson:
+    default-property-inclusion: non_null
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
