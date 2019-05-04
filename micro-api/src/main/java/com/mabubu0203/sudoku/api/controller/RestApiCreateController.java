@@ -1,6 +1,5 @@
 package com.mabubu0203.sudoku.api.controller;
 
-
 import com.mabubu0203.sudoku.api.service.CreateService;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.PathParameterConstants;
@@ -29,8 +28,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH},
-        consumes = {MediaType.APPLICATION_JSON_VALUE},
-        produces = {MediaType.APPLICATION_JSON_VALUE}
+        consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+        produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
 )
 public class RestApiCreateController extends RestBaseController {
 
