@@ -6,9 +6,7 @@ import com.mabubu0203.sudoku.web.form.CreateForm;
 import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.HttpClientErrorException;
@@ -65,7 +63,12 @@ public class CreateHelper {
             throw new SudokuApplicationException();
         }
         URI uri = new UriTemplate(sudokuUriApi + "/createMaster/{type}").expand(form.getSelectType());
-        RequestEntity requestEntity = RequestEntity.get(uri).build();
+        RequestEntity requestEntity =
+                RequestEntity
+                        .get(uri)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .build();
         try {
             ResponseEntity<String> generateEntity = restOperations.exchange(requestEntity, String.class);
             HttpStatus status = generateEntity.getStatusCode();

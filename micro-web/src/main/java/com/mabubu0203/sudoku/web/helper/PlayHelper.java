@@ -17,6 +17,8 @@ import com.mabubu0203.sudoku.web.utils.CompareUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -27,12 +29,7 @@ import org.springframework.web.util.UriTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * <br>
@@ -86,7 +83,12 @@ public class PlayHelper {
         uriVariables.put("type", Integer.toString(form.getSelectType()));
         uriVariables.put("keyHash", "");
         URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
-        RequestEntity requestEntity = RequestEntity.get(uri).build();
+        RequestEntity requestEntity =
+                RequestEntity
+                        .get(uri)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =
                     restOperations.exchange(requestEntity, NumberPlaceBean.class);
@@ -126,7 +128,12 @@ public class PlayHelper {
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
         URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
-        RequestEntity requestEntity = RequestEntity.get(uri).build();
+        RequestEntity requestEntity =
+                RequestEntity
+                        .get(uri)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .build();
         try {
             ResponseEntity<NumberPlaceBean> generateEntity =
                     restOperations.exchange(requestEntity, NumberPlaceBean.class);
@@ -138,7 +145,12 @@ public class PlayHelper {
         }
         if (form.isCompareFlg()) {
             uri = new UriTemplate(sudokuUriApi + "/searchMaster/score?type={type}&keyHash={keyHash}").expand(uriVariables);
-            requestEntity = RequestEntity.get(uri).build();
+            requestEntity =
+                    RequestEntity
+                            .get(uri)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .build();
             try {
                 ResponseEntity<ScoreResponseBean> generateEntity2 =
                         restOperations.exchange(requestEntity, ScoreResponseBean.class);
@@ -217,7 +229,12 @@ public class PlayHelper {
                 new ModelMapper().map(form, UpdateSudokuScoreRequestBean.class);
         try {
             URI uri = new URI(sudokuUriApi + "/updateMaster/score/");
-            RequestEntity requestEntity = RequestEntity.put(uri).body(request);
+            RequestEntity requestEntity =
+                    RequestEntity
+                            .put(uri)
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .body(request);
             Optional<ResponseEntity<Long>> generateEntityOpt = Optional.ofNullable(restOperations.exchange(requestEntity, Long.class));
             if (generateEntityOpt.isPresent()) {
                 return generateEntityOpt.get().getBody();
