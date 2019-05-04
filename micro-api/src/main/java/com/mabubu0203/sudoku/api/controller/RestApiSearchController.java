@@ -116,7 +116,7 @@ public class RestApiSearchController extends RestBaseController {
         log.info("search");
         SearchConditionBean conditionBean = modelMapper.map(request, SearchConditionBean.class);
         conditionBean.setType(request.getSelectType());
-        return service.search(conditionBean, request.getPageNumber(), request.getPageSize());
+        return service.search(conditionBean, request.getPageNumber().intValue(), request.getPageSize().intValue());
     }
 
 }

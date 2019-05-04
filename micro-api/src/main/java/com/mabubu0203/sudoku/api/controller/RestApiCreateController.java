@@ -69,7 +69,7 @@ public class RestApiCreateController extends RestBaseController {
             @PathVariable(name = "type") @Type final Integer type) {
 
         log.info("generateSudoku");
-        return service.generate(type);
+        return service.generate(type.intValue());
     }
 
 }
