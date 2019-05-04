@@ -1,5 +1,6 @@
 package com.mabubu0203.sudoku.interfaces.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -40,6 +41,11 @@ public class SearchResultBean implements Serializable {
     private String memo;
 
     @JsonProperty(value = "createDate")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createDate;
+
+    @JsonProperty(value = "updateDate")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateDate;
 
 }

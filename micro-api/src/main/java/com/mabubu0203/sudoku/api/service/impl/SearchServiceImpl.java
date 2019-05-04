@@ -126,6 +126,7 @@ public class SearchServiceImpl implements SearchService {
             bean.setName(scoreInfoTbl.getName());
             bean.setScore(scoreInfoTbl.getScore());
             bean.setMemo(scoreInfoTbl.getMemo());
+            bean.setUpdateDate(scoreInfoTbl.getUpdateDate());
             modifyContent.add(bean);
         }
         Page<SearchResultBean> result = new PageImpl(modifyContent, pageable, page.getTotalElements());
