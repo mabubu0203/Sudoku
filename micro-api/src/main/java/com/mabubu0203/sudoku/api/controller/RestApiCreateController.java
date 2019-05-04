@@ -36,23 +36,6 @@ public class RestApiCreateController extends RestBaseController {
     private final CreateService service;
 
     /**
-     * 指定した数独をRDBに保存します。<br>
-     *
-     * @param request
-     * @return ResponseEntity
-     * @author uratamanabu
-     * @since 1.0
-     */
-    @PostMapping(value = {RestUrlConstants.URL_GENERATE})
-    public ResponseEntity<String> resisterSudoku(
-            @RequestBody @Validated final ResisterSudokuRecordRequestBean request) {
-
-        log.info("resisterSudoku");
-
-        return service.insertAnswerAndScore(request.getNumberPlaceBean());
-    }
-
-    /**
      * 指定した{@code type}に従い数独を作成します。<br>
      *
      * @param type
@@ -70,6 +53,23 @@ public class RestApiCreateController extends RestBaseController {
 
         log.info("generateSudoku");
         return service.generate(type.intValue());
+    }
+
+    /**
+     * 指定した数独をRDBに保存します。<br>
+     *
+     * @param request
+     * @return ResponseEntity
+     * @author uratamanabu
+     * @since 1.0
+     */
+    @PostMapping(value = {RestUrlConstants.URL_GENERATE})
+    public ResponseEntity<String> resisterSudoku(
+            @RequestBody @Validated final ResisterSudokuRecordRequestBean request) {
+
+        log.info("resisterSudoku");
+
+        return service.insertAnswerAndScore(request.getNumberPlaceBean());
     }
 
 }
