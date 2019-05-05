@@ -25,16 +25,16 @@ public class SudokuSubPanel implements Serializable {
     private boolean confirmFlg;
 
     public SudokuSubPanel(final int size) {
-        coordinates = new ArrayList<>();
-        cellMap = new HashMap<>();
+        this.coordinates = new ArrayList<>();
+        this.cellMap = new HashMap<>();
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 Pair<Integer, Integer> coordinate = getCoordinate(col, row);
-                coordinates.add(coordinate);
-                cellMap.put(coordinate, new SudokuCell(0));
+                this.coordinates.add(coordinate);
+                this.cellMap.put(coordinate, new SudokuCell(0));
             }
         }
-        confirmFlg = false;
+        this.confirmFlg = false;
     }
 
     public Pair<Integer, Integer> getCoordinate(int row, int col) {
@@ -46,7 +46,7 @@ public class SudokuSubPanel implements Serializable {
     }
 
     private SudokuCell findCell(Pair<Integer, Integer> coordinate) {
-        return cellMap.get(coordinate);
+        return this.cellMap.get(coordinate);
     }
 
     @Deprecated
@@ -54,7 +54,7 @@ public class SudokuSubPanel implements Serializable {
         List<SudokuCell> result = new ArrayList<>();
         for (int col = 0; col < size; col++) {
             Pair<Integer, Integer> coordinate = getCoordinate(row, col);
-            result.add(cellMap.get(coordinate));
+            result.add(this.cellMap.get(coordinate));
         }
         return result;
     }
@@ -64,7 +64,7 @@ public class SudokuSubPanel implements Serializable {
         List<SudokuCell> result = new ArrayList<>();
         for (int row = 0; row < size; col++) {
             Pair<Integer, Integer> coordinate = getCoordinate(row, col);
-            result.add(cellMap.get(coordinate));
+            result.add(this.cellMap.get(coordinate));
         }
         return result;
     }
@@ -72,7 +72,7 @@ public class SudokuSubPanel implements Serializable {
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(",");
-        cellMap.forEach((key, value) -> sj.add(key + ":" + value));
+        this.cellMap.forEach((key, value) -> sj.add(key + ":" + value));
         return sj.toString();
     }
 

@@ -2,9 +2,7 @@ package com.mabubu0203.sudoku.components.impl;
 
 import com.mabubu0203.sudoku.components.SudokuGenerator;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.beans.SudokuCell;
-import com.mabubu0203.sudoku.interfaces.beans.SudokuMainFrame;
-import com.mabubu0203.sudoku.interfaces.beans.SudokuSubPanel;
+import com.mabubu0203.sudoku.interfaces.beans.*;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.ESSetWrapUtils;
 import com.mabubu0203.sudoku.utils.SudokuUtils;
@@ -13,10 +11,7 @@ import org.eclipse.collections.api.list.primitive.ImmutableIntList;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 解答を生成する為のコンポーネントクラスです。<br>
@@ -80,9 +75,6 @@ public class SudokuGeneratorImpl implements SudokuGenerator {
         Map<Pair<Integer, Integer>, SudokuSubPanel> subPanelMap = mainFrame.getSubPanelMap();
         int size = mainFrame.getSize();
 
-        Pair<Integer, Integer> lastPanelCoordinate = Pair.of(size - 1, size - 1);
-        SudokuSubPanel lastPanel = subPanelMap.get(lastPanelCoordinate);
-
         List<SudokuSubPanel> lastRowPanels = new ArrayList<>();
         List<SudokuSubPanel> lastColPanels = new ArrayList<>();
 
@@ -97,47 +89,101 @@ public class SudokuGeneratorImpl implements SudokuGenerator {
                 }
             }
         }
-        kaisekiRow(size, lastRowPanels);
-        kaisekiCol(size, lastColPanels);
+
+        ExpectSubPanel expectPanel = new ExpectSubPanel(size);
+        expectPanel.setExpectRowList(kaisekiRow(size, lastRowPanels));
+        expectPanel.setExpectColList(kaisekiCol(size, lastColPanels));
+        calculateLastPanel(size, expectPanel);
+        SudokuSubPanel lastPanel = expectConvertPanel(size, expectPanel);
 
     }
 
     @Deprecated
-    private void kaisekiRow(int size, List<SudokuSubPanel> lastRowPanels) {
-        List<List<Integer>> lastRowList = new ArrayList<>();
+    private List<Set<Integer>> kaisekiRow(int size, List<SudokuSubPanel> lastRowPanels) {
+        List<Set<Integer>> expectRowList = new ArrayList<>();
         for (int col = 0; col < size; col++) {
-            List<Integer> list = new ArrayList<>();
+            Set<Integer> set = new HashSet<>();
             Set<Integer> linkedNum = ESSetWrapUtils.getLinkedNum(size * size);
             for (SudokuSubPanel panel : lastRowPanels) {
                 List<SudokuCell> cells = panel.findCellByCol(size, col);
                 for (SudokuCell cell : cells) {
                     int value = cell.getValue();
                     linkedNum.remove(value);
-
                 }
             }
-            list.addAll(linkedNum);
-            lastRowList.add(list);
+            set.addAll(linkedNum);
+            expectRowList.add(set);
         }
+        return expectRowList;
     }
 
     @Deprecated
-    private void kaisekiCol(int size, List<SudokuSubPanel> lastColPanels) {
-        List<List<Integer>> lastColList = new ArrayList<>();
+    private List<Set<Integer>> kaisekiCol(int size, List<SudokuSubPanel> lastColPanels) {
+        List<Set<Integer>> expectColList = new ArrayList<>();
         for (int row = 0; row < size; row++) {
-            List<Integer> list = new ArrayList<>();
+            Set<Integer> set = new HashSet<>();
             Set<Integer> linkedNum = ESSetWrapUtils.getLinkedNum(size * size);
             for (SudokuSubPanel panel : lastColPanels) {
                 List<SudokuCell> cells = panel.findCellByRow(size, row);
                 for (SudokuCell cell : cells) {
                     int value = cell.getValue();
                     linkedNum.remove(value);
+                }
+            }
+            set.addAll(linkedNum);
+            expectColList.add(set);
+        }
+        return expectColList;
+    }
+
+    private void calculateLastPanel(int size, ExpectSubPanel expectPanel) {
+        do {
+            Map<Pair<Integer, Integer>, ExpectCell> cellMap = expectPanel.getCellMap();
+            for (int row = 0; row < size; row++) {
+                Set<Integer> expectRow = expectPanel.getExpectRowList().get(row);
+                for (int col = 0; col < size; col++) {
+                    Set<Integer> expectCol = expectPanel.getExpectColList().get(col);
+                    for (Integer expectValue : expectCol) {
+                        if (expectRow.contains(expectValue)) {
+                            cellMap.get(Pair.of(row, col)).addExpectValues(expectValue);
+                        }
+                    }
 
                 }
             }
-            list.addAll(linkedNum);
-            lastColList.add(list);
-        }
+            cellMap.forEach((key, value) -> {
+
+                Set<Integer> expectValues = value.getExpectValues();
+                // 期待値が1種類しかない場合
+                if (expectValues.size() == 1) {
+                    int cellValue = expectValues.iterator().next();
+                    value.setValue(cellValue);
+                    expectValues.remove(cellValue);
+
+                    // ExpectRowListの該当行から期待値を削除する。
+                    expectPanel.getExpectRowList().get(key.getFirst()).remove(cellValue);
+                    // ExpectColListの該当列から期待値を削除する。
+                    expectPanel.getExpectColList().get(key.getSecond()).remove(cellValue);
+                }
+            });
+            expectPanel.setCellMap(cellMap);
+            if (expectPanel.getExpectRowList().stream().distinct().count() == 0
+                    && expectPanel.getExpectColList().stream().distinct().count() == 0) {
+                expectPanel.setConfirmFlg(true);
+            }
+        } while (expectPanel.isConfirmFlg());
+
+    }
+
+    private SudokuSubPanel expectConvertPanel(int size, ExpectSubPanel expectPanel) {
+        SudokuSubPanel lastPanel = new SudokuSubPanel(size);
+
+        Map<Pair<Integer, Integer>, SudokuCell> result = new HashMap<>();
+        Map<Pair<Integer, Integer>, ExpectCell> cellMap = expectPanel.getCellMap();
+        cellMap.forEach((key, value) -> result.put(key, new SudokuCell(value.getValue())));
+
+        lastPanel.setCellMap(result);
+        return lastPanel;
     }
 
 }
