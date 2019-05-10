@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @since 1.0
  */
 @Data
+@Deprecated
 public class SudokuCell implements Serializable {
 
     private static final long serialVersionUID = 1L;

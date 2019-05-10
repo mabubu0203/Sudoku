@@ -14,6 +14,7 @@ import java.util.Set;
  * @since 1.0
  */
 @Data
+@Deprecated
 public class ExpectCell implements Serializable {
 
     private static final long serialVersionUID = 1L;

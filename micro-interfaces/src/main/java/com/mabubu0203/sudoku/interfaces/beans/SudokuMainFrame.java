@@ -16,6 +16,7 @@ import java.util.*;
  * @since 1.0
  */
 @Data
+@Deprecated
 public class SudokuMainFrame implements Serializable {
 
     private static final long serialVersionUID = 1L;
