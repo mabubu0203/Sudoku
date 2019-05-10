@@ -23,6 +23,7 @@ import java.util.*;
  */
 @AllArgsConstructor
 @Component
+@Deprecated
 public class SudokuGeneratorImpl implements SudokuGenerator {
 
     @Override
@@ -32,6 +33,7 @@ public class SudokuGeneratorImpl implements SudokuGenerator {
         return;
     }
 
+    @Deprecated
     private SudokuMainFrame generateNumberPlace(int type) {
         int size = SudokuUtils.convertSquareRoot(type);
         SudokuMainFrame mainFrame = new SudokuMainFrame(size);
