@@ -38,10 +38,11 @@ public class WIPSudokuGeneratorImpl implements SudokuGenerator {
         SudokuBean sudokuBean = new SudokuBean(size, type);
 
         for (int row = 0; row < size; row++) {
-
+            // 1行毎配列の要素を組み立てる
+            // 行によって処理を分岐する
             if (row == 0) {
                 // 最初
-                createFirstRow(sudokuBean);
+                createFirstRow(sudokuBean, row);
             } else if (row == size - 1) {
                 // 最後
                 //createLastRow(sudokuBean);
@@ -55,8 +56,14 @@ public class WIPSudokuGeneratorImpl implements SudokuGenerator {
 
     }
 
-    private void createFirstRow(SudokuBean sudokuBean) {
+    private void createFirstRow(SudokuBean sudokuBean, int row) {
+        createFirstSubPanel(sudokuBean, row);
+        for (int col = 1; col < sudokuBean.getSize() - 1; col++) {
+            createSubPanels(sudokuBean, row, col);
+        }
+    }
 
+    private void createFirstSubPanel(SudokuBean sudokuBean, int row) {
         SudokuBean.SubPanel firstPanel = sudokuBean.getSubPanel();
         Map<Pair<Integer, Integer>, SudokuBean.Cell> cellMap = firstPanel.getCellMap();
         // 座標を初期化
@@ -69,7 +76,45 @@ public class WIPSudokuGeneratorImpl implements SudokuGenerator {
         firstPanel.setCellMap(cellMap);
 
         SudokuBean.MainFrame mainFrame = sudokuBean.getMainFrame();
-        mainFrame.getSubPanelMap().put(Pair.of(0, 0), firstPanel);
+        mainFrame.getSubPanelMap().put(Pair.of(row, 0), firstPanel);
+    }
+
+    private void createSubPanels(SudokuBean sudokuBean, int row, int col) {
+        SudokuBean.SubPanel subPanel = sudokuBean.getSubPanel();
+        Map<Pair<Integer, Integer>, SudokuBean.Cell> cellMap = subPanel.getCellMap();
+        // 座標を初期化
+        List<Pair<Integer, Integer>> coordinates = subPanel.getCellMapCoordinates();
+        initCoordinates(sudokuBean.getSize(), subPanel.getCellMapCoordinates());
+
+        ImmutableIntList intList = ESListWrapUtils.getRandList(sudokuBean.getType());
+        intList.forEachWithIndex((s, i) -> cellMap.put(coordinates.get(i), sudokuBean.getSubCell(s)));
+
+        subPanel.setCellMap(cellMap);
+
+        SudokuBean.MainFrame mainFrame = sudokuBean.getMainFrame();
+
+        int firstY = row * sudokuBean.getSize();
+        int lastY = (row + 1) * sudokuBean.getSize();
+        // 判定する
+        for (int y = firstY; y < lastY; y++) {
+            List<Integer> rowList = mainFrame.getRowList(row);
+            List<Integer> rowList2 = subPanel.getRowList(row);
+
+            rowList.addAll(rowList2);
+            if (rowList.stream().distinct().count() == rowList.size() + rowList2.size()) {
+                continue;
+            } else {
+                // やりなおし
+            }
+        }
+        // 判定して問題なければ
+        mainFrame.getSubPanelMap().put(Pair.of(row, col), subPanel);
+
+    }
+
+    private void createMiddleRows(SudokuBean sudokuBean, int row) {
+
+
     }
 
     private void initCoordinates(int size, List<Pair<Integer, Integer>> coordinates) {
