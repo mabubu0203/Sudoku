@@ -25,8 +25,8 @@ buildscript {
 }
 
 plugins {
-    id "org.springframework.boot" version "2.1.4.RELEASE"
-    id "org.sonarqube" version "2.7"
+    id "org.springframework.boot" version "2.1.5.RELEASE"
+    id "org.sonarqube" version "2.7.1"
 }
 
 apply from: "$rootDir/gradle/ide.gradle"
@@ -58,7 +58,7 @@ allprojects {
     }
 
     jacoco {
-        toolVersion = "0.8.2"
+        toolVersion = "0.8.4"
         reportsDir = file("$buildDir/customJacocoReportDir")
     }
 
