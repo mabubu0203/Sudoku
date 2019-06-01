@@ -11,6 +11,13 @@ services:
       - 80:8080
     restart: always
 
+  zipkin:
+    image: openzipkin/zipkin:2.14.0
+    container_name: zipkin
+    ports:
+      # Port used for the Zipkin UI and HTTP Api
+      - 9411:9411
+
   mysqlRc:
     image: mysql:8.0.16
     container_name: mysqlRc
