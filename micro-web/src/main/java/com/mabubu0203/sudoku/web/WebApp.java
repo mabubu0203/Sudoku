@@ -1,10 +1,12 @@
 package com.mabubu0203.sudoku.web;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -61,6 +63,14 @@ public class WebApp extends SpringBootServletInitializer implements SchedulingCo
         threadPool.setWaitForTasksToCompleteOnShutdown(true);
         threadPool.setAwaitTerminationSeconds(60 * 10);
         return threadPool;
+    }
+
+    @Configuration
+    public class ModelMapperConfiguration {
+        @Bean
+        public ModelMapper modelMapper() {
+            return new ModelMapper();
+        }
     }
 
 }
