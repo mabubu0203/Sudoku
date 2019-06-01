@@ -40,6 +40,7 @@ name   | Front | Batch | Admin
 
 [HAL Browser][] 
 [SudokuWeb][] 
+[Zipkin][]
     
 ## 環境
 
@@ -48,8 +49,9 @@ name   | Front | Batch | Admin
 | name              | version
 | :---------------- | :-------
 | OpenJdk           | 11
-| DockerCompose     | 1.21.2
-| Gradle            | 5.10 
+| DockerCompose     | 1.24.0
+| Gradle            | 5.4.1 
 
 [HAL Browser]: http://localhost:8085/     "HAL Browser"
 [SudokuWeb]: http://localhost:8081/linkList     "SudokuWeb"
+[Zipkin]: http://localhost:9411/zipkin     "Zipkin"
