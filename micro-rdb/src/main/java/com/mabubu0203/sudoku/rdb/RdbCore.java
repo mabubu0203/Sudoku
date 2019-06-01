@@ -19,4 +19,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = {"com.mabubu0203.sudoku.rdb.repository"})
 @EnableTransactionManagement(proxyTargetClass = true)
 public class RdbCore {
+
 }

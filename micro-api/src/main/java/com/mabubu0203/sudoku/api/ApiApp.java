@@ -2,6 +2,7 @@ package com.mabubu0203.sudoku.api;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mabubu0203.sudoku.rdb.RdbCore;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -42,10 +43,17 @@ public class ApiApp extends SpringBootServletInitializer {
 
     @Configuration
     public class JacksonConfiguration {
-
         @Bean
         public JavaTimeModule javaTimeModule() {
             return new JavaTimeModule();
+        }
+    }
+
+    @Configuration
+    public class ModelMapperConfiguration {
+        @Bean
+        public ModelMapper modelMapper() {
+            return new ModelMapper();
         }
     }
 }

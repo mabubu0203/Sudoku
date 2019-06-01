@@ -24,11 +24,11 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
 
+    // ModelMapper
+    implementation("org.modelmapper:modelmapper:$modelmapperVersion")
+
     // JDBC Drivers
     implementation("mysql:mysql-connector-java")
-
-    // ModelMapper
-    implementation("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
 
 }
 
