@@ -10,6 +10,9 @@ buildscript {
         // SpringBootAdmin
         springbootAdminVersion = springbootAdminVersion
 
+        // SpringCloudSleuth(Zipkin)
+        cloudZipkinVersion = springCloudZipkinVersion
+
         // EclipseCollections
         ecVersion = eclipsecollectionsVersion
 

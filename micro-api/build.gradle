@@ -1,10 +1,13 @@
 apply plugin: 'war'
+
 dependencies {
 
     // SpringBoot projects
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-zipkin:$cloudZipkinVersion")
 
     // lombok
     annotationProcessor("org.projectlombok:lombok")
