@@ -28,4 +28,8 @@ spring:
     #    active: production
     #    active: test
     include: message
+  sleuth:
+    traceId128: true
+    sampler:
+      probability: 1.0
 
