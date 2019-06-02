@@ -5,6 +5,7 @@ services:
 
   #  elasticsearch:
   #    build: ./docker-elastic
+  #    container_name: docker-elastic
   #    ports:
   #      - 9200:9200
   #      - 9300:9300
@@ -16,24 +17,25 @@ services:
   #
   #  kibana:
   #    build: ./docker-kibana
+  #    container_name: docker-kibana
   #    ports:
   #      - 5601:5601
   #    environment:
   #      - ELASTICSEARCH_URL=http://localhost:9200
   #    links:
-  #      - elasticsearch:elasticsearch
+  #      - elasticsearch
   #    restart: always
 
   mysql:
     build: ./docker-mysql
+    container_name: docker-mysql
     ports:
       - 3306:3306
-      - 33060:33060
     volumes:
       - ./docker-mysql/init:/docker-entrypoint-initdb.d
       - ./docker-mysql/conf/:/etc/mysql/conf.d
-    networks:
-      - sonarnet
+    #    networks:
+    #      - sonarnet
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: app_user
@@ -43,6 +45,7 @@ services:
 
   #  nginx:
   #    build: ./docker-nginx
+  #    container_name: docker-nginx
   #    ports:
   #      - 8011:80
   #      - 8080:8080
@@ -50,6 +53,7 @@ services:
 
   phpmyadmin:
     build: ./docker-phpmyadmin
+    container_name: docker-phpmyadmin
     links:
       - mysql
     ports:
@@ -67,6 +71,7 @@ services:
 
   #  sonarqube:
   #    build: ./docker-sonar
+  #    container_name: docker-sonar
   #    depends_on:
   #      - mysql
   #    volumes:
@@ -85,6 +90,7 @@ services:
 
   zipkin:
     build: ./docker-zipkin
+    container_name: docker-zipkin
     ports:
       - 9410:9410
       - 9411:9411
@@ -95,14 +101,14 @@ services:
     #      - elasticsearch
     restart: always
 
-networks:
-  esnet:
+  #networks:
+  #  esnet:
 #  sonarnet:
 #    driver: bridge
-volumes:
+  #volumes:
   #  elasticsearch-data:
   #    driver: local
-  sonarqube_conf:
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_bundled-plugins:
+#  sonarqube_conf:
+#  sonarqube_data:
+#  sonarqube_extensions:
+#  sonarqube_bundled-plugins:
