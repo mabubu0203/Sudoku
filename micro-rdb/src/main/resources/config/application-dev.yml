@@ -57,8 +57,6 @@ spring:
     console:
       enabled: false
 
-
-
   # ----------------------------------------
   # INTEGRATION PROPERTIES
   # ----------------------------------------

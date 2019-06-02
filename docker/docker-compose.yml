@@ -3,31 +3,39 @@ version: '3.7'
 
 services:
 
-  nginx:
-    container_name: container_nginx
-    hostname: container_nginx_hostname
-    build: ./docker-nginx
-    ports:
-      - 80:8080
-    restart: always
+  #  elasticsearch:
+  #    build: ./docker-elastic
+  #    container_name: docker-elastic
+  #    ports:
+  #      - 9200:9200
+  #      - 9300:9300
+  #    volumes:
+  #      - elasticsearch-data:/usr/share/elasticsearch/data
+  #    networks:
+  #      - esnet
+  #    restart: always
+  #
+  #  kibana:
+  #    build: ./docker-kibana
+  #    container_name: docker-kibana
+  #    ports:
+  #      - 5601:5601
+  #    environment:
+  #      - ELASTICSEARCH_URL=http://localhost:9200
+  #    links:
+  #      - elasticsearch
+  #    restart: always
 
-  zipkin:
-    image: openzipkin/zipkin:2.14.0
-    container_name: zipkin
-    ports:
-      # Port used for the Zipkin UI and HTTP Api
-      - 9411:9411
-
-  mysqlRc:
-    image: mysql:8.0.16
-    container_name: mysqlRc
+  mysql:
+    build: ./docker-mysql
+    container_name: docker-mysql
     ports:
       - 3306:3306
     volumes:
-      - ./mysql/init:/docker-entrypoint-initdb.d
-      - ./mysql/conf/:/etc/mysql/conf.d
-    networks:
-      - sonarnet
+      - ./docker-mysql/init:/docker-entrypoint-initdb.d
+      - ./docker-mysql/conf/:/etc/mysql/conf.d
+    #    networks:
+    #      - sonarnet
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: app_user
@@ -35,47 +43,72 @@ services:
       TZ: "Asia/Tokyo"
     restart: always
 
+  #  nginx:
+  #    build: ./docker-nginx
+  #    container_name: docker-nginx
+  #    ports:
+  #      - 8011:80
+  #      - 8080:8080
+  #    restart: always
+
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    build: ./docker-phpmyadmin
+    container_name: docker-phpmyadmin
     links:
-      - mysqlRc
+      - mysql
     ports:
-      - 8280:80
+      - 8021:80
+      - 8280:8280
+      - 9000:9000
     volumes:
       - /sessions
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mysqlRc
+      - PMA_HOST=mysql
       - PMA_USER=root
       - PMA_PASSWORD=root
     restart: always
 
-  sonarqube:
-    image: sonarqube:7.7-community
-    container_name: sonarqube
-    depends_on:
-      - mysqlRc
-    volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
-    networks:
-      - sonarnet
-    command: -Dsonar.web.context=/sonar
+  #  sonarqube:
+  #    build: ./docker-sonar
+  #    container_name: docker-sonar
+  #    depends_on:
+  #      - mysql
+  #    volumes:
+  #      - sonarqube_conf:/opt/sonarqube/conf
+  #      - sonarqube_data:/opt/sonarqube/data
+  #      - sonarqube_extensions:/opt/sonarqube/extensions
+  #      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+  #    networks:
+  #      - sonarnet
+  #    command: -Dsonar.web.context=/sonar
+  #    ports:
+  #      - 9092:9000
+  #    environment:
+  #      - SONAR_JDBC_URL=jdbc:mysql://localhost:3306/sonar?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+  #    restart: always
+
+  zipkin:
+    build: ./docker-zipkin
+    container_name: docker-zipkin
     ports:
-      - 9000:9000
-      - 9092:9092
-    environment:
-      - SONAR_JDBC_URL=jdbc:mysql://localhost:3306/sonar?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+      - 9410:9410
+      - 9411:9411
+    #    environment:
+    #      - STORAGE_TYPE=elasticsearch
+    #      - ES_HOSTS=elasticsearch
+    #    depends_on:
+    #      - elasticsearch
     restart: always
 
-networks:
-  sonarnet:
-    driver: bridge
-volumes:
-  sonarqube_conf:
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_bundled-plugins:
+  #networks:
+  #  esnet:
+#  sonarnet:
+#    driver: bridge
+  #volumes:
+  #  elasticsearch-data:
+  #    driver: local
+#  sonarqube_conf:
+#  sonarqube_data:
+#  sonarqube_extensions:
+#  sonarqube_bundled-plugins:

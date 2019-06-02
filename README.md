@@ -41,6 +41,7 @@ name   | Front | Batch | Admin
 [HAL Browser][] 
 [SudokuWeb][] 
 [Zipkin][]
+[PhpMyAdmin][]
     
 ## 環境
 
@@ -55,3 +56,4 @@ name   | Front | Batch | Admin
 [HAL Browser]: http://localhost:8085/     "HAL Browser"
 [SudokuWeb]: http://localhost:8081/linkList     "SudokuWeb"
 [Zipkin]: http://localhost:9411/zipkin     "Zipkin"
+[PhpMyAdmin]: http://localhost:8021/     "PhpMyAdmin"
