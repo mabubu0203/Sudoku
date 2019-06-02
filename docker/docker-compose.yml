@@ -3,29 +3,35 @@ version: '3.7'
 
 services:
 
-  nginx:
-    container_name: container_nginx
-    hostname: container_nginx_hostname
-    build: ./docker-nginx
+  elasticsearch:
+    build: ./docker-elastic
     ports:
-      - 80:8080
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - esnet
     restart: always
 
-  zipkin:
-    image: openzipkin/zipkin:2.14.0
-    container_name: zipkin
+  kibana:
+    build: ./docker-kibana
     ports:
-      # Port used for the Zipkin UI and HTTP Api
-      - 9411:9411
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    links:
+      - elasticsearch:elasticsearch
+    restart: always
 
-  mysqlRc:
-    image: mysql:8.0.16
-    container_name: mysqlRc
+  mysql:
+    build: ./docker-mysql
     ports:
       - 3306:3306
+      - 33060:33060
     volumes:
-      - ./mysql/init:/docker-entrypoint-initdb.d
-      - ./mysql/conf/:/etc/mysql/conf.d
+      - ./docker-mysql/init:/docker-entrypoint-initdb.d
+      - ./docker-mysql/conf/:/etc/mysql/conf.d
     networks:
       - sonarnet
     environment:
@@ -35,27 +41,34 @@ services:
       TZ: "Asia/Tokyo"
     restart: always
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    links:
-      - mysqlRc
+  nginx:
+    build: ./docker-nginx
     ports:
-      - 8280:80
+      - 8011:80
+      - 8080:8080
+    restart: always
+
+  phpmyadmin:
+    build: ./docker-phpmyadmin
+    links:
+      - mysql
+    ports:
+      - 8021:80
+      - 8280:8280
+      - 9000:9000
     volumes:
       - /sessions
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mysqlRc
+      - PMA_HOST=mysql
       - PMA_USER=root
       - PMA_PASSWORD=root
     restart: always
 
   sonarqube:
-    image: sonarqube:7.7-community
-    container_name: sonarqube
+    build: ./docker-sonar
     depends_on:
-      - mysqlRc
+      - mysql
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
@@ -65,16 +78,30 @@ services:
       - sonarnet
     command: -Dsonar.web.context=/sonar
     ports:
-      - 9000:9000
-      - 9092:9092
+      - 9092:9000
     environment:
       - SONAR_JDBC_URL=jdbc:mysql://localhost:3306/sonar?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
     restart: always
 
+  zipkin:
+    build: ./docker-zipkin
+    ports:
+      - 9410:9410
+      - 9411:9411
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch
+    depends_on:
+      - elasticsearch
+    restart: always
+
 networks:
+  esnet:
   sonarnet:
     driver: bridge
 volumes:
+  elasticsearch-data:
+    driver: local
   sonarqube_conf:
   sonarqube_data:
   sonarqube_extensions:
