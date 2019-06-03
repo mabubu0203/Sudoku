@@ -54,6 +54,6 @@ name   | Front | Batch | Admin
 | Gradle            | 5.4.1 
 
 [HAL Browser]: http://localhost:8085/     "HAL Browser"
-[SudokuWeb]: http://localhost:8081/linkList     "SudokuWeb"
+[SudokuWeb]: http://localhost:8081/SudokuWeb/linkList     "SudokuWeb"
 [Zipkin]: http://localhost:9411/zipkin     "Zipkin"
 [PhpMyAdmin]: http://localhost:8021/     "PhpMyAdmin"
