@@ -1,6 +1,7 @@
 plugins {
-    id "org.flywaydb.flyway" version "5.2.4"
+    id "com.palantir.docker" version "0.22.1"
 }
+
 dependencies {
 
     // SpringBoot projects
@@ -30,14 +31,6 @@ dependencies {
     // JDBC Drivers
     implementation("mysql:mysql-connector-java")
 
-}
-
-flyway {
-    driver = 'com.mysql.cj.jdbc.Driver'
-    user = 'root'
-    password = 'root'
-    schemas = ['SUDOKU']
-    url = 'jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8'
 }
 
 springBoot {
