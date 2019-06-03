@@ -1,13 +1,6 @@
 # ----------------------------------------
 # CORE PROPERTIES
 # ----------------------------------------
-banner:
-  charset: UTF-8
-  location: classpath:banner.txt
-
-# ----------------------------------------
-# LOGGING PROPERTIES
-# ----------------------------------------
 logging:
   config: classpath:logback-spring.xml
   file: micro-web.log
@@ -23,14 +16,11 @@ logging:
   path: /var/log
 # spring.profiles.activeにデフォルトでアクティブなプロファイルを指定
 spring:
+  banner:
+    charset: UTF-8
+    location: classpath:banner.txt
   profiles:
     active: dev
     #    active: production
     #    active: test
     include: message
-  sleuth:
-    traceId128: true
-    sampler:
-      probability: 1.0
-  zipkin:
-    base-url: http://localhost:9411/ # default

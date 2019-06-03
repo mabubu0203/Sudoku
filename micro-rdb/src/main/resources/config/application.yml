@@ -1,13 +1,6 @@
 # ----------------------------------------
 # CORE PROPERTIES
 # ----------------------------------------
-banner:
-  charset: UTF-8
-  location: classpath:banner.txt
-
-# ----------------------------------------
-# LOGGING PROPERTIES
-# ----------------------------------------
 logging:
   config: classpath:logback-spring.xml
   file: micro-rdb.log
@@ -23,6 +16,9 @@ logging:
   path: /var/log
 # spring.profiles.activeにデフォルトでアクティブなプロファイルを指定
 spring:
+  banner:
+    charset: UTF-8
+    location: classpath:banner.txt
   profiles:
     active: dev
     #    active: production
