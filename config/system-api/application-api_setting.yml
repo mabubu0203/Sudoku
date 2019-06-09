@@ -4,6 +4,8 @@
 spring:
   aop:
     auto: true
+  application:
+    name: api
   beaninfo:
     ignore: true
   data:
@@ -32,10 +34,10 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: console
-  sleuth:
-    traceId128: true
-    sampler:
-      probability: 1.0
+    sleuth:
+      traceId128: true
+      sampler:
+        probability: 1.0
 logging:
   config: classpath:logback-spring.xml
   file: micro-api.log

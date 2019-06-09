@@ -5,4 +5,3 @@ spring:
       uri: http://localhost:9100/SudokuConfig/
       name: web
       profile: web_a
-      label: master
