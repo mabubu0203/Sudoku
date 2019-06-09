@@ -5,12 +5,25 @@ spring:
   aop:
     auto: true
   application:
-    name: web
+    name: rdb
   banner:
     charset: UTF-8
     location: classpath:banner.txt
   beaninfo:
     ignore: true
+  data:
+    jpa:
+      repositories:
+        enabled: true
+    rest:
+      base-path: /
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+  profiles: dev
   http:
     encoding:
       charset: UTF-8
@@ -27,18 +40,9 @@ spring:
       traceId128: true
       sampler:
         probability: 1.0
-  thymeleaf:
-    cache: false
-    check-template: true
-    check-template-location: true
-    enabled: true
-    encoding: UTF-8
-    mode: HTML
-    prefix: classpath:/templates/
-    suffix: .html
 logging:
   config: classpath:logback-spring.xml
-  file: micro-web.log
+  file: micro-rdb.log
   level:
     org:
       hibernate:
@@ -49,3 +53,4 @@ logging:
               BasicBinder: TRACE
       springframework: INFO
   path: /var/log
+

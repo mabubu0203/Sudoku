@@ -5,8 +5,32 @@ spring:
   main:
     zipkin:
       base-url: http://localhost:9411/ # default
-  profiles:
-    include: message,setting
+  # ----------------------------------------
+  # DATA PROPERTIES
+  # ----------------------------------------
+  datasource:
+    continue-on-error: false
+    driverClassName: com.mysql.cj.jdbc.Driver
+    generate-unique-name: false
+    jmx-enabled: true
+    password: root
+    sql-script-encoding: UTF-8
+    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0.9
+    check-location: false
+    locations: classpath:/db/migration/mysql
+    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+  h2:
+    console:
+      enabled: false
   # ----------------------------------------
   # DEVTOOLS PROPERTIES
   # ----------------------------------------
@@ -29,9 +53,9 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 9023
+  port: 9013
   servlet:
-    context-path: /SudokuWeb
+    context-path: /SudokuRdb
     jsp:
       registered: false
   ssl:
@@ -86,6 +110,10 @@ management:
       enabled: true
     jmx:
       enabled: false
+    jolokia:
+      enabled: true
+      path: /jolokia
+      sensitive: true
     liquibase:
       enabled: false
     logfile:
@@ -110,10 +138,12 @@ management:
       enabled: false
     trace:
       enabled: false
+    web:
+      enabled: true
   endpoints:
     web:
       exposure:
-        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,logfile,loggers,mappings,metrics
+        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,jolokia,logfile,loggers,mappings,metrics,web
   health:
     db:
       enabled: true
@@ -128,5 +158,7 @@ management:
       enabled: true
     git:
       enabled: true
+  jolokia:
+    enabled: true
 system:
-  name: system-web_c
+  name: system-rdb_c

@@ -5,5 +5,5 @@ spring:
     config:
       server:
         git:
-          search-paths: config/system-api_a,config/system-api_b,config/system-api_c,config/system-rdb_a,config/system-rdb_b,config/system-rdb_c,config/system-web
+          search-paths: config/system-api,config/system-rdb,config/system-web
           uri: https://github.com/mabubu0203/Sudoku.git

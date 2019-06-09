@@ -4,13 +4,22 @@
 spring:
   aop:
     auto: true
-  application:
-    name: web
-  banner:
-    charset: UTF-8
-    location: classpath:banner.txt
   beaninfo:
     ignore: true
+  data:
+    jpa:
+      repositories:
+        enabled: true
+    rest:
+      base-path: /
+  jackson:
+    default-property-inclusion: non_null
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
   http:
     encoding:
       charset: UTF-8
@@ -23,22 +32,13 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: console
-    sleuth:
-      traceId128: true
-      sampler:
-        probability: 1.0
-  thymeleaf:
-    cache: false
-    check-template: true
-    check-template-location: true
-    enabled: true
-    encoding: UTF-8
-    mode: HTML
-    prefix: classpath:/templates/
-    suffix: .html
+  sleuth:
+    traceId128: true
+    sampler:
+      probability: 1.0
 logging:
   config: classpath:logback-spring.xml
-  file: micro-web.log
+  file: micro-api.log
   level:
     org:
       hibernate:
@@ -49,3 +49,4 @@ logging:
               BasicBinder: TRACE
       springframework: INFO
   path: /var/log
+
