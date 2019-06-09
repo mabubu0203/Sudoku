@@ -10,6 +10,9 @@ buildscript {
         // SpringBootAdmin
         springbootAdminVersion = springbootAdminVersion
 
+        // SpringCloudVersion
+        springCloudVersion = springCloudVersion
+
         // SpringCloudSleuth(Zipkin)
         cloudZipkinVersion = springCloudZipkinVersion
 
@@ -109,6 +112,9 @@ project(':micro-common') {
     dependencies {
         implementation project(':micro-interfaces')
     }
+}
+
+project(':micro-config') {
 }
 
 project(':micro-interfaces') {

@@ -3,6 +3,7 @@ include(
         'micro-admin',
         'micro-api',
         'micro-common',
+        'micro-config',
         'micro-interfaces',
         'micro-rdb',
         'micro-validation',

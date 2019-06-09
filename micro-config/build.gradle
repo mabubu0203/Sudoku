@@ -1,0 +1,21 @@
+dependencies {
+
+    // SpringBoot projects
+    implementation("org.springframework.cloud:spring-cloud-config-server")
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+springBoot {
+    buildInfo()
+    mainClassName = 'com.mabubu0203.sudoku.config.ConfigApp'
+}
+
+war {
+    archiveName = 'Config.war'
+}

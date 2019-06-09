@@ -1,0 +1,46 @@
+# ----------------------------------------
+# CORE PROPERTIES
+# ----------------------------------------
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          search-paths: config/system-a,config/system-b
+          uri: https://github.com/mabubu0203/Sudoku.git
+  jackson:
+    default-property-inclusion: non_null
+  profiles: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  info:
+    build:
+      location: classpath:META-INF/build-info.properties
+    git:
+      location: classpath:git.properties
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: console
+# ----------------------------------------
+# WEB PROPERTIES
+# ----------------------------------------
+server:
+  port: 8020
+  servlet:
+    context-path: /SudokuConfig
+    jsp:
+      registered: false
+  ssl:
+    enabled: false
+  tomcat:
+    accesslog:
+      directory: logs
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern: common
+      prefix: access_log
+      rotate: true
+      suffix: .log
+    uri-encoding: UTF-8
