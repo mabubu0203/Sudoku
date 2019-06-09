@@ -56,7 +56,7 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 8081
+  port: 9021
   servlet:
     context-path: /SudokuWeb
     jsp:
