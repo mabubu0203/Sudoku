@@ -113,7 +113,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,logfile,loggers,mappings,metrics
+        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,logfile,loggers,refresh,mappings,metrics
   health:
     db:
       enabled: true

@@ -3,6 +3,8 @@ spring:
     name: api
   cloud:
     config:
+      discovery:
+        service-id: config
       enabled: true
       uri: http://localhost:9100/SudokuConfig/
       name: api
