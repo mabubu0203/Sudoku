@@ -60,7 +60,7 @@ name   | Front | Batch | Admin
 | api1号機           | 9001
 | api2号機           | 9002
 | api3号機           | 9003
-| config            | 9000
+| config            | 9100
 | rdb1号機           | 9011
 | rdb2号機           | 9012
 | rdb3号機           | 9013

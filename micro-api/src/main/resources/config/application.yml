@@ -1,27 +1,8 @@
-# ----------------------------------------
-# CORE PROPERTIES
-# ----------------------------------------
-logging:
-  config: classpath:logback-spring.xml
-  file: micro-api.log
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
-      springframework: INFO
-  path: /var/log
-# spring.profiles.activeにデフォルトでアクティブなプロファイルを指定
 spring:
-  banner:
-    charset: UTF-8
-    location: classpath:banner.txt
-  profiles:
-    active: dev
-    #    active: production
-    #    active: test
-    include: message
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:9100/SudokuConfig/
+      name: api_a
+      profile: dev
 
