@@ -2,4 +2,4 @@ sudoku:
   uri:
     api: http://localhost:8085/SudokuApi/
 system:
-  name: system-web_b
+  name: system-web_c
