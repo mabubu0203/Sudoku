@@ -1,0 +1,55 @@
+# ----------------------------------------
+# CORE PROPERTIES
+# ----------------------------------------
+spring:
+  aop:
+    auto: true
+  application:
+    name: web
+    banner:
+      charset: UTF-8
+      location: classpath:banner.txt
+  beaninfo:
+    ignore: true
+  profiles:
+    include: message,setting
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  info:
+    build:
+      location: classpath:META-INF/build-info.properties
+    git:
+      location: classpath:git.properties
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: console
+    sleuth:
+      traceId128: true
+      sampler:
+        probability: 1.0
+    zipkin:
+      base-url: http://localhost:9411/ # default
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+logging:
+  config: classpath:logback-spring.xml
+  file: micro-web.log
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+      springframework: INFO
+  path: /var/log

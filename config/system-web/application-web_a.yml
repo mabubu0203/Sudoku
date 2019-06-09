@@ -2,38 +2,9 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
-  aop:
-    auto: true
-  beaninfo:
-    ignore: true
-  profiles: dev
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-  info:
-    build:
-      location: classpath:META-INF/build-info.properties
-    git:
-      location: classpath:git.properties
   main:
-    allow-bean-definition-overriding: true
-    banner-mode: console
-    sleuth:
-      traceId128: true
-      sampler:
-        probability: 1.0
     zipkin:
       base-url: http://localhost:9411/ # default
-  thymeleaf:
-    cache: false
-    check-template: true
-    check-template-location: true
-    enabled: true
-    encoding: UTF-8
-    mode: HTML
-    prefix: classpath:/templates/
-    suffix: .html
   # ----------------------------------------
   # DEVTOOLS PROPERTIES
   # ----------------------------------------
