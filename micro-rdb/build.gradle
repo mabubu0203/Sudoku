@@ -12,6 +12,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.cloud:spring-cloud-starter-zipkin")
+
     // EclipseCollections
     implementation("org.eclipse.collections:eclipse-collections:$ecVersion")
     implementation("org.eclipse.collections:eclipse-collections-api:$ecVersion")
@@ -31,6 +34,12 @@ dependencies {
     // JDBC Drivers
     implementation("mysql:mysql-connector-java")
 
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 springBoot {

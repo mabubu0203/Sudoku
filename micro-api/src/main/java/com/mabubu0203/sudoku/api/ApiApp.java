@@ -1,6 +1,8 @@
 package com.mabubu0203.sudoku.api;
 
+import com.mabubu0203.sudoku.api.config.ApplicationConfig;
 import com.mabubu0203.sudoku.rdb.RdbCore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -20,6 +22,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EntityScan(basePackageClasses = {ApiApp.class})
 @EnableScheduling
 public class ApiApp extends SpringBootServletInitializer {
+
+    @Autowired
+    ApplicationConfig config;
 
     /**
      * SpringBoot起動methodです。<br>

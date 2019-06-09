@@ -13,9 +13,6 @@ buildscript {
         // SpringCloudVersion
         springCloudVersion = springCloudVersion
 
-        // SpringCloudSleuth(Zipkin)
-        cloudZipkinVersion = springCloudZipkinVersion
-
         // EclipseCollections
         ecVersion = eclipsecollectionsVersion
 
