@@ -1,0 +1,159 @@
+# ----------------------------------------
+# CORE PROPERTIES
+# ----------------------------------------
+spring:
+  aop:
+    auto: true
+  beaninfo:
+    ignore: true
+  profiles: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  info:
+    build:
+      location: classpath:META-INF/build-info.properties
+    git:
+      location: classpath:git.properties
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: console
+    sleuth:
+      traceId128: true
+      sampler:
+        probability: 1.0
+    zipkin:
+      base-url: http://localhost:9411/ # default
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+  # ----------------------------------------
+  # DEVTOOLS PROPERTIES
+  # ----------------------------------------
+  devtools:
+    livereload:
+      enabled: true
+      port: 35219
+    restart:
+      enabled: true
+      poll-interval: 1000
+    quiet-period: 400
+  remote:
+    debug:
+      enabled: false
+      local-port: 8000
+    restart:
+      enabled: false
+      secret-header-name: X-AUTH-TOKEN
+# ----------------------------------------
+# WEB PROPERTIES
+# ----------------------------------------
+server:
+  port: 9022
+  servlet:
+    context-path: /SudokuWeb
+    jsp:
+      registered: false
+  ssl:
+    enabled: false
+  tomcat:
+    accesslog:
+      directory: logs
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern: common
+      prefix: access_log
+      rotate: true
+      suffix: .log
+    uri-encoding: UTF-8
+# ----------------------------------------
+# SECURITY PROPERTIES
+# ----------------------------------------
+security:
+  basic:
+    enabled: false
+  enable-csrf: false
+  headers:
+    cache: false
+    content-type: false
+    frame: false
+    xss: false
+    require-ssl: false
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+  cloudfoundry:
+    enabled: false
+  endpoint:
+    auditevents:
+      enabled: true
+    beans:
+      enabled: true
+    conditions:
+      enabled: true
+    configprops:
+      enabled: true
+    env:
+      enabled: true
+    flyway:
+      enabled: true
+    health:
+      enabled: true
+    heapdump:
+      enabled: true
+    info:
+      enabled: true
+    jmx:
+      enabled: false
+    liquibase:
+      enabled: false
+    logfile:
+      enabled: true
+      path: /logfile
+      sensitive: true
+    loggers:
+      enabled: true
+    mappings:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    scheduledtasks:
+      enabled: false
+    sessions:
+      enabled: false
+    shutdown:
+      enabled: false
+    threaddump:
+      enabled: false
+    trace:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,logfile,loggers,mappings,metrics
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: true
+  info:
+    build:
+      enabled: true
+    defaults:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+system:
+  name: system-web_b

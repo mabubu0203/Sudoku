@@ -23,6 +23,8 @@ spring:
     location: classpath:banner.txt
   profiles:
     active: dev
-    #    active: production
+    #    active: web_a
+    #    active: web_b
+    #    active: web_c
     #    active: test
     include: message

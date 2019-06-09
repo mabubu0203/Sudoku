@@ -56,7 +56,7 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 9023
+  port: 9021
   servlet:
     context-path: /SudokuWeb
     jsp:
@@ -155,3 +155,5 @@ management:
       enabled: true
     git:
       enabled: true
+system:
+  name: system-web_a

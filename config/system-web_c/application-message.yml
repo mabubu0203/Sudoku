@@ -1,5 +1,0 @@
-sudoku:
-  uri:
-    api: http://localhost:9003/SudokuApi/
-system:
-  name: system-web_c
