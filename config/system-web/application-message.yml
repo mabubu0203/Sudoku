@@ -1,0 +1,3 @@
+sudoku:
+  uri:
+    api: http://localhost:9001/SudokuApi/
