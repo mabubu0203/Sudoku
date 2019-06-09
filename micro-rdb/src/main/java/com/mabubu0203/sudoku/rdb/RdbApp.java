@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
  * SpringBoot起動クラスです。<br>
@@ -14,6 +15,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @since 1.0
  */
 @SpringBootApplication
+@RefreshScope
 public class RdbApp extends SpringBootServletInitializer {
 
     @Autowired

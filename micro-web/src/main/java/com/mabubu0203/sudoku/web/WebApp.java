@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -24,6 +25,7 @@ import java.util.concurrent.Executor;
 @SpringBootApplication
 @EntityScan(basePackageClasses = {WebApp.class})
 @EnableScheduling
+@RefreshScope
 public class WebApp extends SpringBootServletInitializer implements SchedulingConfigurer {
 
     @Autowired

@@ -4,11 +4,12 @@ plugins {
 
 dependencies {
 
-    // SpringBoot projects
+    // SpringBoot Projects
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
 
+    // Spring Projects
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.cloud:spring-cloud-starter-zipkin")
 

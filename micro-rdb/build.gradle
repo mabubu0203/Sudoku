@@ -8,12 +8,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
-    implementation("org.springframework.data:spring-data-rest-hal-browser")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
+    // Spring Projects
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.cloud:spring-cloud-starter-zipkin")
+    implementation("org.springframework.data:spring-data-rest-hal-browser")
 
     // EclipseCollections
     implementation("org.eclipse.collections:eclipse-collections:$ecVersion")
