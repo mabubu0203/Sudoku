@@ -6,11 +6,6 @@ spring:
     auto: true
   beaninfo:
     ignore: true
-  cloud:
-    config:
-      uri: http://localhost:8020
-      name: application
-      profile: a
   data:
     jpa:
       repositories:

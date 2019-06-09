@@ -13,9 +13,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    implementation("org.springframework.data:spring-data-commons")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.cloud:spring-cloud-starter-zipkin")
 
-    implementation("org.springframework.cloud:spring-cloud-starter-zipkin:$cloudZipkinVersion")
+    implementation("org.springframework.data:spring-data-commons")
 
     // EclipseCollections
     implementation("org.eclipse.collections:eclipse-collections:$ecVersion")
@@ -30,6 +31,12 @@ dependencies {
     // ModelMapper
     implementation("org.modelmapper:modelmapper:$modelmapperVersion")
 
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 springBoot {

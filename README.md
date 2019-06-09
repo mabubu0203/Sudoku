@@ -53,6 +53,21 @@ name   | Front | Batch | Admin
 | DockerCompose     | 1.24.0
 | Gradle            | 5.4.1 
 
+### Ports
+
+| name              | port
+| :---------------- | :-------
+| api1号機           | 9001
+| api2号機           | 9002
+| api3号機           | 9003
+| config            | 9000
+| rdb1号機           | 9011
+| rdb2号機           | 9012
+| rdb3号機           | 9013
+| web1号機           | 9021
+| web2号機           | 9022
+| web3号機           | 9023
+
 [HAL Browser]: http://localhost:8085/     "HAL Browser"
 [SudokuWeb]: http://localhost:8081/SudokuWeb/linkList     "SudokuWeb"
 [Zipkin]: http://localhost:9411/zipkin     "Zipkin"

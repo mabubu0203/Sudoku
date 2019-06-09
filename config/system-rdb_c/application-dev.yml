@@ -6,19 +6,12 @@ spring:
     auto: true
   beaninfo:
     ignore: true
-  cloud:
-    config:
-      uri: http://localhost:8020
-      name: application
-      profile: a
   data:
     jpa:
       repositories:
         enabled: true
     rest:
       base-path: /
-  jackson:
-    default-property-inclusion: non_null
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -38,12 +31,12 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: console
-  sleuth:
-    traceId128: true
-    sampler:
-      probability: 1.0
-  zipkin:
-    base-url: http://localhost:9411/ # default
+    sleuth:
+      traceId128: true
+      sampler:
+        probability: 1.0
+    zipkin:
+      base-url: http://localhost:9411/ # default
   # ----------------------------------------
   # DATA PROPERTIES
   # ----------------------------------------
@@ -56,6 +49,17 @@ spring:
     sql-script-encoding: UTF-8
     url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
     username: root
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0.9
+    check-location: false
+    locations: classpath:/db/migration/mysql
+    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
   h2:
     console:
       enabled: false
@@ -81,9 +85,9 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 8085
+  port: 8075
   servlet:
-    context-path: /SudokuApi
+    context-path: /SudokuRdb
     jsp:
       registered: false
   ssl:

@@ -6,25 +6,6 @@ spring:
     auto: true
   beaninfo:
     ignore: true
-  cloud:
-    config:
-      uri: http://localhost:8020
-      name: application
-      profile: a
-  data:
-    jpa:
-      repositories:
-        enabled: true
-    rest:
-      base-path: /
-  jackson:
-    default-property-inclusion: non_null
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
   profiles: dev
   http:
     encoding:
@@ -38,27 +19,21 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: console
-  sleuth:
-    traceId128: true
-    sampler:
-      probability: 1.0
-  zipkin:
-    base-url: http://localhost:9411/ # default
-  # ----------------------------------------
-  # DATA PROPERTIES
-  # ----------------------------------------
-  datasource:
-    continue-on-error: false
-    driverClassName: com.mysql.cj.jdbc.Driver
-    generate-unique-name: false
-    jmx-enabled: true
-    password: root
-    sql-script-encoding: UTF-8
-    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-  h2:
-    console:
-      enabled: false
+    sleuth:
+      traceId128: true
+      sampler:
+        probability: 1.0
+    zipkin:
+      base-url: http://localhost:9411/ # default
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
   # ----------------------------------------
   # DEVTOOLS PROPERTIES
   # ----------------------------------------
@@ -81,9 +56,9 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 8085
+  port: 8081
   servlet:
-    context-path: /SudokuApi
+    context-path: /SudokuWeb
     jsp:
       registered: false
   ssl:
@@ -138,10 +113,6 @@ management:
       enabled: true
     jmx:
       enabled: false
-    jolokia:
-      enabled: true
-      path: /jolokia
-      sensitive: true
     liquibase:
       enabled: false
     logfile:
@@ -166,12 +137,10 @@ management:
       enabled: false
     trace:
       enabled: false
-    web:
-      enabled: true
   endpoints:
     web:
       exposure:
-        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,jolokia,logfile,loggers,mappings,metrics,web
+        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,logfile,loggers,mappings,metrics
   health:
     db:
       enabled: true
@@ -186,5 +155,3 @@ management:
       enabled: true
     git:
       enabled: true
-  jolokia:
-    enabled: true
