@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: rdb
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:9100/SudokuConfig/
+      name: rdb_a
+      profile: dev
+      label: master

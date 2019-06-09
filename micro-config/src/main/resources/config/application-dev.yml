@@ -2,12 +2,6 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
-  cloud:
-    config:
-      server:
-        git:
-          search-paths: config/system-api_a,config/system-api_b,config/system-api_c,config/system-rdb_a,config/system-rdb_b,config/system-rdb_c,config/system-web_a,config/system-web_b,config/system-web_c
-          uri: https://github.com/mabubu0203/Sudoku.git
   jackson:
     default-property-inclusion: non_null
   profiles: dev

@@ -1,7 +1,10 @@
 spring:
+  application:
+    name: api
   cloud:
     config:
       enabled: true
       uri: http://localhost:9100/SudokuConfig/
-      name: web_a
+      name: api_a
       profile: dev
+      label: master
