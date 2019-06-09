@@ -1,3 +1,4 @@
 sudoku:
   uri:
     api: http://localhost:9001/SudokuApi/
+    rdb: http://localhost:9011/SudokuRdb/

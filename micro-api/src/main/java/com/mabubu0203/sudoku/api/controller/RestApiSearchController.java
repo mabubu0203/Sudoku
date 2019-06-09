@@ -14,9 +14,10 @@ import com.mabubu0203.sudoku.validator.constraint.AnswerKey;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import io.micrometer.core.instrument.util.StringUtils;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +32,6 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH},
@@ -41,8 +41,11 @@ import org.springframework.web.bind.annotation.*;
 )
 public class RestApiSearchController extends RestBaseController {
 
-    private final SearchService service;
-    private final ModelMapper modelMapper;
+    @Autowired
+    private SearchService service;
+    @Autowired
+    @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
+    private ModelMapper modelMapper;
 
     /**
      * 指定した{@code type}と{@code keyHash}より数独を取得します。<br>
