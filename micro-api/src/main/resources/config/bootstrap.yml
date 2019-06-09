@@ -5,6 +5,5 @@ spring:
     config:
       enabled: true
       uri: http://localhost:9100/SudokuConfig/
-      name: api_a
-      profile: dev
-      label: master
+      name: api
+      profile: api_a
