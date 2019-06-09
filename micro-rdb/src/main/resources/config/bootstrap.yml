@@ -5,6 +5,5 @@ spring:
     config:
       enabled: true
       uri: http://localhost:9100/SudokuConfig/
-      name: rdb_a
-      profile: dev
-      label: master
+      name: rdb
+      profile: rdb_a
