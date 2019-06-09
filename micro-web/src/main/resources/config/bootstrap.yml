@@ -1,10 +1,8 @@
 spring:
-  application:
-    name: web
   cloud:
     config:
       enabled: true
       uri: http://localhost:9100/SudokuConfig/
-      name: web_a
+      name: web
       profile: dev
       label: master
