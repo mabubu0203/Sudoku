@@ -1,6 +1,8 @@
 package com.mabubu0203.sudoku.web;
 
+import com.mabubu0203.sudoku.web.config.ApplicationConfig;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -25,6 +27,9 @@ import java.util.concurrent.Executor;
 @EntityScan(basePackageClasses = {WebApp.class})
 @EnableScheduling
 public class WebApp extends SpringBootServletInitializer implements SchedulingConfigurer {
+
+    @Autowired
+    ApplicationConfig config;
 
     /**
      * SpringBoot起動methodです。<br>

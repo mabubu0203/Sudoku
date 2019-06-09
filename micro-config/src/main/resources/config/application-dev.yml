@@ -2,12 +2,6 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
-  cloud:
-    config:
-      server:
-        git:
-          search-paths: config/system-api_a,config/system-api_b,system-api_c
-          uri: https://github.com/mabubu0203/Sudoku.git
   jackson:
     default-property-inclusion: non_null
   profiles: dev
@@ -27,7 +21,7 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 9000
+  port: 9100
   servlet:
     context-path: /SudokuConfig
     jsp:
