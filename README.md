@@ -24,8 +24,10 @@ name   | Front | Batch | Admin
     `$ cd docker`  
     `$ docker-compose -f docker-compose.yml build`  
     `$ docker-compose -f docker-compose.yml up -d`  
-3. GradleタスクよりbootRun(`:micro-api -> Tasks -> application -> bootRun`)
-4. GradleタスクよりbootRun(`:micro-web -> Tasks -> application -> bootRun`)
+3. GradleタスクよりbootRun(`:micro-config -> Tasks -> application -> bootRun`)
+4. GradleタスクよりbootRun(`:micro-rdb -> Tasks -> application -> bootRun`)
+5. GradleタスクよりbootRun(`:micro-api -> Tasks -> application -> bootRun`)
+6. GradleタスクよりbootRun(`:micro-web -> Tasks -> application -> bootRun`)
 
 ## 停止方法
 
@@ -68,7 +70,7 @@ name   | Front | Batch | Admin
 | web2号機           | 9022
 | web3号機           | 9023
 
-[HAL Browser]: http://localhost:8085/     "HAL Browser"
-[SudokuWeb]: http://localhost:8081/SudokuWeb/linkList     "SudokuWeb"
+[HAL Browser]: http://localhost:9011/     "HAL Browser"
+[SudokuWeb]: http://localhost:9021/SudokuWeb/linkList     "SudokuWeb"
 [Zipkin]: http://localhost:9411/zipkin     "Zipkin"
 [PhpMyAdmin]: http://localhost:8021/     "PhpMyAdmin"

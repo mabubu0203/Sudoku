@@ -11,9 +11,10 @@ import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +36,16 @@ import java.util.stream.Stream;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    private final AnswerInfoService answerInfoService;
-    private final ScoreInfoService scoreInfoService;
-    private final ModelMapper modelMapper;
+    @Autowired
+    private AnswerInfoService answerInfoService;
+    @Autowired
+    private ScoreInfoService scoreInfoService;
+    @Autowired
+    @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
+    private ModelMapper modelMapper;
 
     @Transactional(readOnly = true)
     @Override

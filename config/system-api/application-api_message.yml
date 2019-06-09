@@ -1,0 +1,4 @@
+sudoku:
+  uri:
+    rdb: http://localhost:9011/SudokuRdb/
+    web: http://localhost:9021/SudokuWeb/

@@ -12,9 +12,10 @@ import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;
 import com.mabubu0203.sudoku.rdb.specification.ScoreInfoSpecifications;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.SudokuUtils;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -35,12 +36,14 @@ import java.util.stream.Stream;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
 @Service
 public class AnswerInfoServiceImpl implements AnswerInfoService {
 
-    private final AnswerInfoRepository answerInfoRepository;
-    private final ModelMapper modelMapper;
+    @Autowired
+    private AnswerInfoRepository answerInfoRepository;
+    @Autowired
+    @Qualifier("com.mabubu0203.sudoku.rdb.config.ModelMapperConfiguration.ModelMapper")
+    private ModelMapper modelMapper;
 
     @Override
     public AnswerInfoTbl insert(NumberPlaceBean numberplaceBean) {
