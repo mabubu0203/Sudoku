@@ -2,41 +2,11 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
-  aop:
-    auto: true
-  beaninfo:
-    ignore: true
-  data:
-    jpa:
-      repositories:
-        enabled: true
-    rest:
-      base-path: /
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-  profiles: dev
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-  info:
-    build:
-      location: classpath:META-INF/build-info.properties
-    git:
-      location: classpath:git.properties
   main:
-    allow-bean-definition-overriding: true
-    banner-mode: console
-    sleuth:
-      traceId128: true
-      sampler:
-        probability: 1.0
     zipkin:
       base-url: http://localhost:9411/ # default
+  profiles:
+    include: message,setting
   # ----------------------------------------
   # DATA PROPERTIES
   # ----------------------------------------
@@ -49,17 +19,6 @@ spring:
     sql-script-encoding: UTF-8
     url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
     username: root
-  flyway:
-    baseline-on-migrate: true
-    baseline-version: 0.9
-    check-location: false
-    locations: classpath:/db/migration/mysql
-    url: jdbc:mysql://localhost:3306/SUDOKU?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-    password: root
-    sql-migration-prefix: V
-    sql-migration-separator: __
-    sql-migration-suffixes: .sql
   h2:
     console:
       enabled: false
@@ -85,9 +44,9 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 9011
+  port: 9001
   servlet:
-    context-path: /SudokuRdb
+    context-path: /SudokuApi
     jsp:
       registered: false
   ssl:
@@ -192,3 +151,5 @@ management:
       enabled: true
   jolokia:
     enabled: true
+system:
+  name: system-api_b

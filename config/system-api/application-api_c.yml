@@ -2,43 +2,11 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
-  aop:
-    auto: true
-  beaninfo:
-    ignore: true
-  data:
-    jpa:
-      repositories:
-        enabled: true
-    rest:
-      base-path: /
-  jackson:
-    default-property-inclusion: non_null
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-  profiles: dev
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-  info:
-    build:
-      location: classpath:META-INF/build-info.properties
-    git:
-      location: classpath:git.properties
   main:
-    allow-bean-definition-overriding: true
-    banner-mode: console
-  sleuth:
-    traceId128: true
-    sampler:
-      probability: 1.0
-  zipkin:
-    base-url: http://localhost:9411/ # default
+    zipkin:
+      base-url: http://localhost:9411/ # default
+  profiles:
+    include: message,setting
   # ----------------------------------------
   # DATA PROPERTIES
   # ----------------------------------------
@@ -76,7 +44,7 @@ spring:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
-  port: 9003
+  port: 9001
   servlet:
     context-path: /SudokuApi
     jsp:
@@ -183,3 +151,5 @@ management:
       enabled: true
   jolokia:
     enabled: true
+system:
+  name: system-api_c
