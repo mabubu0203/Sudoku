@@ -1,3 +1,44 @@
+spring:
+  application:
+    name: config
+  banner:
+    charset: UTF-8
+    location: classpath:banner.txt
+  jackson:
+    default-property-inclusion: non_null
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  info:
+    build:
+      location: classpath:META-INF/build-info.properties
+    git:
+      location: classpath:git.properties
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: console
+# ----------------------------------------
+# WEB PROPERTIES
+# ----------------------------------------
+server:
+  port: 9100
+  servlet:
+    context-path: /SudokuConfig
+    jsp:
+      registered: false
+  ssl:
+    enabled: false
+  tomcat:
+    accesslog:
+      directory: logs
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern: common
+      prefix: access_log
+      rotate: true
+      suffix: .log
+    uri-encoding: UTF-8
 # ----------------------------------------
 # CORE PROPERTIES
 # ----------------------------------------
@@ -6,24 +47,6 @@ logging:
   file: micro-config.log
   level:
     org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
       springframework: INFO
   path: /var/log
-# spring.profiles.activeにデフォルトでアクティブなプロファイルを指定
-spring:
-  application:
-    name: config
-  banner:
-    charset: UTF-8
-    location: classpath:banner.txt
-  profiles:
-    active: dev
-    #    active: production
-    #    active: test
-    include: message
 
