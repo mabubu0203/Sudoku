@@ -6,6 +6,9 @@ spring:
     auto: true
   application:
     name: api
+  banner:
+    charset: UTF-8
+    location: classpath:banner.txt
   beaninfo:
     ignore: true
   data:

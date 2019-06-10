@@ -24,7 +24,7 @@ public class ConfigApp extends SpringBootServletInitializer {
      * @since 1.0
      */
     public static void main(final String[] args) {
-        new SpringApplicationBuilder(ConfigApp.class).profiles("dev").run(args);
+        new SpringApplicationBuilder(ConfigApp.class).run(args);
     }
 
     @Override
