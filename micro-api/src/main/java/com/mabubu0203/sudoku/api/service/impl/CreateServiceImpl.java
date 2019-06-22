@@ -3,7 +3,7 @@ package com.mabubu0203.sudoku.api.service.impl;
 import com.mabubu0203.sudoku.api.service.CreateService;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
+import com.mabubu0203.sudoku.logic.SudokuModule;
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
@@ -31,11 +31,12 @@ public class CreateServiceImpl implements CreateService {
 
     private final AnswerInfoService answerInfoService;
     private final ScoreInfoService scoreInfoService;
+    private final SudokuModule sudokuModule;
 
     @Override
     public ResponseEntity<NumberPlaceBean> generate(final int type) {
 
-        Optional<NumberPlaceBean> numberPlaceBeanOpt = Optional.ofNullable(new Sudoku(type).generate());
+        Optional<NumberPlaceBean> numberPlaceBeanOpt = Optional.ofNullable(sudokuModule.generate(type));
         if (numberPlaceBeanOpt.isPresent()) {
             return new ResponseEntity<>(numberPlaceBeanOpt.get(), HttpStatus.CREATED);
         } else {

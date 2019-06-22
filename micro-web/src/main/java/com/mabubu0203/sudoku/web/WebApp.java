@@ -1,5 +1,6 @@
 package com.mabubu0203.sudoku.web;
 
+import com.mabubu0203.sudoku.CommonCore;
 import com.mabubu0203.sudoku.web.config.ApplicationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -23,13 +25,14 @@ import java.util.concurrent.Executor;
  * @since 1.0
  */
 @SpringBootApplication
+@Import(value = {CommonCore.class})
 @EntityScan(basePackageClasses = {WebApp.class})
 @EnableScheduling
 @RefreshScope
 public class WebApp extends SpringBootServletInitializer implements SchedulingConfigurer {
 
     @Autowired
-    ApplicationConfig config;
+    private ApplicationConfig config;
 
     /**
      * SpringBoot起動methodです。<br>
