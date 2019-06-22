@@ -1,3 +1,7 @@
+plugins {
+    id "com.palantir.docker" version "0.22.1"
+}
+
 dependencies {
 
     // Spring Projects
