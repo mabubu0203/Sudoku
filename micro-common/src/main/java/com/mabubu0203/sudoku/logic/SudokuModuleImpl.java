@@ -218,7 +218,14 @@ public class SudokuModuleImpl implements SudokuModule {
         int y = 0;
 
         try {
-
+            // TODO:移植中
+            while (itr.hasNext()) {
+                SudokuUtils.setCell(moduleBean.getNumberPlaceBean(), itr.next(), moduleBean.getNumberPlaceArray()[y][x++]);
+                if (x == moduleBean.getSize()) {
+                    x = 0;
+                    y++;
+                }
+            }
         } catch (SudokuApplicationException e) {
             e.printStackTrace();
             log.error("やらかしています。");
