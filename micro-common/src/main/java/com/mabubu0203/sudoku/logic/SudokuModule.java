@@ -99,4 +99,22 @@ public interface SudokuModule {
      */
     @Deprecated
     String convertToSha256(String str);
+
+    /**
+     * 数独を0から生成し返却します。
+     *
+     * @author uratamanabu
+     * @version 1.0
+     * @since 1.0
+     */
+    NumberPlaceBean generate(int type);
+
+    /**
+     * 数独をマスキングして返却します。
+     *
+     * @author uratamanabu
+     * @version 1.0
+     * @since 1.0
+     */
+    NumberPlaceBean filteredOfLevel(int type, NumberPlaceBean bean, String level);
 }

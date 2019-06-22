@@ -5,7 +5,7 @@ import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.RecordBean;
 import com.mabubu0203.sudoku.interfaces.request.UpdateSudokuScoreRequestBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
-import com.mabubu0203.sudoku.logic.deprecated.Sudoku;
+import com.mabubu0203.sudoku.logic.SudokuModule;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.ESMapWrapUtils;
 import com.mabubu0203.sudoku.utils.SudokuUtils;
@@ -16,6 +16,7 @@ import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import com.mabubu0203.sudoku.web.utils.CompareUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -44,6 +45,9 @@ public class PlayHelper {
 
     @Value("${sudoku.uri.api}")
     private String sudokuUriApi;
+
+    @Autowired
+    private SudokuModule sudokuModule;
 
     /**
      * <br>
@@ -95,7 +99,7 @@ public class PlayHelper {
             NumberPlaceBean numberPlaceBean = generateEntity.getBody();
             // 一件から虫食いのリストを取得します。
             numberPlaceBean =
-                    new Sudoku(form.getSelectType()).filteredOfLevel(numberPlaceBean, form.getSelectLevel());
+                    sudokuModule.filteredOfLevel(form.getSelectType(), numberPlaceBean, form.getSelectLevel());
             PlayForm playForm = new ModelMapper().map(numberPlaceBean, PlayForm.class);
             playForm.setCount(0);
             playForm.setScore(SudokuUtils.calculationScore(form.getSelectType(), form.getSelectLevel()));

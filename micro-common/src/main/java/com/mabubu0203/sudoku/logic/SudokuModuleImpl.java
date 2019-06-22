@@ -164,30 +164,17 @@ public class SudokuModuleImpl implements SudokuModule {
         }
     }
 
-    /**
-     * 数独を0から生成し返却します。
-     *
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    public NumberPlaceBean generate() {
-        // TODO:
-        SudokuModuleBean moduleBean = new SudokuModuleBean(0);
+    @Override
+    public NumberPlaceBean generate(int type) {
+        SudokuModuleBean moduleBean = new SudokuModuleBean(type);
         createAnswerArray(moduleBean);
         arrayConvertBean(moduleBean);
         return moduleBean.getNumberPlaceBean();
     }
 
-    /**
-     * 数独をマスキングして返却します。
-     *
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
-     */
-    public NumberPlaceBean filteredOfLevel(NumberPlaceBean bean, String level) {
-        SudokuModuleBean moduleBean = new SudokuModuleBean(0);
+    @Override
+    public NumberPlaceBean filteredOfLevel(int type, NumberPlaceBean bean, String level) {
+        SudokuModuleBean moduleBean = new SudokuModuleBean(type);
         moduleBean.setNumberPlaceBean(bean);
         filteredOfLevel(moduleBean, level);
         return moduleBean.getNumberPlaceBean();

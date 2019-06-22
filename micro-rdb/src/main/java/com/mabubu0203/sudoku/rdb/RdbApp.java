@@ -19,7 +19,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 public class RdbApp extends SpringBootServletInitializer {
 
     @Autowired
-    ApplicationConfig config;
+    private ApplicationConfig config;
 
     /**
      * SpringBoot起動methodです。<br>
