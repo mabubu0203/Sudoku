@@ -21,7 +21,6 @@ public interface ScoreInfoService {
      *
      * @param numberplaceBean 数独
      * @return ScoreInfoTbl
-     * @author uratamanabu
      * @since 1.0
      */
     ScoreInfoTbl insert(NumberPlaceBean numberplaceBean);
@@ -33,7 +32,6 @@ public interface ScoreInfoService {
      * @param type    タイプ
      * @param keyHash KeyHash
      * @return 0/1件
-     * @author uratamanabu
      * @since 1.0
      */
     Optional<ScoreInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
@@ -43,7 +41,6 @@ public interface ScoreInfoService {
      *
      * @param numberplaceBean 数独
      * @return ScoreInfoTbl
-     * @author uratamanabu
      * @since 1.0
      */
     ScoreInfoTbl update(NumberPlaceBean numberplaceBean);
@@ -53,7 +50,6 @@ public interface ScoreInfoService {
      *
      * @param scoreInfoTbl スコア情報
      * @return ScoreInfoTbl
-     * @author uratamanabu
      * @since 1.0
      */
     ScoreInfoTbl update(ScoreInfoTbl scoreInfoTbl);

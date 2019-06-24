@@ -36,7 +36,6 @@ public class ScoreInfoSpecifications {
      * @param score
      * @param selectorScore
      * @return Specification
-     * @author uratamanabu
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> scoreContains(Integer score, Integer selectorScore) {
@@ -71,7 +70,6 @@ public class ScoreInfoSpecifications {
      * @param name
      * @param selectorNo
      * @return Specification
-     * @author uratamanabu
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> nameContains(String name, Integer selectorNo) {
@@ -110,7 +108,6 @@ public class ScoreInfoSpecifications {
      * @param dateStart
      * @param dateEnd
      * @return Specification
-     * @author uratamanabu
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> dateContains(LocalDate dateStart, LocalDate dateEnd) {

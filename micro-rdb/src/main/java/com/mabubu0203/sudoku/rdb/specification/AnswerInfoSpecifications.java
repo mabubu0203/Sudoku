@@ -31,7 +31,6 @@ public class AnswerInfoSpecifications {
      *
      * @param selectType
      * @return Specification
-     * @author uratamanabu
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> typeContains(Integer selectType) {
@@ -44,7 +43,6 @@ public class AnswerInfoSpecifications {
      * @param no
      * @param selectorNo
      * @return Specification
-     * @author uratamanabu
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> noContains(Long no, Integer selectorNo) {
@@ -78,7 +76,6 @@ public class AnswerInfoSpecifications {
      * @param keyHash
      * @param selectorKeyHash
      * @return Specification
-     * @author uratamanabu
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> keyHashContains(String keyHash, int selectorKeyHash) {

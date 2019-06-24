@@ -25,7 +25,6 @@ public interface ScoreRepository extends JpaRepository<ScoreInfoTbl, Long> {
      * @param type
      * @param keyHash
      * @return 0/1件
-     * @author uratamanabu
      * @since 1.0
      */
     @Query(
