@@ -25,7 +25,6 @@ public interface AnswerInfoService {
      *
      * @param numberplaceBean 数独
      * @return AnswerInfoTbl
-     * @author uratamanabu
      * @since 1.0
      */
     AnswerInfoTbl insert(NumberPlaceBean numberplaceBean);
@@ -36,7 +35,6 @@ public interface AnswerInfoService {
      *
      * @param answerKey answerKey
      * @return N件
-     * @author uratamanabu
      * @since 1.0
      */
     Stream<AnswerInfoTbl> searchByAnswerKey(String answerKey);
@@ -47,7 +45,6 @@ public interface AnswerInfoService {
      *
      * @param type タイプ
      * @return 0/1件
-     * @author uratamanabu
      * @since 1.0
      */
     Optional<AnswerInfoTbl> findFirstByType(Integer type);
@@ -59,7 +56,6 @@ public interface AnswerInfoService {
      * @param type    タイプ
      * @param keyHash KeyHash
      * @return 0/1件
-     * @author uratamanabu
      * @since 1.0
      */
     Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
@@ -71,7 +67,6 @@ public interface AnswerInfoService {
      * @param condition 検索条件
      * @param pageable  ページ情報
      * @return N件
-     * @author uratamanabu
      * @since 1.0
      */
     Page<AnswerInfoTbl> searchRecords(SearchConditionBean condition, Pageable pageable);
@@ -82,7 +77,6 @@ public interface AnswerInfoService {
      *
      * @param answerInfoTbl
      * @return NumberPlaceBean
-     * @author uratamanabu
      * @since 1.0
      */
     NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl);

@@ -26,6 +26,7 @@ public class NumberPlaceArrayUtils {
      *
      * @param numberPlace 　数独の配列
      * @param size
+     * @since 1.0
      */
     public static void createFirstRow(int[][] numberPlace, int size) {
         ImmutableIntList intList = ESListWrapUtils.getRandList(size);
@@ -37,6 +38,7 @@ public class NumberPlaceArrayUtils {
      *
      * @param numberPlace 　数独の配列
      * @param size
+     * @since 1.0
      */
     public static void createLastRow(int[][] numberPlace, int size) {
         for (int x = 0; x < size; x++) {
@@ -51,6 +53,7 @@ public class NumberPlaceArrayUtils {
      * @param x
      * @param size
      * @return 列から逆算した値
+     * @since 1.0
      */
     public static int lastColumnCell(int[][] numberPlace, int x, int size) {
         int cell = 0;
@@ -69,6 +72,7 @@ public class NumberPlaceArrayUtils {
      * @param numberPlace 　数独の配列
      * @param y
      * @param size
+     * @since 1.0
      */
     public static void createMiddleRows(int[][] numberPlace, int y, int size) {
         boolean isCheck = false;
@@ -89,15 +93,18 @@ public class NumberPlaceArrayUtils {
     }
 
     /**
+     * ・
+     *
      * @param numberPlace 　数独の配列
      * @param x
      * @param y
      * @param column
      * @param size
      * @return
+     * @since 1.0
      */
     public static boolean isCheck(int[][] numberPlace, int x, int y, int column, int size) {
-// y軸判定
+        // y軸判定
         int[] copyY = new int[y];
         for (int k = 0; k < y; k++) {
             copyY[k] = numberPlace[k][x];
@@ -126,11 +133,14 @@ public class NumberPlaceArrayUtils {
     }
 
     /**
+     * ・
+     *
      * @param numberPlace 　数独の配列
      * @param y
      * @param column
      * @param copyArray
      * @return
+     * @since 1.0
      */
     public static boolean isNotEqualNumber(int[][] numberPlace, int y, int column, int[] copyArray) {
         if (Arrays.stream(copyArray).anyMatch(s -> s == column)) {
@@ -146,6 +156,7 @@ public class NumberPlaceArrayUtils {
      *
      * @param numberPlace
      * @return AnswerKey
+     * @since 1.0
      */
     public static String createAnswerKey(int[][] numberPlace) {
         StringBuilder answerKey = new StringBuilder();

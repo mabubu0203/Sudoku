@@ -33,7 +33,9 @@ public enum Difficulty {
     /**
      * size:9プレイ時の難易度:強の時の虫食い数を示します
      */
-    HARD9(6);
+    HARD9(6),
+
+    ;
 
     /**
      * 虫食い数を定義します。
@@ -45,17 +47,17 @@ public enum Difficulty {
      * コンストラクタ
      *
      * @param value
+     * @since 1.0
      */
     Difficulty(final int value) {
         this.value = value;
     }
 
     /**
-     * 列挙型を返却します。
+     * 列挙型を返却します。<br>
      *
      * @param key
-     * @return　難易度
-     * @author uratamanabu
+     * @return 難易度
      * @since 1.0
      */
     public static Difficulty getDifficulty(final String key) {
@@ -69,4 +71,5 @@ public enum Difficulty {
         }
         return null;
     }
+
 }

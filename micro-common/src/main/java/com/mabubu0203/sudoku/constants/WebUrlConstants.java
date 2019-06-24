@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 import static lombok.AccessLevel.PRIVATE;
 
 /**
- * <br>
+ * エンドポイント定数クラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -55,6 +55,9 @@ public class WebUrlConstants {
         IS_SEARCH(URL_IS_SEARCH),
         ;
 
+        /**
+         * パスを定義します。
+         */
         @Getter
         private String path;
 
@@ -62,7 +65,6 @@ public class WebUrlConstants {
          * コンストラクタ<br>
          *
          * @param value
-         * @author uratamanabu
          * @since 1.0
          */
         Forward(String value) {
@@ -73,8 +75,7 @@ public class WebUrlConstants {
          * 列挙型を返却します。<br>
          *
          * @param key
-         * @return　難易度
-         * @author uratamanabu
+         * @return 難易度
          * @since 1.0
          */
         public static Forward getForward(String key) {

@@ -1,10 +1,8 @@
 package com.mabubu0203.sudoku.validator;
 
-
 import com.mabubu0203.sudoku.form.BaseForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 
 /**
  * フォームバリデーションクラスのベースクラスです。<br>

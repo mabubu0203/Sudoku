@@ -28,6 +28,7 @@ public class SudokuUtils {
      *
      * @param num
      * @return 平方根
+     * @since 1.0
      */
     public static int convertSquareRoot(int num) {
         return (int) Math.sqrt(num);
@@ -39,6 +40,7 @@ public class SudokuUtils {
      * @param selectType
      * @param selectLevel
      * @return 虫食い数
+     * @since 1.0
      */
     public static int getWarmEatenValue(int selectType, String selectLevel) {
         String key = selectLevel.toUpperCase().concat(Integer.toString(selectType));
@@ -56,6 +58,7 @@ public class SudokuUtils {
      * @param selectType
      * @param selectLevel
      * @return 最大スコア
+     * @since 1.0
      */
     public static int calculationScore(int selectType, String selectLevel) {
         String key = selectLevel.toUpperCase().concat(Integer.toString(selectType));
@@ -83,7 +86,8 @@ public class SudokuUtils {
      * SHA256変換した文字列を返却します。<br>
      *
      * @param str 文字列
-     * @return SHA256変換した文字列かnull
+     * @return SHA256変換した文字列か空文字
+     * @since 1.0
      */
     public static String convertToSha256(String str) {
         try {

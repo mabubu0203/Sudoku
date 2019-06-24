@@ -14,6 +14,7 @@ public interface SudokuModule {
      *
      * @param type
      * @return NumberPlaceBean
+     * @since 1.0
      */
     NumberPlaceBean generate(int type);
 
@@ -24,6 +25,7 @@ public interface SudokuModule {
      * @param bean
      * @param level
      * @return NumberPlaceBean
+     * @since 1.0
      */
     NumberPlaceBean filteredOfLevel(int type, NumberPlaceBean bean, String level);
 

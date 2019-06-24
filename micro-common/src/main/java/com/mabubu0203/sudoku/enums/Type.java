@@ -10,6 +10,7 @@ import lombok.Getter;
  * @since 1.0
  */
 public enum Type {
+
     /**
      * size:4
      */
@@ -18,7 +19,9 @@ public enum Type {
     /**
      * size:9
      */
-    SIZE9(9);
+    SIZE9(9),
+
+    ;
 
     @Getter
     private int size;
@@ -27,6 +30,7 @@ public enum Type {
      * コンストラクタ
      *
      * @param size
+     * @since 1.0
      */
     Type(final int size) {
         this.size = size;
@@ -37,7 +41,6 @@ public enum Type {
      *
      * @param size
      * @return 数独のサイズ
-     * @author uratamanabu
      * @since 1.0
      */
     public static Type getType(final int size) {
@@ -48,4 +51,5 @@ public enum Type {
         }
         return null;
     }
+
 }

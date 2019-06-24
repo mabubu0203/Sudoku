@@ -25,7 +25,6 @@ public class RdbApp extends SpringBootServletInitializer {
      * SpringBoot起動methodです。<br>
      *
      * @param args 起動引数
-     * @author uratamanabu
      * @since 1.0
      */
     public static void main(final String[] args) {

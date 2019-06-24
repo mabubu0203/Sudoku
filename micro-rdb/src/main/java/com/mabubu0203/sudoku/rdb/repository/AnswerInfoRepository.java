@@ -27,7 +27,6 @@ public interface AnswerInfoRepository
      *
      * @param answerKey
      * @return N件
-     * @author uratamanabu
      * @since 1.0
      */
     Stream<AnswerInfoTbl> findByAnswerKey(String answerKey);
@@ -39,7 +38,6 @@ public interface AnswerInfoRepository
      * @param type
      * @param keyHash
      * @return 0/1件
-     * @author uratamanabu
      * @since 1.0
      */
     Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
@@ -50,7 +48,6 @@ public interface AnswerInfoRepository
      *
      * @param type
      * @return 0/1件
-     * @author uratamanabu
      * @since 1.0
      */
     @Query(

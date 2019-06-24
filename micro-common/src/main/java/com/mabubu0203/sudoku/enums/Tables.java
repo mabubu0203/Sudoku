@@ -7,6 +7,7 @@ package com.mabubu0203.sudoku.enums;
  * @version 1.0
  * @since 1.0
  */
+@Deprecated
 public enum Tables {
 
     /**
