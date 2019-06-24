@@ -32,6 +32,7 @@ public class NumberPlaceBeanUtils {
      * @param numberPlaceBean
      * @param key
      * @param value
+     * @since 1.0
      */
     public static void setCell(NumberPlaceBean numberPlaceBean, String key, int value) {
         try {
@@ -55,6 +56,7 @@ public class NumberPlaceBeanUtils {
      * @param numberPlaceBean
      * @param key
      * @throws SudokuApplicationException
+     * @since 1.0
      */
     public static void filteredCell(NumberPlaceBean numberPlaceBean, String key) throws SudokuApplicationException {
         try {
@@ -71,4 +73,5 @@ public class NumberPlaceBeanUtils {
             throw new SudokuApplicationException();
         }
     }
+
 }

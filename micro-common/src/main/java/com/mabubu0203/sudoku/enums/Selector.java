@@ -10,13 +10,16 @@ import lombok.Getter;
  * @since 1.0
  */
 public enum Selector {
+
     PERFECT_MATCH("完全一致", 1),
     FORWARD_MATCH("前方一致", 2),
     BACKWARD_MATCH("後方一致", 3),
     PARTIAL_MATCH("部分一致", 4),
     AROUND5("前後５件", 5),
     MORE_BIG("より大きい", 6),
-    MORE_SMALL("より小さい", 7);
+    MORE_SMALL("より小さい", 7),
+
+    ;
 
     @Getter
     private String label;
@@ -29,6 +32,7 @@ public enum Selector {
      *
      * @param label
      * @param value
+     * @since 1.0
      */
     Selector(final String label, final int value) {
         this.label = label;
@@ -39,8 +43,7 @@ public enum Selector {
      * 列挙型を返却します。<br>
      *
      * @param value
-     * @return　セレクトボックス
-     * @author uratamanabu
+     * @return セレクトボックス
      * @since 1.0
      */
     public static Selector getSelector(final int value) {
@@ -51,4 +54,5 @@ public enum Selector {
         }
         return null;
     }
+
 }

@@ -33,6 +33,7 @@ public class ESMapWrapUtils {
      * .
      *
      * @return 変更不能のmapを返却します
+     * @since 1.0
      */
     public static ImmutableMap<String, Integer> getSelectTypes() {
         MutableMap<String, Integer> map = Maps.mutable.empty();
@@ -47,6 +48,7 @@ public class ESMapWrapUtils {
      * .
      *
      * @return 変更不能のmapを返却します
+     * @since 1.0
      */
     public static ImmutableMap<String, String> getSelectLevels() {
         MutableMap<String, String> map = Maps.mutable.empty();
@@ -62,6 +64,7 @@ public class ESMapWrapUtils {
      * .
      *
      * @return 変更不能のmapを返却します
+     * @since 1.0
      */
     public static ImmutableSortedMap<String, Integer> getSelectorNo() {
         MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());
@@ -78,6 +81,7 @@ public class ESMapWrapUtils {
      * .
      *
      * @return 変更不能のmapを返却します
+     * @since 1.0
      */
     public static ImmutableSortedMap<String, Integer> getSelectorKeyHash() {
         MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());
@@ -94,6 +98,7 @@ public class ESMapWrapUtils {
      * .
      *
      * @return 変更不能のmapを返却します
+     * @since 1.0
      */
     public static ImmutableSortedMap<String, Integer> getSelectorScore() {
         MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());
@@ -109,6 +114,7 @@ public class ESMapWrapUtils {
      * .
      *
      * @return 変更不能のmapを返却します
+     * @since 1.0
      */
     public static ImmutableSortedMap<String, Integer> getSelectorName() {
         MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());

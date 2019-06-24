@@ -33,6 +33,7 @@ public class ESListWrapUtils {
      * @param size
      * @param warmEaten
      * @return MutableList
+     * @since 1.0
      */
     public static MutableList<String> createCells(int size, int warmEaten) {
         MutableList<String> result = Lists.mutable.empty();
@@ -52,6 +53,7 @@ public class ESListWrapUtils {
      *
      * @param selectType
      * @return MutableList
+     * @since 1.0
      */
     public static MutableList<MutableList<String>> createCells(int selectType) {
         MutableList<MutableList<String>> resultList = Lists.mutable.empty();
@@ -74,6 +76,7 @@ public class ESListWrapUtils {
      * @param count
      * @param convert アルファベットのアッパー/ロアー
      * @return セルの連番のListを返却します
+     * @since 1.0
      */
     public static MutableList<String> getCellList(int size, int count, String convert) {
         MutableList<String> list = Lists.mutable.empty();
@@ -100,6 +103,7 @@ public class ESListWrapUtils {
      *
      * @param selectType
      * @return 連番のListを返却します
+     * @since 1.0
      */
     public static List<Integer> getSelectNum(int selectType) {
         Type type = Type.getType(selectType);
@@ -123,6 +127,7 @@ public class ESListWrapUtils {
      *
      * @param size
      * @return 変更不能のListを返却します
+     * @since 1.0
      */
     public static List<Integer> getLinkedNum(int size) {
         List<Integer> list = new LinkedList<>();
@@ -138,6 +143,7 @@ public class ESListWrapUtils {
      *
      * @param size
      * @return 変更不能のListを返却します
+     * @since 1.0
      */
     public static ImmutableIntList getRandList(int size) {
         Random rnd = new Random();
