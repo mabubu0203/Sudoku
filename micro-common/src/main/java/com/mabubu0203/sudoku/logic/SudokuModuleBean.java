@@ -15,9 +15,7 @@ public class SudokuModuleBean {
     /**
      * コンストラクタです。
      *
-     * @author uratamanabu
-     * @version 1.0
-     * @since 1.0
+     * @param type
      */
     public SudokuModuleBean(int type) {
         this.size = type;

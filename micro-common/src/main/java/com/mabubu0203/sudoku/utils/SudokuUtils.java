@@ -1,16 +1,13 @@
 package com.mabubu0203.sudoku.utils;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Difficulty;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
-import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Objects;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -28,7 +25,6 @@ public class SudokuUtils {
 
     /**
      * 引数で与えられた整数の平方根を返します。<br>
-     * .
      *
      * @param num
      * @return 平方根
@@ -38,11 +34,28 @@ public class SudokuUtils {
     }
 
     /**
-     * .
+     * 虫食い数を取得する。<br>
      *
      * @param selectType
      * @param selectLevel
-     * @return
+     * @return 虫食い数
+     */
+    public static int getWarmEatenValue(int selectType, String selectLevel) {
+        String key = selectLevel.toUpperCase().concat(Integer.toString(selectType));
+        Difficulty difficulty = Difficulty.getDifficulty(key);
+        if (difficulty == null) {
+            return 0;
+        } else {
+            return difficulty.getValue();
+        }
+    }
+
+    /**
+     * TypeとLebelから最大スコアを算出します。<br>
+     *
+     * @param selectType
+     * @param selectLevel
+     * @return 最大スコア
      */
     public static int calculationScore(int selectType, String selectLevel) {
         String key = selectLevel.toUpperCase().concat(Integer.toString(selectType));
@@ -67,25 +80,25 @@ public class SudokuUtils {
     }
 
     /**
-     * .
+     * SHA256変換した文字列を返却します。<br>
      *
-     * @param numberPlaceBean
-     * @param key
-     * @param value
+     * @param str 文字列
+     * @return SHA256変換した文字列かnull
      */
-    public static void setCell(NumberPlaceBean numberPlaceBean, String key, int value) {
+    public static String convertToSha256(String str) {
         try {
-            PropertyDescriptor properties = new PropertyDescriptor(key, numberPlaceBean.getClass());
-            Method setter = properties.getWriteMethod();
-            if (Objects.nonNull(setter)) {
-                setter.invoke(numberPlaceBean, value);
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(str.getBytes(CommonConstants.UTF8));
+            byte[] cipherByte = md.digest();
+            StringBuilder hash = new StringBuilder(2 * cipherByte.length);
+            for (byte b : cipherByte) {
+                hash.append(String.format("%02x", b & 0xff));
             }
-        } catch (IntrospectionException
-                | IllegalAccessException
-                | IllegalArgumentException
-                | InvocationTargetException e) {
+            return hash.toString();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            throw new SudokuApplicationException();
+            return CommonConstants.EMPTY_STR;
         }
     }
+
 }

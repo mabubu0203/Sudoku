@@ -38,7 +38,7 @@ public class ESListWrapUtils {
         MutableList<String> result = Lists.mutable.empty();
         for (int count = 0; count < size; count++) {
             MutableList<String> list = getCellList(size, count, CommonConstants.UPPER);
-            if (warmEaten == (int) CommonConstants.INTEGER_ZERO) {
+            if (warmEaten == CommonConstants.INTEGER_ZERO) {
                 list.forEach(result::add);
             } else {
                 list.shuffleThis().take(warmEaten).toSortedList().each(result::add);
