@@ -25,14 +25,6 @@
     <link href="../../static/css/bootstrap.css" rel="stylesheet"
           th:href="@{/css/bootstrap.css}"
           type="text/css"/>
-    <!-- bootstrap-datepicker -->
-    <link href="../../static/css/bootstrap-datepicker.min.css" rel="stylesheet"
-          th:href="@{/css/bootstrap-datepicker.min.css}"
-          type="text/css"/>
-    <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style th:fragment="css" type="text/css">
       body {
         padding-top: 80px;
@@ -89,12 +81,6 @@
         background: #B2D8FF;
       }
     }
-
-
-
-
-
-
     </style>
 </head>
 <body>
@@ -102,30 +88,27 @@
 <header th:fragment="header"></header>
 <div th:fragment="script">
     <!-- bootstrap -->
-    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js}"
+    <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
             type="text/javascript"></script>
-    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}"
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"
+            type="text/javascript"></script>
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"
             type="text/javascript"></script>
     <!-- bootstrap-validator -->
     <script src="../../static/js/validator.js"
             th:src="@{/js/validator.js}"
             type="text/javascript"></script>
-    <!-- bootstrap-datepicker -->
-    <script src="../../static/js/bootstrap-datepicker.min.js"
-            th:src="@{/js/bootstrap-datepicker.min.js}"
+    <!-- moment.js -->
+    <script src="../../static/js/moment/moment.min.js"
+            th:src="@{/js/moment/moment.min.js}"
             type="text/javascript"></script>
-    <script src="../../static/js/bootstrap-datepicker.ja.min.js"
-            th:src="@{/js/bootstrap-datepicker.ja.min.js}"
+    <script src="../../static/js/moment/locale/ja.js"
+            th:src="@{/js/moment/locale/ja.js}"
             type="text/javascript"></script>
+    <!-- tooltip -->
     <script type="text/javascript">
             $('.bs-component [data-toggle="popover"]').popover();
             $('.bs-component [data-toggle="tooltip"]').tooltip();
-
-
-
-
-
-
     </script>
 </div>
 <div class="container">
