@@ -11,7 +11,7 @@ import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;
 import com.mabubu0203.sudoku.rdb.specification.ScoreInfoSpecifications;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
-import com.mabubu0203.sudoku.utils.SudokuUtils;
+import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +86,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
         ListIterator<String> itr = ESListWrapUtils.createCells(type.getSize(), CommonConstants.INTEGER_ZERO).listIterator();
         try {
             for (String value : valueArray) {
-                SudokuUtils.setCell(numberPlaceBean, itr.next(), Integer.valueOf(value));
+                NumberPlaceBeanUtils.setCell(numberPlaceBean, itr.next(), Integer.valueOf(value));
             }
         } catch (SudokuApplicationException e) {
             e.printStackTrace();

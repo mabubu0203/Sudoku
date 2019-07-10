@@ -25,19 +25,18 @@
     <link href="../static/css/bootstrap.css" rel="stylesheet"
           th:href="@{/css/bootstrap.css}"
           type="text/css"/>
-    <!-- bootstrap-datepicker -->
-    <link href="../static/css/bootstrap-datepicker.min.css" rel="stylesheet"
-          th:href="@{/css/bootstrap-datepicker.min.css}"
-          type="text/css"/>
     <style th:replace="./common/_temp :: css" type="text/css"></style>
-    <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- tempusdominus-bootstrap-4 -->
+    <link href="../static/css/tempusdominus-bootstrap-4.css" rel="stylesheet"
+          th:href="@{/css/tempusdominus-bootstrap-4.css}"
+          type="text/css"/>
+    <style th:replace="./common/_temp :: css-date-picker" type="text/css"></style>
 </head>
 
 <body>
+
 <div th:replace="./common/_temp :: script"/>
+
 <div class="container">
     <nav th:replace="./common/_temp :: nav"/>
     <div class="bs-docs-section">
@@ -204,19 +203,30 @@
                         <div class="form-group row">
                             <div class="col-lg-2"></div>
                             <label class="col-lg-2 control-label">toDate</label>
-                            <div class="col-lg-6 input-group input-daterange" id="datepicker">
+                            <div class="col-lg-8 input-group input-daterange">
                                 <div class="col-lg-6">
-                                    <input class="form-control" placeholder="開始日を入力してください。"
-                                           th:field="*{dateStart}" th:id="dateStart"
-                                           th:name="dateStart" type="date"/>
+                                    <div class="input-group date" data-target-input="nearest" id="datetimepickerStart">
+                                        <input class="form-control datetimepicker-input" data-target="#dateStart"
+                                               placeholder="開始日を入力してください。" th:field="*{dateStart}"
+                                               th:id="dateStart" th:name="dateStart" type="date"/>
+                                        <div class="input-group-append" data-target="#dateStart"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input class="form-control" placeholder="終了日を入力してください。"
-                                           th:field="*{dateEnd}" th:id="dateEnd"
-                                           th:name="dateEnd" type="date"/>
+                                    <div class="input-group date" data-target-input="nearest" id="datetimepickerEnd">
+                                        <input class="form-control datetimepicker-input" data-target="#dateEnd"
+                                               placeholder="終了日を入力してください。" th:field="*{dateEnd}"
+                                               th:id="dateEnd" th:name="dateEnd" type="date"/>
+                                        <div class="input-group-append" data-target="#dateEnd"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-2"></div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -248,31 +258,60 @@
               }
             });
 
-            jQuery('#datepicker').datepicker({
-                clearBtn: true,
-                language: "ja",
-                format: "yyyy年mm月dd日",
-                daysOfWeekHighlighted: "0",
-                calendarWeeks: true,
-                autoclose: true,
-                todayHighlight: true,
-                onSelect: function( selectedDate ) {
-                    var option = this . id == 'dateStart' ? 'minDate' : 'maxDate',
-                    instance = $( this ) . data( 'datepicker' ),
-                    date = $ . datepicker . parseDate(
-                        instance . settings . dateFormat ||
-                        $ . datepicker . _defaults . dateFormat,
-                        selectedDate, instance . settings
-                    );
-                    dates . not( this ) . datepicker( 'option', option, date );
-                }
-            });
+        $('#datetimepickerStart').datetimepicker({
+            dayViewHeaderFormat: 'YYYY年 MMMM',
+            format: "YYYY/MM/DD",
+            locale: moment.locale('ja'),
+            buttons: {
+                showClose: true
+            },
+            tooltips: {
+                close: '閉じる',
+                selectMonth: '月を選択',
+                prevMonth: '前月',
+                nextMonth: '次月',
+                selectYear: '年を選択',
+                prevYear: '前年',
+                nextYear: '次年',
+                selectDate: '日付を選択',
+                prevDecade: '前期間',
+                nextDecade: '次期間',
+                selectDecade: '期間を選択'
+            }
+        });
+
+        $("#datetimepickerStart").on("change.datetimepicker", function (e) {
+            $('#datetimepickerEnd').datetimepicker('minDate', e.date);
+        });
+
+        $('#datetimepickerEnd').datetimepicker({
+            dayViewHeaderFormat: 'YYYY年 MMMM',
+            format: "YYYY/MM/DD",
+            locale: moment.locale('ja'),
+            buttons: {
+                showClose: true
+            },
+            tooltips: {
+                close: '閉じる',
+                selectMonth: '月を選択',
+                prevMonth: '前月',
+                nextMonth: '次月',
+                selectYear: '年を選択',
+                prevYear: '前年',
+                nextYear: '次年',
+                selectDate: '日付を選択',
+                prevDecade: '前期間',
+                nextDecade: '次期間',
+                selectDecade: '期間を選択'
+            },
+            useCurrent: false
+        });
+
+        $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
+            $('#datetimepickerStart').datetimepicker('maxDate', e.date);
+        });
+
         /*]]>*/
-
-
-
-
-
         </script>
     </div>
 </div>
