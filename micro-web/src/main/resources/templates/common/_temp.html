@@ -80,12 +80,24 @@
       .hover {
         background: #B2D8FF;
       }
-    }
+    </style>
+    <style th:fragment="css-date-picker" type="text/css">
+        .datepicker-days th.dow:first-child,
+        .datepicker-days td:first-child {
+            color: #f00;
+        }
+
+        .datepicker-days th.dow:last-child,
+        .datepicker-days td:last-child {
+            color: #00f;
+        }
     </style>
 </head>
+
 <body>
 
 <header th:fragment="header"></header>
+
 <div th:fragment="script">
     <!-- bootstrap -->
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
@@ -105,12 +117,18 @@
     <script src="../../static/js/moment/locale/ja.js"
             th:src="@{/js/moment/locale/ja.js}"
             type="text/javascript"></script>
+    <!-- tempusdominus-bootstrap-4 -->
+    <script src="../../static/js/tempusdominus-bootstrap-4.js"
+            th:src="@{/js/tempusdominus-bootstrap-4.js}"
+            type="text/javascript"></script>
     <!-- tooltip -->
     <script type="text/javascript">
             $('.bs-component [data-toggle="popover"]').popover();
             $('.bs-component [data-toggle="tooltip"]').tooltip();
     </script>
+
 </div>
+
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav">
         <a class="navbar-brand" href="./top" th:href="@{/top}">数独</a>
@@ -139,6 +157,9 @@
         </div>
     </nav>
 </div>
+
 <footer th:fragment="footer"></footer>
+
 </body>
+
 </html>
