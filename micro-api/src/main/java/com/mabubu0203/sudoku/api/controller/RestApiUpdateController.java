@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,6 +39,8 @@ public class RestApiUpdateController extends RestBaseController {
     @Autowired
     private UpdateService service;
     @Autowired
+    private RestTemplateBuilder restTemplateBuilder;
+    @Autowired
     @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
     private ModelMapper modelMapper;
 
@@ -55,7 +58,7 @@ public class RestApiUpdateController extends RestBaseController {
 
         log.info("updateScore");
         ScoreInfoTbl updateScoreBean = modelMapper.map(request, ScoreInfoTbl.class);
-        return service.updateScore(updateScoreBean, request.getType().intValue(), request.getKeyHash());
+        return service.updateScore(restTemplateBuilder.build(), updateScoreBean, request.getType().intValue(), request.getKeyHash());
     }
 
 }
