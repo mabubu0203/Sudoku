@@ -23,7 +23,7 @@ dependencies {
     implementation("org.eclipse.collections:eclipse-collections-forkjoin:$ecVersion")
 
     // Flyway
-    implementation("org.flywaydb:flyway-core")
+    //implementation("org.flywaydb:flyway-core")
 
     // lombok
     annotationProcessor("org.projectlombok:lombok")

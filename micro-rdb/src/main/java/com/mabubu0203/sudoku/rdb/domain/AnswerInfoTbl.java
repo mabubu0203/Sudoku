@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * ANSWER_INFO_TBLのEntityクラスです。<br>
+ * {@code answer_info_tbl}のEntityクラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -20,9 +20,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Data
 @ToString(exclude = {"scoreInfoTbl"})
 @Table(
-        name = "ANSWER_INFO_TBL",
-        catalog = "SUDOKU",
-        uniqueConstraints = @UniqueConstraint(columnNames = "ANSWERKEY")
+        name = "answer_info_tbl",
+        catalog = "sudoku",
+        uniqueConstraints = @UniqueConstraint(columnNames = "answerkey")
 )
 public class AnswerInfoTbl implements Serializable {
 
@@ -31,7 +31,7 @@ public class AnswerInfoTbl implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(
-            name = "NO",
+            name = "no",
             unique = true,
             length = 10,
             nullable = false,
@@ -40,7 +40,7 @@ public class AnswerInfoTbl implements Serializable {
     private Long no;
 
     @Column(
-            name = "TYPE",
+            name = "type",
             length = 1,
             nullable = false,
             columnDefinition = "TINYINT"
@@ -48,7 +48,7 @@ public class AnswerInfoTbl implements Serializable {
     private Integer type;
 
     @Column(
-            name = "ANSWERKEY",
+            name = "answerkey",
             unique = true,
             length = 81,
             nullable = false,
@@ -57,7 +57,7 @@ public class AnswerInfoTbl implements Serializable {
     private String answerKey;
 
     @Column(
-            name = "KEYHASH",
+            name = "keyhash",
             unique = true,
             length = 64,
             nullable = false,
@@ -66,7 +66,7 @@ public class AnswerInfoTbl implements Serializable {
     private String keyHash;
 
     @Column(
-            name = "CREATE_DATE",
+            name = "create_date",
             columnDefinition = "DATETIME"
     )
     private LocalDateTime createDate;
@@ -77,10 +77,10 @@ public class AnswerInfoTbl implements Serializable {
             targetEntity = ScoreInfoTbl.class
     )
     @JoinColumn(
-            name = "NO",
+            name = "no",
             unique = true,
             nullable = false,
-            table = "SCORE_INFO_Tbl"
+            table = "score_info_tbl"
     )
     private ScoreInfoTbl scoreInfoTbl;
 
