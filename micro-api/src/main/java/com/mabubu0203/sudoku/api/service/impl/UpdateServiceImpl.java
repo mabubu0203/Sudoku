@@ -1,20 +1,17 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.UpdateService;
-import com.mabubu0203.sudoku.constants.CommonConstants;
+import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblsEndPoints;
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
-import org.springframework.web.util.UriTemplate;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 /**
  * 更新する為のサービスクラスです。<br>
@@ -29,67 +26,32 @@ import java.util.Map;
 @Service
 public class UpdateServiceImpl implements UpdateService {
 
+    @Autowired
+    private ScoreInfoTblsEndPoints scoreInfoTblsEndPoints;
+
     @Override
-    @Transactional
     public ResponseEntity<Long> updateScore(
             final RestOperations restOperations,
             final ScoreInfoTbl updateScoreBean,
             final int type,
             final String keyHash) {
 
-        final String findByTypeAndKeyHash = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + "scoreInfoTbls" + CommonConstants.SLASH
-                + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
-        final String update = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + "scoreInfoTbls" + CommonConstants.SLASH;
+        Optional<com.mabubu0203.sudoku.domain.ScoreInfoTbl> scoreInfoTblOpt =
+                scoreInfoTblsEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
 
-        // TODO:findByTypeAndKeyHash
-        Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("type", Integer.toString(type));
-        uriVariables.put("keyHash", keyHash);
-        URI uri = new UriTemplate(findByTypeAndKeyHash + "?type={type}&keyHash={keyHash}").expand(uriVariables);
-        RequestEntity requestEntity =
-                RequestEntity
-                        .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, "application/hal+json;charset=UTF-8")
-                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .build();
-        try {
-            ResponseEntity<ScoreInfoTbl> generateEntity = restOperations.exchange(requestEntity, ScoreInfoTbl.class);
-            HttpStatus status = generateEntity.getStatusCode();
-            switch (status) {
-                case OK:
-                    break;
-                case NOT_FOUND:
-                default:
-                    return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
-            }
-            // TODO:update
-            ScoreInfoTbl scoreInfoTbl = generateEntity.getBody();
+        if (scoreInfoTblOpt.isPresent()) {
+            com.mabubu0203.sudoku.domain.ScoreInfoTbl scoreInfoTbl = scoreInfoTblOpt.get();
             scoreInfoTbl.setName(updateScoreBean.getName());
             scoreInfoTbl.setMemo(updateScoreBean.getMemo());
             scoreInfoTbl.setScore(updateScoreBean.getScore());
+            boolean result = scoreInfoTblsEndPoints.update(restOperations, scoreInfoTbl);
 
-            uri = new UriTemplate(update + "{no}").expand(scoreInfoTbl.getNo());
-            requestEntity =
-                    RequestEntity
-                            .put(uri)
-                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .body(scoreInfoTbl);
-            generateEntity = restOperations.exchange(requestEntity, ScoreInfoTbl.class);
-            status = generateEntity.getStatusCode();
-            switch (status) {
-                case OK:
-                    return new ResponseEntity<>(scoreInfoTbl.getNo(), HttpStatus.OK);
-                case CONFLICT:
-                    return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.CONFLICT);
-                default:
-                    return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
+            if (result) {
+                return new ResponseEntity<>(scoreInfoTbl.getNo(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
             }
-
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
+        } else {
             return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
         }
 
