@@ -1,6 +1,5 @@
 package com.mabubu0203.sudoku.rdb.repository;
 
-
 import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 /**
- * SCORE_INFO_TBLへのRepositoryクラスです。<br>
+ * {@code score_info_tbl}へのRepositoryクラスです。<br>
  * このクラスでCRUD操作を実装してください。<br>
  *
  * @author uratamanabu
@@ -19,7 +18,7 @@ import java.util.Optional;
 public interface ScoreRepository extends JpaRepository<ScoreInfoTbl, Long> {
 
     /**
-     * SCORE_INFO_TBLへTypeとKeyHashで検索を行います。<br>
+     * {@code score_info_tbl}へTypeとKeyHashで検索を行います。<br>
      * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type
@@ -28,10 +27,9 @@ public interface ScoreRepository extends JpaRepository<ScoreInfoTbl, Long> {
      * @since 1.0
      */
     @Query(
-            value =
-                    "SELECT * FROM SCORE_INFO_TBL INNER JOIN ANSWER_INFO_TBL ON SCORE_INFO_TBL.NO = ANSWER_INFO_TBL.NO WHERE ANSWER_INFO_TBL.TYPE = :TYPE AND ANSWER_INFO_TBL.KEYHASH = :KEYHASH",
-            nativeQuery = true
+            nativeQuery = true,
+            value = "SELECT * FROM score_info_tbl INNER JOIN answer_info_tbl ON score_info_tbl.no = answer_info_tbl.no WHERE answer_info_tbl.type = :type AND answer_info_tbl.keyhash = :keyHash"
     )
-    Optional<ScoreInfoTbl> findByTypeAndKeyHash(@Param("TYPE") Integer type, @Param("KEYHASH") String keyHash);
+    Optional<ScoreInfoTbl> findByTypeAndKeyHash(@Param("type") Integer type, @Param("keyHash") String keyHash);
 
 }

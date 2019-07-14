@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * SCORE_INFO_TBLのEntityクラスです。<br>
+ * {@code score_info_tbl}のEntityクラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -19,7 +19,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Data
 @ToString(exclude = {"answerInfoTbl"})
-@Table(name = "SCORE_INFO_TBL", catalog = "SUDOKU")
+@Table(
+        name = "score_info_tbl",
+        catalog = "sudoku"
+)
 public class ScoreInfoTbl implements Serializable {
 
     private static final long serialVersionUID = -5665962434247119049L;
@@ -27,7 +30,7 @@ public class ScoreInfoTbl implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(
-            name = "NO",
+            name = "no",
             unique = true,
             length = 10,
             nullable = false,
@@ -36,7 +39,7 @@ public class ScoreInfoTbl implements Serializable {
     private Long no;
 
     @Column(
-            name = "SCORE",
+            name = "score",
             length = 7,
             nullable = false,
             columnDefinition = "MEDIUMINT"
@@ -44,7 +47,7 @@ public class ScoreInfoTbl implements Serializable {
     private Integer score;
 
     @Column(
-            name = "NAME",
+            name = "name",
             length = 64,
             nullable = false,
             columnDefinition = "VARCHAR"
@@ -52,14 +55,14 @@ public class ScoreInfoTbl implements Serializable {
     private String name;
 
     @Column(
-            name = "MEMO",
+            name = "memo",
             length = 64,
             nullable = false,
             columnDefinition = "VARCHAR")
     private String memo;
 
     @Column(
-            name = "UPDATE_DATE",
+            name = "update_date",
             columnDefinition = "DATETIME"
     )
     private LocalDateTime updateDate;
@@ -71,10 +74,10 @@ public class ScoreInfoTbl implements Serializable {
             targetEntity = AnswerInfoTbl.class
     )
     @JoinColumn(
-            name = "NO",
+            name = "no",
             unique = true,
             nullable = false,
-            table = "ANSWER_INFO_TBL"
+            table = "answer_info_tbl"
     )
     private AnswerInfoTbl answerInfoTbl;
 

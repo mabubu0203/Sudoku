@@ -1,6 +1,5 @@
 package com.mabubu0203.sudoku.rdb.repository;
 
-
 import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -11,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * ANSWER_INFO_TBLへのRepositoryクラスです。<br>
+ * {@code answer_info_tbl}へのRepositoryクラスです。<br>
  * このクラスでCRUD操作を実装してください。<br>
  *
  * @author uratamanabu
@@ -22,17 +21,17 @@ public interface AnswerInfoRepository
         extends JpaRepository<AnswerInfoTbl, Long>, JpaSpecificationExecutor<AnswerInfoTbl> {
 
     /**
-     * ANSWER_INFO_TBLへAnswerKeyで検索を行います。<br>
+     * {@code answer_info_tbl}へAnswerKeyで検索を行います。<br>
      * 返却はN件を表すStreamで返却します。<br>
      *
      * @param answerKey
      * @return N件
      * @since 1.0
      */
-    Stream<AnswerInfoTbl> findByAnswerKey(String answerKey);
+    Stream<AnswerInfoTbl> findByAnswerKey(@Param("answerkey") String answerKey);
 
     /**
-     * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。<br>
+     * {@code answer_info_tbl}へTypeとKeyHashで検索を行います。<br>
      * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type
@@ -40,10 +39,10 @@ public interface AnswerInfoRepository
      * @return 0/1件
      * @since 1.0
      */
-    Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
+    Optional<AnswerInfoTbl> findByTypeAndKeyHash(@Param("type") Integer type, @Param("keyhash") String keyHash);
 
     /**
-     * ANSWER_INFO_TBLへTypeで検索を行います。<br>
+     * {@code answer_info_tbl}へTypeで検索を行います。<br>
      * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type
@@ -52,8 +51,8 @@ public interface AnswerInfoRepository
      */
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM ANSWER_INFO_TBL WHERE TYPE = :TYPE ORDER BY NO DESC LIMIT 1"
+            value = "SELECT * FROM answer_info_tbl WHERE type = :type ORDER BY no DESC LIMIT 1"
     )
-    Optional<AnswerInfoTbl> findFirstByType(@Param("TYPE") Integer type);
+    Optional<AnswerInfoTbl> findFirstByType(@Param("type") Integer type);
 
 }
