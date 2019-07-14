@@ -23,16 +23,16 @@ services:
       - esnet
     restart: always
 
-  #  kibana:
-  #    build: ./docker-kibana
-  #    container_name: docker-kibana
-  #    ports:
-  #      - 5601:5601
-  #    environment:
-  #      - ELASTICSEARCH_URL=http://localhost:9200
-  #    links:
-  #      - elasticsearch
-  #    restart: always
+  kibana:
+    build: ./docker-kibana
+    container_name: docker-kibana
+    ports:
+      - 5601:5601
+    links:
+      - elasticsearch
+    networks:
+      - esnet
+    restart: always
 
   mysql:
     build: ./docker-mysql
