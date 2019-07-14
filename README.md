@@ -41,10 +41,10 @@ name   | Front | Batch | Admin
 ## Endpoints
 
 [kibana][]
-[PhpMyAdmin][]
+[phpMyAdmin][]
 [HAL Browser][] 
 [SudokuWeb][] 
-[Zipkin][]
+[zipkin][]
     
 ## 環境
 
@@ -64,7 +64,7 @@ name   | Front | Batch | Admin
 | :---------------- | :-------
 | mysql             | 3306
 | kibana            | 5601
-| PhpMyAdmin        | 8021
+| phpMyAdmin        | 8021
 | api1号機           | 9001
 | api2号機           | 9002
 | api3号機           | 9003
@@ -76,10 +76,10 @@ name   | Front | Batch | Admin
 | web2号機           | 9022
 | web3号機           | 9023
 | elasticsearch     | 9200
-| Zipkin            | 9411
+| zipkin            | 9411
 
 [kibana]: http://localhost:5601     "kibana"
-[PhpMyAdmin]: http://localhost:8021/     "PhpMyAdmin"
+[phpMyAdmin]: http://localhost:8021/     "phpMyAdmin"
 [HAL Browser]: http://localhost:9011/SudokuRdb/browser/index.html#/     "HAL Browser"
 [SudokuWeb]: http://localhost:9021/SudokuWeb/linkList     "SudokuWeb"
-[Zipkin]: http://localhost:9411/zipkin     "Zipkin"
+[zipkin]: http://localhost:9411/zipkin     "zipkin"
