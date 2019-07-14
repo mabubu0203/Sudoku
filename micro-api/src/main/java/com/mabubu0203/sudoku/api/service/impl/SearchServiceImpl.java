@@ -51,6 +51,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<Boolean> isExist(final String answerKey) {
 
+        // TODO:answerInfoRepository.findByAnswerKey(answerKey)
         try (Stream<AnswerInfoTbl> stream = answerInfoService.searchByAnswerKey(answerKey)) {
             if (stream.count() == 0) {
                 return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
@@ -69,6 +70,7 @@ public class SearchServiceImpl implements SearchService {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        // TODO:answerInfoRepository.findAll(answerSpecification, pageable)
         Page<AnswerInfoTbl> page = answerInfoService.searchRecords(conditionBean, pageable);
         if (Objects.nonNull(page) && page.hasContent()) {
             Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
@@ -85,6 +87,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type) {
 
+        // TODO:answerInfoRepository.findFirstByType(type)
         Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findFirstByType(type);
         if (answerInfoTblOpt.isPresent()) {
             NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
@@ -97,6 +100,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type, final String keyHash) {
 
+        // TODO:answerInfoRepository.findByTypeAndKeyHash(type, keyHash)
         Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findByTypeAndKeyHash(type, keyHash);
         if (answerInfoTblOpt.isPresent()) {
             NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
@@ -109,6 +113,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<ScoreResponseBean> getScore(final int type, final String keyHash) {
 
+        // TODO:scoreRepository.findByTypeAndKeyHash(type, keyHash)
         Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
         if (scoreInfoTblOpt.isPresent()) {
             ScoreResponseBean response = modelMapper.map(scoreInfoTblOpt.get(), ScoreResponseBean.class);

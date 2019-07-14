@@ -32,6 +32,7 @@ public class UpdateServiceImpl implements UpdateService {
     public ResponseEntity<Long> updateScore(
             final ScoreInfoTbl updateScoreBean, final int type, final String keyHash) {
 
+        // TODO:scoreRepository.findByTypeAndKeyHash(type, keyHash)
         Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
         if (scoreInfoTblOpt.isPresent()) {
             ScoreInfoTbl scoreInfoTbl = scoreInfoTblOpt.get();
@@ -39,6 +40,7 @@ public class UpdateServiceImpl implements UpdateService {
             scoreInfoTbl.setMemo(updateScoreBean.getMemo());
             scoreInfoTbl.setScore(updateScoreBean.getScore());
             try {
+                // TODO:scoreRepository.save(scoreInfoTbl)
                 scoreInfoTbl = scoreInfoService.update(scoreInfoTbl);
                 return new ResponseEntity<>(scoreInfoTbl.getNo(), HttpStatus.OK);
             } catch (Exception e) {
