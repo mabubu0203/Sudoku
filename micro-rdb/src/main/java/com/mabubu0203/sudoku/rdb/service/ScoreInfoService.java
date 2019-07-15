@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.rdb.service;
 
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 
 import java.util.Optional;
 

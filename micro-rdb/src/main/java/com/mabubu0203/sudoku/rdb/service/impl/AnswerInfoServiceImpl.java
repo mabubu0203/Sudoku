@@ -5,7 +5,7 @@ import com.mabubu0203.sudoku.enums.Type;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
-import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.repository.AnswerInfoRepository;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;

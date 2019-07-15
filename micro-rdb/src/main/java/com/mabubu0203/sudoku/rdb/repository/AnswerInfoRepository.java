@@ -1,6 +1,6 @@
 package com.mabubu0203.sudoku.rdb.repository;
 
-import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

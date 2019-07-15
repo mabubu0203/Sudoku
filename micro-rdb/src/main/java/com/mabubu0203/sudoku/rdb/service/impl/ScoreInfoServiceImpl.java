@@ -2,7 +2,7 @@ package com.mabubu0203.sudoku.rdb.service.impl;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.rdb.repository.ScoreRepository;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
 import lombok.extern.slf4j.Slf4j;

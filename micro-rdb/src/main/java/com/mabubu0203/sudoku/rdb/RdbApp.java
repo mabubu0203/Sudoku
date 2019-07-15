@@ -1,11 +1,14 @@
 package com.mabubu0203.sudoku.rdb;
 
+import com.mabubu0203.sudoku.CommonCore;
+import com.mabubu0203.sudoku.InterfacesCore;
 import com.mabubu0203.sudoku.rdb.config.ApplicationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Import;
 
 /**
  * SpringBoot起動クラスです。<br>
@@ -15,6 +18,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  * @since 1.0
  */
 @SpringBootApplication
+@Import(value = {InterfacesCore.class, CommonCore.class})
 @RefreshScope
 public class RdbApp extends SpringBootServletInitializer {
 

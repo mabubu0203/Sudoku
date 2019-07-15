@@ -2,7 +2,7 @@ package com.mabubu0203.sudoku.rdb.service;
 
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
-import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

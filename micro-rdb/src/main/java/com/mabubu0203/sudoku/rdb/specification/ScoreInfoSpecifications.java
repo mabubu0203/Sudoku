@@ -2,7 +2,7 @@ package com.mabubu0203.sudoku.rdb.specification;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Selector;
-import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
