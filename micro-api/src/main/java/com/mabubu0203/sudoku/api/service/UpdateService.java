@@ -1,6 +1,6 @@
 package com.mabubu0203.sudoku.api.service;
 
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestOperations;
 

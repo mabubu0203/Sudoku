@@ -2,7 +2,7 @@ package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.UpdateService;
 import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblsEndPoints;
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +36,11 @@ public class UpdateServiceImpl implements UpdateService {
             final int type,
             final String keyHash) {
 
-        Optional<com.mabubu0203.sudoku.domain.ScoreInfoTbl> scoreInfoTblOpt =
+        Optional<ScoreInfoTbl> scoreInfoTblOpt =
                 scoreInfoTblsEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
 
         if (scoreInfoTblOpt.isPresent()) {
-            com.mabubu0203.sudoku.domain.ScoreInfoTbl scoreInfoTbl = scoreInfoTblOpt.get();
+            ScoreInfoTbl scoreInfoTbl = scoreInfoTblOpt.get();
             scoreInfoTbl.setName(updateScoreBean.getName());
             scoreInfoTbl.setMemo(updateScoreBean.getMemo());
             scoreInfoTbl.setScore(updateScoreBean.getScore());
