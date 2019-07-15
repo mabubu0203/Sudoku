@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.clients.rdb;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
-import com.mabubu0203.sudoku.domain.ScoreInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;

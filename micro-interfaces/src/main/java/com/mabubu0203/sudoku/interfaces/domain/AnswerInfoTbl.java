@@ -1,4 +1,4 @@
-package com.mabubu0203.sudoku.rdb.domain;
+package com.mabubu0203.sudoku.interfaces.domain;
 
 import lombok.Data;
 import lombok.ToString;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * {@code score_info_tbl}のEntityクラスです。<br>
+ * {@code answer_info_tbl}のEntityクラスです。<br>
  *
  * @author uratamanabu
  * @version 1.0
@@ -18,12 +18,13 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Data
-@ToString(exclude = {"answerInfoTbl"})
+@ToString(exclude = {"scoreInfoTbl"})
 @Table(
-        name = "score_info_tbl",
-        catalog = "sudoku"
+        name = "answer_info_tbl",
+        catalog = "sudoku",
+        uniqueConstraints = @UniqueConstraint(columnNames = "answerkey")
 )
-public class ScoreInfoTbl implements Serializable {
+public class AnswerInfoTbl implements Serializable {
 
     private static final long serialVersionUID = -5665962434247119049L;
 
@@ -39,46 +40,48 @@ public class ScoreInfoTbl implements Serializable {
     private Long no;
 
     @Column(
-            name = "score",
-            length = 7,
+            name = "type",
+            length = 1,
             nullable = false,
-            columnDefinition = "MEDIUMINT"
+            columnDefinition = "TINYINT"
     )
-    private Integer score;
+    private Integer type;
 
     @Column(
-            name = "name",
+            name = "answerkey",
+            unique = true,
+            length = 81,
+            nullable = false,
+            columnDefinition = "VARCHAR"
+    )
+    private String answerKey;
+
+    @Column(
+            name = "keyhash",
+            unique = true,
             length = 64,
             nullable = false,
             columnDefinition = "VARCHAR"
     )
-    private String name;
+    private String keyHash;
 
     @Column(
-            name = "memo",
-            length = 64,
-            nullable = false,
-            columnDefinition = "VARCHAR")
-    private String memo;
-
-    @Column(
-            name = "update_date",
+            name = "create_date",
             columnDefinition = "DATETIME"
     )
-    private LocalDateTime updateDate;
+    private LocalDateTime createDate;
 
     @OneToOne(
-            mappedBy = "scoreInfoTbl",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
-            targetEntity = AnswerInfoTbl.class
+            targetEntity = ScoreInfoTbl.class
     )
     @JoinColumn(
             name = "no",
             unique = true,
             nullable = false,
-            table = "answer_info_tbl"
+            table = "score_info_tbl"
     )
-    private AnswerInfoTbl answerInfoTbl;
+    private ScoreInfoTbl scoreInfoTbl;
 
 }
