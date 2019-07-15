@@ -20,7 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @since 1.0
  */
 @SpringBootApplication
-@Import(value = {InterfacesCore.class, CommonCore.class, RdbCore.class})
+@Import(value = {CommonCore.class, InterfacesCore.class, RdbCore.class})
 @EnableScheduling
 @RefreshScope
 public class ApiApp extends SpringBootServletInitializer {

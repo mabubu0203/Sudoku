@@ -1,10 +1,10 @@
 package com.mabubu0203.sudoku.web;
 
 import com.mabubu0203.sudoku.CommonCore;
+import com.mabubu0203.sudoku.InterfacesCore;
 import com.mabubu0203.sudoku.web.config.ApplicationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -25,8 +25,7 @@ import java.util.concurrent.Executor;
  * @since 1.0
  */
 @SpringBootApplication
-@Import(value = {CommonCore.class})
-@EntityScan(basePackageClasses = {WebApp.class})
+@Import(value = {CommonCore.class, InterfacesCore.class})
 @EnableScheduling
 @RefreshScope
 public class WebApp extends SpringBootServletInitializer implements SchedulingConfigurer {

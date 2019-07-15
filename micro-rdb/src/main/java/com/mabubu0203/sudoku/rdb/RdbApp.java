@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
  * @since 1.0
  */
 @SpringBootApplication
-@Import(value = {InterfacesCore.class, CommonCore.class})
+@Import(value = {CommonCore.class, InterfacesCore.class})
 @RefreshScope
 public class RdbApp extends SpringBootServletInitializer {
 
