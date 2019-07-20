@@ -1,6 +1,7 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.SearchService;
+import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblsEndPoints;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
@@ -10,7 +11,6 @@ import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
-import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestOperations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private AnswerInfoService answerInfoService;
     @Autowired
-    private ScoreInfoService scoreInfoService;
+    private ScoreInfoTblsEndPoints scoreInfoTblsEndPoints;
     @Autowired
     @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
     private ModelMapper modelMapper;
@@ -111,10 +112,11 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<ScoreResponseBean> getScore(final int type, final String keyHash) {
+    public ResponseEntity<ScoreResponseBean> getScore(final RestOperations restOperations, final int type, final String keyHash) {
 
-        // TODO:scoreRepository.findByTypeAndKeyHash(type, keyHash)
-        Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
+        Optional<ScoreInfoTbl> scoreInfoTblOpt =
+                scoreInfoTblsEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
+
         if (scoreInfoTblOpt.isPresent()) {
             ScoreResponseBean response = modelMapper.map(scoreInfoTblOpt.get(), ScoreResponseBean.class);
             return new ResponseEntity<>(response, HttpStatus.OK);

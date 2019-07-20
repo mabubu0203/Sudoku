@@ -5,6 +5,7 @@ import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestOperations;
 
 /**
  * 検索する為のinterfaceです。<br>
@@ -76,12 +77,14 @@ public interface SearchService {
      * ・200:正常時<br>
      * ・204:0件時<br>
      *
+     * @param restOperations
      * @param type
      * @param keyHash
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    ResponseEntity<ScoreResponseBean> getScore(final int type, final String keyHash);
+    ResponseEntity<ScoreResponseBean> getScore(final RestOperations restOperations,
+                                               final int type, final String keyHash);
 
 }

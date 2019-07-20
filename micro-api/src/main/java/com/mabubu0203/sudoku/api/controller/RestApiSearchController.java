@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -43,6 +44,8 @@ public class RestApiSearchController extends RestBaseController {
 
     @Autowired
     private SearchService service;
+    @Autowired
+    private RestTemplateBuilder restTemplateBuilder;
     @Autowired
     @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
     private ModelMapper modelMapper;
@@ -84,7 +87,7 @@ public class RestApiSearchController extends RestBaseController {
             @RequestParam(name = "keyHash") @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
 
         log.info("getScore");
-        return service.getScore(type.intValue(), keyHash);
+        return service.getScore(restTemplateBuilder.build(), type.intValue(), keyHash);
     }
 
     /**
