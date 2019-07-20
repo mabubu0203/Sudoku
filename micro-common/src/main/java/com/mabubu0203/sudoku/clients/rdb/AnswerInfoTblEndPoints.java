@@ -21,7 +21,7 @@ import java.net.URISyntaxException;
  * @since 1.0
  */
 @Service
-public class AnswerInfoTblEndpoints {
+public class AnswerInfoTblEndPoints {
 
     /**
      * {@code /}<br>

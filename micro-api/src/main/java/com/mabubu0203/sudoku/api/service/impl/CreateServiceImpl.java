@@ -1,8 +1,8 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.CreateService;
-import com.mabubu0203.sudoku.clients.rdb.AnswerInfoTblEndpoints;
-import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblsEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.AnswerInfoTblEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
@@ -35,10 +35,10 @@ import java.util.Optional;
 public class CreateServiceImpl implements CreateService {
 
     @Autowired
-    private ScoreInfoTblsEndPoints scoreInfoTblsEndPoints;
+    private AnswerInfoTblEndPoints answerInfoTblEndpoints;
 
     @Autowired
-    private AnswerInfoTblEndpoints answerInfoTblEndpoints;
+    private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
 
     private final SudokuModule sudokuModule;
 
@@ -69,7 +69,7 @@ public class CreateServiceImpl implements CreateService {
             scoreInfoTbl.setScore(CommonConstants.INTEGER_ZERO);
             scoreInfoTbl.setName(CommonConstants.EMPTY_STR);
             scoreInfoTbl.setMemo(CommonConstants.EMPTY_STR);
-            scoreInfoTblsEndPoints.insert(restOperations, scoreInfoTbl);
+            scoreInfoTblEndPoints.insert(restOperations, scoreInfoTbl);
             return new ResponseEntity<>(answerInfoTbl.getKeyHash(), HttpStatus.OK);
         } catch (Exception e) {
             log.debug("一意制約違反です。");

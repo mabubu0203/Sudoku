@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.UpdateService;
-import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblsEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import java.util.Optional;
 public class UpdateServiceImpl implements UpdateService {
 
     @Autowired
-    private ScoreInfoTblsEndPoints scoreInfoTblsEndPoints;
+    private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
 
     @Override
     public ResponseEntity<Long> updateScore(
@@ -37,14 +37,14 @@ public class UpdateServiceImpl implements UpdateService {
             final String keyHash) {
 
         Optional<ScoreInfoTbl> scoreInfoTblOpt =
-                scoreInfoTblsEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
+                scoreInfoTblEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
 
         if (scoreInfoTblOpt.isPresent()) {
             ScoreInfoTbl scoreInfoTbl = scoreInfoTblOpt.get();
             scoreInfoTbl.setName(updateScoreBean.getName());
             scoreInfoTbl.setMemo(updateScoreBean.getMemo());
             scoreInfoTbl.setScore(updateScoreBean.getScore());
-            boolean result = scoreInfoTblsEndPoints.update(restOperations, scoreInfoTbl);
+            boolean result = scoreInfoTblEndPoints.update(restOperations, scoreInfoTbl);
 
             if (result) {
                 return new ResponseEntity<>(scoreInfoTbl.getNo(), HttpStatus.OK);

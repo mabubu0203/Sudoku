@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.SearchService;
-import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblsEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
@@ -43,7 +43,7 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private AnswerInfoService answerInfoService;
     @Autowired
-    private ScoreInfoTblsEndPoints scoreInfoTblsEndPoints;
+    private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
     @Autowired
     @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
     private ModelMapper modelMapper;
@@ -115,7 +115,7 @@ public class SearchServiceImpl implements SearchService {
     public ResponseEntity<ScoreResponseBean> getScore(final RestOperations restOperations, final int type, final String keyHash) {
 
         Optional<ScoreInfoTbl> scoreInfoTblOpt =
-                scoreInfoTblsEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
+                scoreInfoTblEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
 
         if (scoreInfoTblOpt.isPresent()) {
             ScoreResponseBean response = modelMapper.map(scoreInfoTblOpt.get(), ScoreResponseBean.class);

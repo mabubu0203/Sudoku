@@ -26,7 +26,7 @@ import java.util.Optional;
  * @since 1.0
  */
 @Service
-public class ScoreInfoTblsEndPoints {
+public class ScoreInfoTblEndPoints {
 
     /**
      * {@code /search/findByTypeAndKeyHash}<br>
