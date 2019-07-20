@@ -1,6 +1,7 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.SearchService;
+import com.mabubu0203.sudoku.clients.rdb.AnswerInfoTblEndPoints;
 import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.PagenationHelper;
@@ -42,6 +43,9 @@ public class SearchServiceImpl implements SearchService {
 
     @Autowired
     private AnswerInfoService answerInfoService;
+
+    @Autowired
+    private AnswerInfoTblEndPoints answerInfoTblEndpoints;
     @Autowired
     private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
     @Autowired
@@ -86,10 +90,9 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type) {
+    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final RestOperations restOperations, final int type) {
 
-        // TODO:answerInfoRepository.findFirstByType(type)
-        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findFirstByType(type);
+        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findFirstByType(restOperations, type);
         if (answerInfoTblOpt.isPresent()) {
             NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
@@ -99,10 +102,9 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type, final String keyHash) {
+    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final RestOperations restOperations, final int type, final String keyHash) {
 
-        // TODO:answerInfoRepository.findByTypeAndKeyHash(type, keyHash)
-        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findByTypeAndKeyHash(type, keyHash);
+        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findByTypeAndKeyHash(restOperations, type, keyHash);
         if (answerInfoTblOpt.isPresent()) {
             NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);

@@ -52,25 +52,29 @@ public interface SearchService {
      * ・200:正常時<br>
      * ・204:0件時<br>
      *
+     * @param restOperations
      * @param type
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type);
+    ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final RestOperations restOperations,
+                                                         final int type);
 
     /**
      * {@code type}と{@code keyHash}より数独を取得します。<br>
      * ・200:正常時<br>
      * ・204:0件時<br>
      *
+     * @param restOperations
      * @param type
      * @param keyHash
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type, final String keyHash);
+    ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final RestOperations restOperations,
+                                                         final int type, final String keyHash);
 
     /**
      * {@code type}と{@code keyHash}より数独のスコアを取得します。<br>
