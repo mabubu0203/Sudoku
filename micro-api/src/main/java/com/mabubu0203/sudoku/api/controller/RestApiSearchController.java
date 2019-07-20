@@ -66,9 +66,9 @@ public class RestApiSearchController extends RestBaseController {
 
         log.info("getNumberPlaceDetail");
         if (StringUtils.isEmpty(keyHash)) {
-            return service.getNumberPlaceDetail(type.intValue());
+            return service.getNumberPlaceDetail(restTemplateBuilder.build(), type.intValue());
         } else {
-            return service.getNumberPlaceDetail(type.intValue(), keyHash);
+            return service.getNumberPlaceDetail(restTemplateBuilder.build(), type.intValue(), keyHash);
         }
     }
 
