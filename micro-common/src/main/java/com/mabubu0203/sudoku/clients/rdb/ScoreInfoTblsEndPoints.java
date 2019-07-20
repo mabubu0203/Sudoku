@@ -1,7 +1,6 @@
 package com.mabubu0203.sudoku.clients.rdb;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
-import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import org.springframework.web.util.UriTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -77,16 +77,17 @@ public class ScoreInfoTblsEndPoints {
      * {@code /}<br>
      *
      * @param restOperations
-     * @param numberPlaceBean
+     * @param scoreInfoTbl
      * @return boolean
      * @since 1.0
      */
     public boolean insert(
             final RestOperations restOperations,
-            final NumberPlaceBean numberPlaceBean) {
+            final ScoreInfoTbl scoreInfoTbl) {
         final String insert = "http://localhost:9011/SudokuRdb/"
                 + CommonConstants.SLASH + "scoreInfoTbls" + CommonConstants.SLASH;
 
+        scoreInfoTbl.setUpdateDate(LocalDateTime.now());
         try {
             URI uri = new URI(insert);
             RequestEntity requestEntity =
@@ -94,7 +95,7 @@ public class ScoreInfoTblsEndPoints {
                             .post(uri)
                             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .body(numberPlaceBean);
+                            .body(scoreInfoTbl);
             ResponseEntity<ScoreInfoTbl> generateEntity = restOperations.exchange(requestEntity, ScoreInfoTbl.class);
             HttpStatus status = generateEntity.getStatusCode();
             switch (status) {
@@ -123,7 +124,7 @@ public class ScoreInfoTblsEndPoints {
             final ScoreInfoTbl updateScoreBean) {
         final String update = "http://localhost:9011/SudokuRdb/"
                 + CommonConstants.SLASH + "scoreInfoTbls" + CommonConstants.SLASH;
-
+        updateScoreBean.setUpdateDate(LocalDateTime.now());
         URI uri = new UriTemplate(update + "{no}").expand(updateScoreBean.getNo());
         try {
             RequestEntity requestEntity =
