@@ -10,6 +10,8 @@ import com.mabubu0203.sudoku.interfaces.request.ResisterSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +36,9 @@ import org.springframework.web.bind.annotation.*;
 public class RestApiCreateController extends RestBaseController {
 
     private final CreateService service;
+
+    @Autowired
+    private RestTemplateBuilder restTemplateBuilder;
 
     /**
      * 指定した{@code type}に従い数独を作成します。<br>
@@ -69,7 +74,8 @@ public class RestApiCreateController extends RestBaseController {
 
         log.info("resisterSudoku");
 
-        return service.insertAnswerAndScore(request.getNumberPlaceBean());
+        return service.insertAnswerAndScore(restTemplateBuilder.build(),
+                request.getNumberPlaceBean());
     }
 
 }
