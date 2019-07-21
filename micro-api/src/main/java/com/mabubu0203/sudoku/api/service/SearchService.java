@@ -35,6 +35,7 @@ public interface SearchService {
      * ・200:正常時<br>
      * ・204:0件時<br>
      *
+     * @param restOperations
      * @param conditionBean
      * @param pageNumber
      * @param pageSize
@@ -43,6 +44,7 @@ public interface SearchService {
      * @since 1.0
      */
     ResponseEntity<SearchSudokuRecordResponseBean> search(
+            final RestOperations restOperations,
             final SearchConditionBean conditionBean,
             final int pageNumber,
             final int pageSize);
