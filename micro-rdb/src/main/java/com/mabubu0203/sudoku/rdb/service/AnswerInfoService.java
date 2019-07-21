@@ -6,8 +6,8 @@ import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * ANSWER_INFO_TBLへのinterfaceです。<br>
@@ -37,7 +37,7 @@ public interface AnswerInfoService {
      * @return N件
      * @since 1.0
      */
-    Stream<AnswerInfoTbl> searchByAnswerKey(String answerKey);
+    List<AnswerInfoTbl> searchByAnswerKey(String answerKey);
 
     /**
      * ANSWER_INFO_TBLへTypeで検索を行います。<br>

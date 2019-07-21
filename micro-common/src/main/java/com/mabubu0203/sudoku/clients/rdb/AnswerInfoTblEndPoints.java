@@ -3,6 +3,7 @@ package com.mabubu0203.sudoku.clients.rdb;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -13,6 +14,7 @@ import org.springframework.web.util.UriTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -114,7 +116,7 @@ public class AnswerInfoTblEndPoints {
      * @return
      * @since 1.0
      */
-    public AnswerInfoTbl findByAnswerKey(
+    public List<AnswerInfoTbl> findByAnswerKey(
             final RestOperations restOperations,
             final String answerKey) {
         final String findByAnswerKey = "http://localhost:9011/SudokuRdb/"
@@ -131,7 +133,11 @@ public class AnswerInfoTblEndPoints {
                         .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .build();
         try {
-            ResponseEntity<AnswerInfoTbl> generateEntity = restOperations.exchange(requestEntity, AnswerInfoTbl.class);
+            ResponseEntity<List<AnswerInfoTbl>> generateEntity = restOperations.exchange(
+                    requestEntity,
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
             HttpStatus status = generateEntity.getStatusCode();
             switch (status) {
                 case OK:

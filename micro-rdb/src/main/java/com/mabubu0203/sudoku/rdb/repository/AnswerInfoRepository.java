@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * {@code answer_info_tbl}へのRepositoryクラスです。<br>
@@ -28,7 +28,7 @@ public interface AnswerInfoRepository
      * @return N件
      * @since 1.0
      */
-    Stream<AnswerInfoTbl> findByAnswerKey(@Param("answerkey") String answerKey);
+    List<AnswerInfoTbl> findByAnswerKey(@Param("answerkey") String answerKey);
 
     /**
      * {@code answer_info_tbl}へTypeとKeyHashで検索を行います。<br>

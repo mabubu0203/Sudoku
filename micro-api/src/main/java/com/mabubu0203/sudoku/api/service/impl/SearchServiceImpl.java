@@ -15,7 +15,6 @@ import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
-import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * 検索する為のサービスクラスです。<br>
@@ -42,9 +40,6 @@ import java.util.stream.Stream;
 @Slf4j
 @Service
 public class SearchServiceImpl implements SearchService {
-
-    @Autowired
-    private AnswerInfoService answerInfoService;
 
     @Autowired
     private RdbApiSearchEndPoints rdbApiSearchEndPoints;
@@ -60,16 +55,15 @@ public class SearchServiceImpl implements SearchService {
     private ModelMapper modelMapper;
 
     @Override
-    public ResponseEntity<Boolean> isExist(final String answerKey) {
+    public ResponseEntity<Boolean> isExist(final RestOperations restOperations, final String answerKey) {
 
-        // TODO:answerInfoRepository.findByAnswerKey(answerKey)
-        try (Stream<AnswerInfoTbl> stream = answerInfoService.searchByAnswerKey(answerKey)) {
-            if (stream.count() == 0) {
-                return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
-            }
+        List<AnswerInfoTbl> list = answerInfoTblEndpoints.findByAnswerKey(restOperations, answerKey);
+        if (list.size() == 0) {
+            return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
         }
+
     }
 
     @Override
@@ -115,7 +109,7 @@ public class SearchServiceImpl implements SearchService {
         Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findByTypeAndKeyHash(
                 restOperations, type, keyHash);
         if (answerInfoTblOpt.isPresent()) {
-            NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
+            NumberPlaceBean numberPlaceBean = answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);

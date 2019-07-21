@@ -23,12 +23,13 @@ public interface SearchService {
      * 存在結果をtrue/falseで返却します。<br>
      * ・200:true/false<br>
      *
+     * @param restOperations
      * @param answerKey
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    ResponseEntity<Boolean> isExist(final String answerKey);
+    ResponseEntity<Boolean> isExist(final RestOperations restOperations, final String answerKey);
 
     /**
      * 検索画面からの検索をpageオブジェクトに格納し返却します。<br>

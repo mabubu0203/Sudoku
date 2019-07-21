@@ -22,10 +22,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * ANSWER_INFO_TBLへのサービスクラスです。 <br>
@@ -53,7 +53,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public Stream<AnswerInfoTbl> searchByAnswerKey(String answerKey) {
+    public List<AnswerInfoTbl> searchByAnswerKey(String answerKey) {
         return answerInfoRepository.findByAnswerKey(answerKey);
     }
 
