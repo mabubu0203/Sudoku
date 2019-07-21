@@ -4,6 +4,7 @@ import com.mabubu0203.sudoku.constants.WebUrlConstants;
 import com.mabubu0203.sudoku.controller.WebBaseController;
 import com.mabubu0203.sudoku.web.form.ScoreForm;
 import com.mabubu0203.sudoku.web.form.validator.ScoreFormValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = {"/"})
 public class WebPageController extends WebBaseController {
 

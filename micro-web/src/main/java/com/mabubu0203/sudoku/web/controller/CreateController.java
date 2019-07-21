@@ -5,6 +5,7 @@ import com.mabubu0203.sudoku.web.form.CreateForm;
 import com.mabubu0203.sudoku.web.form.validator.CreateFormValidator;
 import com.mabubu0203.sudoku.web.helper.CreateHelper;
 import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestOperations;
 
 import java.util.Optional;
 
@@ -27,18 +27,12 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = {"/"})
 public class CreateController {
 
-    private final RestOperations restOperations;
+    private final RestTemplateBuilder restTemplateBuilder;
     private final CreateHelper createHelper;
-
-    public CreateController(
-            final RestTemplateBuilder restTemplateBuilder,
-            final CreateHelper createHelper) {
-        this.restOperations = restTemplateBuilder.build(); // Builderのbuildメソッドを呼び出しRestTemplateを生成
-        this.createHelper = createHelper;
-    }
 
     /**
      * <br>
@@ -95,7 +89,7 @@ public class CreateController {
             return okCreateAnswer(form, model);
         } else {
             HelperBean handleBean = new HelperBean().setForm(form).setModel(model);
-            HttpStatus result = this.createHelper.completeAnswer(restOperations, handleBean);
+            HttpStatus result = this.createHelper.completeAnswer(restTemplateBuilder.build(), handleBean);
             switch (result) {
                 case OK:
                     return WebUrlConstants.Forward.COMPLETE_ANSWER.getPath();

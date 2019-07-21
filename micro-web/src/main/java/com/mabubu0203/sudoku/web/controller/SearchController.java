@@ -9,6 +9,7 @@ import com.mabubu0203.sudoku.web.form.validator.DetailFormValidator;
 import com.mabubu0203.sudoku.web.form.validator.SearchFromValidator;
 import com.mabubu0203.sudoku.web.helper.SearchHelper;
 import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestOperations;
 
 import java.util.Optional;
 
@@ -30,26 +30,12 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = {"/"})
 public class SearchController {
 
-    private final RestOperations restOperations;
+    private final RestTemplateBuilder restTemplateBuilder;
     private final SearchHelper searchHelper;
-
-    /**
-     * コンストラクタ<br>
-     *
-     * @param restTemplateBuilder
-     * @param searchHelper
-     * @author uratamanabu
-     * @since 1.0
-     */
-    public SearchController(
-            final RestTemplateBuilder restTemplateBuilder,
-            final SearchHelper searchHelper) {
-        this.restOperations = restTemplateBuilder.build(); // Builderのbuildメソッドを呼び出しRestTemplateを生成
-        this.searchHelper = searchHelper;
-    }
 
     /**
      * <br>
@@ -107,7 +93,7 @@ public class SearchController {
             model.addAttribute("validationError", "不正な値が入力されました。");
         } else {
             HelperBean handleBean = new HelperBean().setForm(form).setModel(model);
-            this.searchHelper.isSearch(restOperations, handleBean);
+            this.searchHelper.isSearch(restTemplateBuilder.build(), handleBean);
         }
         return searchAnswer(form, model);
     }
@@ -162,7 +148,7 @@ public class SearchController {
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         } else {
             HelperBean handleBean = new HelperBean().setForm(form).setModel(model);
-            this.searchHelper.playNumberPlaceDetail(restOperations, handleBean);
+            this.searchHelper.playNumberPlaceDetail(restTemplateBuilder.build(), handleBean);
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         }
     }
