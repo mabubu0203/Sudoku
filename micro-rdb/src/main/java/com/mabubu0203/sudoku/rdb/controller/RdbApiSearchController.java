@@ -5,14 +5,13 @@ import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +28,7 @@ import java.time.LocalDate;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH},
@@ -49,7 +48,6 @@ public class RdbApiSearchController {
      * @author uratamanabu
      * @since 1.0
      */
-    @Transactional(readOnly = true)
     @GetMapping(value = {CommonConstants.EMPTY_STR})
     public Page<AnswerInfoTbl> search(
             @RequestParam(value = "selectType") Integer selectType,

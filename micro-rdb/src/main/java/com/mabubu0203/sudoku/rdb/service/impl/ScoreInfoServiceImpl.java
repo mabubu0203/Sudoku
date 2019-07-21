@@ -5,10 +5,9 @@ import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.rdb.repository.ScoreRepository;
 import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,14 +22,12 @@ import java.util.Optional;
  * @since 1.0
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class ScoreInfoServiceImpl implements ScoreInfoService {
 
-    @Autowired
-    private ScoreRepository scoreRepository;
-    @Autowired
-    @Qualifier("com.mabubu0203.sudoku.rdb.config.ModelMapperConfiguration.ModelMapper")
-    private ModelMapper modelMapper;
+    private final ScoreRepository scoreRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public ScoreInfoTbl insert(NumberPlaceBean numberplaceBean) {
