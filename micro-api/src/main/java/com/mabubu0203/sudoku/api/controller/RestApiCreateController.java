@@ -8,9 +8,8 @@ import com.mabubu0203.sudoku.controller.RestBaseController;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.request.ResisterSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.validator.constraint.Type;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH},
@@ -36,9 +35,7 @@ import org.springframework.web.bind.annotation.*;
 public class RestApiCreateController extends RestBaseController {
 
     private final CreateService service;
-
-    @Autowired
-    private RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder;
 
     /**
      * 指定した{@code type}に従い数独を作成します。<br>

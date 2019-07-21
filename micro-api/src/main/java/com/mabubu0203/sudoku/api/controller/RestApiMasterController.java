@@ -7,6 +7,7 @@ import com.mabubu0203.sudoku.controller.RestBaseController;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.request.ResisterSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.validator.constraint.Type;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -29,6 +29,7 @@ import java.net.URI;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH},
         consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
@@ -36,11 +37,8 @@ import java.net.URI;
 )
 public class RestApiMasterController extends RestBaseController {
 
-    private final RestOperations restOperations;
+    private final RestTemplateBuilder restTemplateBuilder;
 
-    public RestApiMasterController(final RestTemplateBuilder restTemplateBuilder) {
-        this.restOperations = restTemplateBuilder.build();
-    }
 
     /**
      * Web側から呼び出されます。<br>
@@ -76,7 +74,7 @@ public class RestApiMasterController extends RestBaseController {
                 .build();
         // 1. 生成します。
         ResponseEntity<NumberPlaceBean> generateEntity =
-                restOperations.exchange(requestEntity, NumberPlaceBean.class);
+                restTemplateBuilder.build().exchange(requestEntity, NumberPlaceBean.class);
 
         if (generateEntity.getStatusCode() != HttpStatus.CREATED) {
             log.error("一意制約違反です。");
@@ -100,7 +98,7 @@ public class RestApiMasterController extends RestBaseController {
                 .build();
         // 2.存在確認します。
         ResponseEntity<Boolean> isSudokuExistEntity =
-                restOperations.exchange(requestEntity, Boolean.class);
+                restTemplateBuilder.build().exchange(requestEntity, Boolean.class);
 
         if (isSudokuExistEntity.getBody().booleanValue()) {
             log.error("一意制約違反です。");
@@ -123,7 +121,7 @@ public class RestApiMasterController extends RestBaseController {
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(request);
         // 3.保存します。
-        ResponseEntity<String> resisterEntity = restOperations.exchange(requestEntity, String.class);
+        ResponseEntity<String> resisterEntity = restTemplateBuilder.build().exchange(requestEntity, String.class);
 
         return resisterEntity;
 

@@ -3,9 +3,8 @@ package com.mabubu0203.sudoku.api.service.impl;
 import com.mabubu0203.sudoku.api.service.UpdateService;
 import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,12 +21,11 @@ import java.util.Optional;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UpdateServiceImpl implements UpdateService {
 
-    @Autowired
-    private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
+    private final ScoreInfoTblEndPoints scoreInfoTblEndPoints;
 
     @Override
     public ResponseEntity<Long> updateScore(

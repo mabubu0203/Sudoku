@@ -14,10 +14,9 @@ import com.mabubu0203.sudoku.validator.constraint.AnswerKey;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
 import io.micrometer.core.instrument.util.StringUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH},
         consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
@@ -42,13 +42,9 @@ import org.springframework.web.bind.annotation.*;
 )
 public class RestApiSearchController extends RestBaseController {
 
-    @Autowired
-    private SearchService service;
-    @Autowired
-    private RestTemplateBuilder restTemplateBuilder;
-    @Autowired
-    @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
-    private ModelMapper modelMapper;
+    private final SearchService service;
+    private final RestTemplateBuilder restTemplateBuilder;
+    private final ModelMapper modelMapper;
 
     /**
      * 指定した{@code type}と{@code keyHash}より数独を取得します。<br>
@@ -104,7 +100,7 @@ public class RestApiSearchController extends RestBaseController {
             @AnswerKey(message = "数値64桁を入力しましょう。") final String answerKey) {
 
         log.info("isSudokuExist");
-        return service.isExist(answerKey);
+        return service.isExist(restTemplateBuilder.build(), answerKey);
     }
 
     /**
@@ -122,7 +118,7 @@ public class RestApiSearchController extends RestBaseController {
         log.info("search");
         SearchConditionBean conditionBean = modelMapper.map(request, SearchConditionBean.class);
         conditionBean.setType(request.getSelectType());
-        return service.search(conditionBean, request.getPageNumber().intValue(), request.getPageSize().intValue());
+        return service.search(restTemplateBuilder.build(), conditionBean, request.getPageNumber().intValue(), request.getPageSize().intValue());
     }
 
 }

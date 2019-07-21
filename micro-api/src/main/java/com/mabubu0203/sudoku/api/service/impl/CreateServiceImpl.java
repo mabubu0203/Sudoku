@@ -5,7 +5,7 @@ import com.mabubu0203.sudoku.clients.rdb.RdbApiCreateEndPoints;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.logic.SudokuModule;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +23,11 @@ import java.util.Optional;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CreateServiceImpl implements CreateService {
 
     private final SudokuModule sudokuModule;
-
     private final RdbApiCreateEndPoints rdbApiCreateEndPoints;
 
     @Override

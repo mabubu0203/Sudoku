@@ -17,10 +17,9 @@ import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,21 +37,15 @@ import java.util.*;
  * @since 1.0
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    @Autowired
-    private RdbApiSearchEndPoints rdbApiSearchEndPoints;
 
-    @Autowired
-    private AnswerInfoTblEndPoints answerInfoTblEndpoints;
-
-    @Autowired
-    private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
-
-    @Autowired
-    @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
-    private ModelMapper modelMapper;
+    private final RdbApiSearchEndPoints rdbApiSearchEndPoints;
+    private final AnswerInfoTblEndPoints answerInfoTblEndpoints;
+    private final ScoreInfoTblEndPoints scoreInfoTblEndPoints;
+    private final ModelMapper modelMapper;
 
     @Override
     public ResponseEntity<Boolean> isExist(final RestOperations restOperations, final String answerKey) {
