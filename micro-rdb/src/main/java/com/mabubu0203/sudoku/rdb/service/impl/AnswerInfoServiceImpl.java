@@ -5,27 +5,26 @@ import com.mabubu0203.sudoku.enums.Type;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
-import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.repository.AnswerInfoRepository;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;
 import com.mabubu0203.sudoku.rdb.specification.ScoreInfoSpecifications;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * ANSWER_INFO_TBLへのサービスクラスです。 <br>
@@ -36,14 +35,12 @@ import java.util.stream.Stream;
  * @since 1.0
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class AnswerInfoServiceImpl implements AnswerInfoService {
 
-    @Autowired
-    private AnswerInfoRepository answerInfoRepository;
-    @Autowired
-    @Qualifier("com.mabubu0203.sudoku.rdb.config.ModelMapperConfiguration.ModelMapper")
-    private ModelMapper modelMapper;
+    private final AnswerInfoRepository answerInfoRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public AnswerInfoTbl insert(NumberPlaceBean numberplaceBean) {
@@ -53,7 +50,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public Stream<AnswerInfoTbl> searchByAnswerKey(String answerKey) {
+    public List<AnswerInfoTbl> searchByAnswerKey(String answerKey) {
         return answerInfoRepository.findByAnswerKey(answerKey);
     }
 

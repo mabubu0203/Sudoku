@@ -1,18 +1,16 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.CreateService;
+import com.mabubu0203.sudoku.clients.rdb.RdbApiCreateEndPoints;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.logic.SudokuModule;
-import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
-import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
-import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestOperations;
 
 import java.util.Optional;
 
@@ -25,13 +23,12 @@ import java.util.Optional;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CreateServiceImpl implements CreateService {
 
-    private final AnswerInfoService answerInfoService;
-    private final ScoreInfoService scoreInfoService;
     private final SudokuModule sudokuModule;
+    private final RdbApiCreateEndPoints rdbApiCreateEndPoints;
 
     @Override
     public ResponseEntity<NumberPlaceBean> generate(final int type) {
@@ -45,16 +42,13 @@ public class CreateServiceImpl implements CreateService {
 
     }
 
-    @Transactional
     @Override
-    public ResponseEntity<String> insertAnswerAndScore(final NumberPlaceBean numberPlaceBean) {
+    public ResponseEntity<String> insertAnswerAndScore(final RestOperations restOperations, final NumberPlaceBean numberPlaceBean) {
 
-        try {
-            AnswerInfoTbl answerInfoTbl = answerInfoService.insert(numberPlaceBean);
-            scoreInfoService.insert(numberPlaceBean);
-            return new ResponseEntity<>(answerInfoTbl.getKeyHash(), HttpStatus.OK);
-        } catch (Exception e) {
-            log.debug("一意制約違反です。");
+        Optional<String> keyHashOpt = rdbApiCreateEndPoints.insert(restOperations, numberPlaceBean);
+        if (keyHashOpt.isPresent()) {
+            return new ResponseEntity<>(keyHashOpt.get(), HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
         }
 

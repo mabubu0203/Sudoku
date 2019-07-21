@@ -1,11 +1,7 @@
 package com.mabubu0203.sudoku.web.form;
 
 import com.mabubu0203.sudoku.form.BaseForm;
-import com.mabubu0203.sudoku.validator.constraint.KeyHash;
-import com.mabubu0203.sudoku.validator.constraint.Name;
-import com.mabubu0203.sudoku.validator.constraint.Score;
-import com.mabubu0203.sudoku.validator.constraint.Selector;
-import com.mabubu0203.sudoku.validator.constraint.Type;
+import com.mabubu0203.sudoku.validator.constraint.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

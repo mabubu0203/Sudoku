@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @ComponentScan
-@EntityScan(basePackages = {"com.mabubu0203.sudoku.rdb.domain"})
+@EntityScan(basePackageClasses = {RdbCore.class})
 @EnableJpaRepositories(basePackages = {"com.mabubu0203.sudoku.rdb.repository"})
 @EnableTransactionManagement(proxyTargetClass = true)
 public class RdbCore {

@@ -14,9 +14,9 @@ import com.mabubu0203.sudoku.web.form.PlayForm;
 import com.mabubu0203.sudoku.web.form.ScoreForm;
 import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import com.mabubu0203.sudoku.web.utils.CompareUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -41,13 +41,12 @@ import java.util.*;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PlayHelper {
 
+    private final SudokuModule sudokuModule;
     @Value("${sudoku.uri.api}")
     private String sudokuUriApi;
-
-    @Autowired
-    private SudokuModule sudokuModule;
 
     /**
      * <br>

@@ -4,12 +4,12 @@ import com.mabubu0203.sudoku.api.service.UpdateService;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.controller.RestBaseController;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.interfaces.request.UpdateSudokuScoreRequestBean;
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(
         value = {CommonConstants.SLASH + RestUrlConstants.URL_UPDATE_MASTER + CommonConstants.SLASH},
         consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
@@ -35,11 +36,9 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class RestApiUpdateController extends RestBaseController {
 
-    @Autowired
-    private UpdateService service;
-    @Autowired
-    @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
-    private ModelMapper modelMapper;
+    private final UpdateService service;
+    private final RestTemplateBuilder restTemplateBuilder;
+    private final ModelMapper modelMapper;
 
     /**
      * 指定したスコアをRDBに保存します。<br>
@@ -55,7 +54,7 @@ public class RestApiUpdateController extends RestBaseController {
 
         log.info("updateScore");
         ScoreInfoTbl updateScoreBean = modelMapper.map(request, ScoreInfoTbl.class);
-        return service.updateScore(updateScoreBean, request.getType().intValue(), request.getKeyHash());
+        return service.updateScore(restTemplateBuilder.build(), updateScoreBean, request.getType().intValue(), request.getKeyHash());
     }
 
 }

@@ -1,31 +1,32 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.SearchService;
+import com.mabubu0203.sudoku.clients.rdb.AnswerInfoTblEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.RdbApiSearchEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
+import com.mabubu0203.sudoku.constants.CommonConstants;
+import com.mabubu0203.sudoku.enums.Type;
+import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
+import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
-import com.mabubu0203.sudoku.rdb.domain.AnswerInfoTbl;
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
-import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
-import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
+import com.mabubu0203.sudoku.utils.ESListWrapUtils;
+import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestOperations;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * 検索する為のサービスクラスです。<br>
@@ -36,40 +37,39 @@ import java.util.stream.Stream;
  * @since 1.0
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    @Autowired
-    private AnswerInfoService answerInfoService;
-    @Autowired
-    private ScoreInfoService scoreInfoService;
-    @Autowired
-    @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
-    private ModelMapper modelMapper;
 
-    @Transactional(readOnly = true)
+    private final RdbApiSearchEndPoints rdbApiSearchEndPoints;
+    private final AnswerInfoTblEndPoints answerInfoTblEndpoints;
+    private final ScoreInfoTblEndPoints scoreInfoTblEndPoints;
+    private final ModelMapper modelMapper;
+
     @Override
-    public ResponseEntity<Boolean> isExist(final String answerKey) {
+    public ResponseEntity<Boolean> isExist(final RestOperations restOperations, final String answerKey) {
 
-        try (Stream<AnswerInfoTbl> stream = answerInfoService.searchByAnswerKey(answerKey)) {
-            if (stream.count() == 0) {
-                return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
-            }
+        List<AnswerInfoTbl> list = answerInfoTblEndpoints.findByAnswerKey(restOperations, answerKey);
+        if (list.size() == 0) {
+            return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
         }
+
     }
 
-    @Transactional(readOnly = true)
     @Override
     public ResponseEntity<SearchSudokuRecordResponseBean> search(
+            final RestOperations restOperations,
             final SearchConditionBean conditionBean,
             final int pageNumber,
-            final int pageSize) {
+            final int pageSize
+    ) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        Page<AnswerInfoTbl> page = answerInfoService.searchRecords(conditionBean, pageable);
+        Page<AnswerInfoTbl> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
         if (Objects.nonNull(page) && page.hasContent()) {
             Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
             SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
@@ -83,11 +83,11 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type) {
+    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final RestOperations restOperations, final int type) {
 
-        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findFirstByType(type);
+        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findFirstByType(restOperations, type);
         if (answerInfoTblOpt.isPresent()) {
-            NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
+            NumberPlaceBean numberPlaceBean = answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -95,11 +95,14 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final int type, final String keyHash) {
+    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
+            final RestOperations restOperations,
+            final int type, final String keyHash) {
 
-        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoService.findByTypeAndKeyHash(type, keyHash);
+        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findByTypeAndKeyHash(
+                restOperations, type, keyHash);
         if (answerInfoTblOpt.isPresent()) {
-            NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
+            NumberPlaceBean numberPlaceBean = answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -107,9 +110,14 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<ScoreResponseBean> getScore(final int type, final String keyHash) {
+    public ResponseEntity<ScoreResponseBean> getScore(
+            final RestOperations restOperations,
+            final int type, final String keyHash
+    ) {
 
-        Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
+        Optional<ScoreInfoTbl> scoreInfoTblOpt =
+                scoreInfoTblEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
+
         if (scoreInfoTblOpt.isPresent()) {
             ScoreResponseBean response = modelMapper.map(scoreInfoTblOpt.get(), ScoreResponseBean.class);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -137,6 +145,27 @@ public class SearchServiceImpl implements SearchService {
         }
         Page<SearchResultBean> result = new PageImpl(modifyContent, pageable, page.getTotalElements());
         return result;
+    }
+
+    private NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl) {
+        NumberPlaceBean numberPlaceBean = new ModelMapper().map(answerInfoTbl, NumberPlaceBean.class);
+        String answerKey = numberPlaceBean.getAnswerKey();
+        String[] valueArray = answerKey.split(CommonConstants.EMPTY_STR);
+        Type type = Type.getType(numberPlaceBean.getType());
+        if (type == null) {
+            throw new SudokuApplicationException();
+        }
+        ListIterator<String> itr = ESListWrapUtils.createCells(type.getSize(), CommonConstants.INTEGER_ZERO).listIterator();
+        try {
+            for (String value : valueArray) {
+                NumberPlaceBeanUtils.setCell(numberPlaceBean, itr.next(), Integer.valueOf(value));
+            }
+        } catch (SudokuApplicationException e) {
+            e.printStackTrace();
+            log.error("やらかしています。");
+            throw new SudokuApplicationException();
+        }
+        return numberPlaceBean;
     }
 
 }

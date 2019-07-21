@@ -1,6 +1,6 @@
 package com.mabubu0203.sudoku.rdb.repository;
 
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

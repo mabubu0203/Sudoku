@@ -1,14 +1,14 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.UpdateService;
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
-import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
-import lombok.AllArgsConstructor;
+import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestOperations;
 
 import java.util.Optional;
 
@@ -21,32 +21,38 @@ import java.util.Optional;
  * @since 1.0
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UpdateServiceImpl implements UpdateService {
 
-    private final ScoreInfoService scoreInfoService;
+    private final ScoreInfoTblEndPoints scoreInfoTblEndPoints;
 
     @Override
-    @Transactional
     public ResponseEntity<Long> updateScore(
-            final ScoreInfoTbl updateScoreBean, final int type, final String keyHash) {
+            final RestOperations restOperations,
+            final ScoreInfoTbl updateScoreBean,
+            final int type,
+            final String keyHash) {
 
-        Optional<ScoreInfoTbl> scoreInfoTblOpt = scoreInfoService.findByTypeAndKeyHash(type, keyHash);
+        Optional<ScoreInfoTbl> scoreInfoTblOpt =
+                scoreInfoTblEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
+
         if (scoreInfoTblOpt.isPresent()) {
             ScoreInfoTbl scoreInfoTbl = scoreInfoTblOpt.get();
             scoreInfoTbl.setName(updateScoreBean.getName());
             scoreInfoTbl.setMemo(updateScoreBean.getMemo());
             scoreInfoTbl.setScore(updateScoreBean.getScore());
-            try {
-                scoreInfoTbl = scoreInfoService.update(scoreInfoTbl);
+            boolean result = scoreInfoTblEndPoints.update(restOperations, scoreInfoTbl);
+
+            if (result) {
                 return new ResponseEntity<>(scoreInfoTbl.getNo(), HttpStatus.OK);
-            } catch (Exception e) {
+            } else {
                 return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
             }
         } else {
             return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
         }
+
     }
 
 }

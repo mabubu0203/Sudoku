@@ -4,17 +4,14 @@ import com.mabubu0203.sudoku.constants.WebUrlConstants;
 import com.mabubu0203.sudoku.controller.WebBaseController;
 import com.mabubu0203.sudoku.web.form.ScoreForm;
 import com.mabubu0203.sudoku.web.form.validator.ScoreFormValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -27,6 +24,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = {"/"})
 public class WebPageController extends WebBaseController {
 

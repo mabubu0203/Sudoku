@@ -8,6 +8,7 @@ import com.mabubu0203.sudoku.web.form.validator.CreateFormValidator;
 import com.mabubu0203.sudoku.web.form.validator.PlayFormValidator;
 import com.mabubu0203.sudoku.web.helper.PlayHelper;
 import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestOperations;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -33,18 +29,12 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = {"/"})
 public class PlayController {
 
-    private final RestOperations restOperations;
+    private final RestTemplateBuilder restTemplateBuilder;
     private final PlayHelper playHelper;
-
-    public PlayController(
-            final RestTemplateBuilder restTemplateBuilder,
-            final PlayHelper playHelper) {
-        this.restOperations = restTemplateBuilder.build(); // Builderのbuildメソッドを呼び出しRestTemplateを生成
-        this.playHelper = playHelper;
-    }
 
     /**
      * <br>
@@ -103,7 +93,7 @@ public class PlayController {
             return okCreateQuestion(form, model);
         } else {
             HelperBean handleBean = new HelperBean().setForm(form).setModel(model);
-            this.playHelper.playNumberPlace(restOperations, handleBean);
+            this.playHelper.playNumberPlace(restTemplateBuilder.build(), handleBean);
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         }
     }
@@ -129,7 +119,7 @@ public class PlayController {
             return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
         } else {
             HelperBean handleBean = new HelperBean().setForm(form).setModel(model);
-            int result = this.playHelper.isCheck(restOperations, handleBean);
+            int result = this.playHelper.isCheck(restTemplateBuilder.build(), handleBean);
             switch (result) {
                 case 1:
                     return WebUrlConstants.Forward.BEST_SCORE.getPath();
@@ -164,7 +154,7 @@ public class PlayController {
             return WebUrlConstants.Forward.BEST_SCORE.getPath();
         } else {
             HelperBean handleBean = new HelperBean().setForm(form).setModel(model);
-            this.playHelper.bestScore(restOperations, handleBean);
+            this.playHelper.bestScore(restTemplateBuilder.build(), handleBean);
             return WebUrlConstants.Forward.BEST_SCORE_COMPLETE.getPath();
         }
     }

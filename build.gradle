@@ -101,7 +101,7 @@ subprojects {
 
 project(':micro-api') {
     dependencies {
-        implementation project(':micro-common') , project(':micro-interfaces') , project(':micro-rdb') , project(':micro-validation')
+        implementation project(':micro-common') , project(':micro-interfaces') , project(':micro-validation')
     }
 }
 

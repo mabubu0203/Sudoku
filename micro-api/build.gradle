@@ -20,6 +20,12 @@ dependencies {
     // ModelMapper
     implementation("org.modelmapper:modelmapper:$modelmapperVersion")
 
+    // EclipseCollections
+    implementation("org.eclipse.collections:eclipse-collections:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-api:$ecVersion")
+    testCompile("org.eclipse.collections:eclipse-collections-testutils:$ecVersion")
+    implementation("org.eclipse.collections:eclipse-collections-forkjoin:$ecVersion")
+
 }
 
 dependencyManagement {

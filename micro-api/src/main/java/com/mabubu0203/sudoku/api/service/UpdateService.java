@@ -1,7 +1,8 @@
 package com.mabubu0203.sudoku.api.service;
 
-import com.mabubu0203.sudoku.rdb.domain.ScoreInfoTbl;
+import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestOperations;
 
 /**
  * 更新する為のinterfaceです。<br>
@@ -20,6 +21,7 @@ public interface UpdateService {
      * ・200:正常時<br>
      * ・400:異常時<br>
      *
+     * @param restOperations
      * @param updateScoreBean
      * @param type
      * @param keyHash
@@ -27,6 +29,10 @@ public interface UpdateService {
      * @author uratamanabu
      * @since 1.0
      */
-    ResponseEntity<Long> updateScore(final ScoreInfoTbl updateScoreBean, final int type, final String keyHash);
+    ResponseEntity<Long> updateScore(
+            final RestOperations restOperations,
+            final ScoreInfoTbl updateScoreBean,
+            final int type,
+            final String keyHash);
 
 }

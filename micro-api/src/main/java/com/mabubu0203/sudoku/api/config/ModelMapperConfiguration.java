@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(value = "com.mabubu0203.sudoku.api.config.ModelMapperConfiguration")
 public class ModelMapperConfiguration {
 
-    @Bean(value = "com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
+    @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
