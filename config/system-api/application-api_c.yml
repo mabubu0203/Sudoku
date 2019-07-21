@@ -8,21 +8,6 @@ spring:
   profiles:
     include: api_message,api_setting
   # ----------------------------------------
-  # DATA PROPERTIES
-  # ----------------------------------------
-  datasource:
-    continue-on-error: false
-    driverClassName: com.mysql.cj.jdbc.Driver
-    generate-unique-name: false
-    jmx-enabled: true
-    password: root
-    sql-script-encoding: UTF-8
-    url: jdbc:mysql://localhost:3306/sudoku?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-  h2:
-    console:
-      enabled: false
-  # ----------------------------------------
   # DEVTOOLS PROPERTIES
   # ----------------------------------------
   devtools:
