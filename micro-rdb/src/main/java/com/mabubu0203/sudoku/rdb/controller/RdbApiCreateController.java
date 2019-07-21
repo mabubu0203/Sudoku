@@ -2,9 +2,18 @@ package com.mabubu0203.sudoku.rdb.controller;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
+import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
+import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
+import com.mabubu0203.sudoku.rdb.service.ScoreInfoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +35,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 )
 public class RdbApiCreateController {
+
+    private final AnswerInfoService answerInfoService;
+    private final ScoreInfoService scoreInfoService;
+
+    /**
+     * 数独の検索を実施します。<br>
+     *
+     * @param numberPlaceBean
+     * @return true
+     * @author uratamanabu
+     * @since 1.0
+     */
+    @Transactional
+    @PostMapping(value = {CommonConstants.EMPTY_STR})
+    public ResponseEntity<String> insert(
+            @RequestBody final NumberPlaceBean numberPlaceBean
+    ) {
+
+        try {
+            AnswerInfoTbl answerInfoTbl = answerInfoService.insert(numberPlaceBean);
+            scoreInfoService.insert(numberPlaceBean);
+            return new ResponseEntity<>(answerInfoTbl.getKeyHash(), HttpStatus.OK);
+        } catch (Exception e) {
+            log.debug("一意制約違反です。");
+            return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
+        }
+
+    }
+
 }

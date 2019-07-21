@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +44,7 @@ public class RdbApiSearchController {
      * 数独の検索を実施します。<br>
      *
      * @param pageable 検索条件
-     * @return ResponseEntity
+     * @return Page
      * @author uratamanabu
      * @since 1.0
      */
@@ -59,7 +61,8 @@ public class RdbApiSearchController {
             @RequestParam(value = "selectorScore") Integer selectorScore,
             @RequestParam(value = "selectorKeyHash") Integer selectorKeyHash,
             @RequestParam(value = "selectorName") Integer selectorName,
-            Pageable pageable) {
+            @PageableDefault(sort = {"no"}, direction = Sort.Direction.ASC) Pageable pageable
+    ) {
 
         SearchConditionBean condition = new SearchConditionBean();
         condition.setSelectorNo(selectorNo);
