@@ -10,10 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
 
 /**
  * 検索する為のcontrollerです。<br>
@@ -39,15 +41,32 @@ public class RdbApiSearchController {
     /**
      * 数独の検索を実施します。<br>
      *
-     * @param conditionBean 検索条件
+     * @param pageable 検索条件
      * @return ResponseEntity
      * @author uratamanabu
      * @since 1.0
      */
-    @PostMapping(value = {CommonConstants.EMPTY_STR})
+    @GetMapping(value = {CommonConstants.EMPTY_STR})
     public Page<AnswerInfoTbl> search(
-            @RequestBody final SearchConditionBean conditionBean, final Pageable pageable) {
-        return answerInfoService.searchRecords(conditionBean, pageable);
+            @RequestParam(value = "selectType") Integer selectType,
+            @RequestParam(value = "no", required = false) Long no,
+            @RequestParam(value = "keyHash", required = false) String keyHash,
+            @RequestParam(value = "score", required = false) Integer score,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "dateStart", required = false) LocalDate dateStart,
+            @RequestParam(value = "dateEnd", required = false) LocalDate dateEnd,
+            @RequestParam(value = "selectorNo") Integer selectorNo,
+            @RequestParam(value = "selectorScore") Integer selectorScore,
+            @RequestParam(value = "selectorKeyHash") Integer selectorKeyHash,
+            @RequestParam(value = "selectorName") Integer selectorName,
+            Pageable pageable) {
+
+        SearchConditionBean condition = new SearchConditionBean();
+        condition.setSelectorNo(selectorNo);
+        condition.setSelectorScore(selectorScore);
+        condition.setSelectorKeyHash(selectorKeyHash);
+        condition.setSelectorName(selectorName);
+        return answerInfoService.searchRecords(condition, pageable);
     }
 
 }
