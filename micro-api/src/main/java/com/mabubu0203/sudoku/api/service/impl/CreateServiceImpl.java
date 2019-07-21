@@ -1,24 +1,17 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.CreateService;
-import com.mabubu0203.sudoku.clients.rdb.AnswerInfoTblEndPoints;
-import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.RdbApiCreateEndPoints;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
-import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.logic.SudokuModule;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -34,17 +27,9 @@ import java.util.Optional;
 @Service
 public class CreateServiceImpl implements CreateService {
 
-    @Autowired
-    private AnswerInfoTblEndPoints answerInfoTblEndpoints;
-
-    @Autowired
-    private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
-
     private final SudokuModule sudokuModule;
 
-    @Autowired
-    @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
-    private ModelMapper modelMapper;
+    private final RdbApiCreateEndPoints rdbApiCreateEndPoints;
 
     @Override
     public ResponseEntity<NumberPlaceBean> generate(final int type) {
@@ -61,18 +46,10 @@ public class CreateServiceImpl implements CreateService {
     @Override
     public ResponseEntity<String> insertAnswerAndScore(final RestOperations restOperations, final NumberPlaceBean numberPlaceBean) {
 
-        try {
-            AnswerInfoTbl answerInfoTbl = modelMapper.map(numberPlaceBean, AnswerInfoTbl.class);
-            answerInfoTbl.setCreateDate(LocalDateTime.now());
-            answerInfoTblEndpoints.insert(restOperations, answerInfoTbl);
-            ScoreInfoTbl scoreInfoTbl = modelMapper.map(numberPlaceBean, ScoreInfoTbl.class);
-            scoreInfoTbl.setScore(CommonConstants.INTEGER_ZERO);
-            scoreInfoTbl.setName(CommonConstants.EMPTY_STR);
-            scoreInfoTbl.setMemo(CommonConstants.EMPTY_STR);
-            scoreInfoTblEndPoints.insert(restOperations, scoreInfoTbl);
-            return new ResponseEntity<>(answerInfoTbl.getKeyHash(), HttpStatus.OK);
-        } catch (Exception e) {
-            log.debug("一意制約違反です。");
+        Optional<String> keyHashOpt = rdbApiCreateEndPoints.insert(restOperations, numberPlaceBean);
+        if (keyHashOpt.isPresent()) {
+            return new ResponseEntity<>(keyHashOpt.get(), HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
         }
 

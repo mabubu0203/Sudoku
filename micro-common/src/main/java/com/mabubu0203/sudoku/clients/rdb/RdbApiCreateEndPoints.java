@@ -10,6 +10,7 @@ import org.springframework.web.client.RestOperations;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 /**
  * {@code /answerInfoTbls}のエンドポイントのラッパーです。<br>
@@ -31,7 +32,7 @@ public class RdbApiCreateEndPoints {
      * @return boolean
      * @since 1.0
      */
-    public String insert(
+    public Optional<String> insert(
             final RestOperations restOperations,
             final NumberPlaceBean numberPlaceBean
     ) {
@@ -50,14 +51,14 @@ public class RdbApiCreateEndPoints {
             HttpStatus status = generateEntity.getStatusCode();
             switch (status) {
                 case OK:
-                    return generateEntity.getBody();
+                    return Optional.ofNullable(generateEntity.getBody());
                 case CONFLICT:
                 default:
-                    return null;
+                    return Optional.empty();
             }
         } catch (URISyntaxException | RestClientException e) {
             e.printStackTrace();
-            return null;
+            return Optional.empty();
         }
     }
 

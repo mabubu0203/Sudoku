@@ -26,7 +26,6 @@ import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestOperations;
 
 import java.util.*;
@@ -52,13 +51,14 @@ public class SearchServiceImpl implements SearchService {
 
     @Autowired
     private AnswerInfoTblEndPoints answerInfoTblEndpoints;
+
     @Autowired
     private ScoreInfoTblEndPoints scoreInfoTblEndPoints;
+
     @Autowired
     @Qualifier("com.mabubu0203.sudoku.api.config.ModelMapperConfiguration.ModelMapper")
     private ModelMapper modelMapper;
 
-    @Transactional(readOnly = true)
     @Override
     public ResponseEntity<Boolean> isExist(final String answerKey) {
 
@@ -72,13 +72,13 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
-    @Transactional(readOnly = true)
     @Override
     public ResponseEntity<SearchSudokuRecordResponseBean> search(
             final RestOperations restOperations,
             final SearchConditionBean conditionBean,
             final int pageNumber,
-            final int pageSize) {
+            final int pageSize
+    ) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
@@ -108,9 +108,12 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(final RestOperations restOperations, final int type, final String keyHash) {
+    public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
+            final RestOperations restOperations,
+            final int type, final String keyHash) {
 
-        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findByTypeAndKeyHash(restOperations, type, keyHash);
+        Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findByTypeAndKeyHash(
+                restOperations, type, keyHash);
         if (answerInfoTblOpt.isPresent()) {
             NumberPlaceBean numberPlaceBean = answerInfoService.answerInfoTblConvertBean(answerInfoTblOpt.get());
             return new ResponseEntity<>(numberPlaceBean, HttpStatus.OK);
@@ -120,7 +123,10 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<ScoreResponseBean> getScore(final RestOperations restOperations, final int type, final String keyHash) {
+    public ResponseEntity<ScoreResponseBean> getScore(
+            final RestOperations restOperations,
+            final int type, final String keyHash
+    ) {
 
         Optional<ScoreInfoTbl> scoreInfoTblOpt =
                 scoreInfoTblEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
@@ -157,7 +163,7 @@ public class SearchServiceImpl implements SearchService {
     private NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl) {
         NumberPlaceBean numberPlaceBean = new ModelMapper().map(answerInfoTbl, NumberPlaceBean.class);
         String answerKey = numberPlaceBean.getAnswerKey();
-        String[] valueArray = answerKey.split("");
+        String[] valueArray = answerKey.split(CommonConstants.EMPTY_STR);
         Type type = Type.getType(numberPlaceBean.getType());
         if (type == null) {
             throw new SudokuApplicationException();

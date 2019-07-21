@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,7 @@ public class RdbApiSearchController {
      * @author uratamanabu
      * @since 1.0
      */
+    @Transactional(readOnly = true)
     @GetMapping(value = {CommonConstants.EMPTY_STR})
     public Page<AnswerInfoTbl> search(
             @RequestParam(value = "selectType") Integer selectType,
