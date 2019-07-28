@@ -1,6 +1,5 @@
 package com.mabubu0203.sudoku.rdb.specification;
 
-import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Selector;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import lombok.NoArgsConstructor;
@@ -46,7 +45,7 @@ public class AnswerInfoSpecifications {
      * @since 1.0
      */
     public static Specification<AnswerInfoTbl> noContains(Long no, Integer selectorNo) {
-        if (CommonConstants.LONG_ZERO.equals(no)) {
+        if (Long.valueOf(0).equals(no)) {
             return null;
         } else {
             Selector selector = Selector.getSelector(selectorNo);
