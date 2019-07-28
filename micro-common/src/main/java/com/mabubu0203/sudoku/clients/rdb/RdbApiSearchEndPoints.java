@@ -5,8 +5,8 @@ import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -40,22 +40,22 @@ public class RdbApiSearchEndPoints {
      * @return boolean
      * @since 1.0
      */
-    public Page<AnswerInfoTbl> search(
+    public PagedResources<AnswerInfoTbl> search(
             final RestOperations restOperations,
             final SearchConditionBean conditionBean,
             final Pageable pageable) {
 
         final String search = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
+                + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
         Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("selectType", "4");
+        uriVariables.put("selectType", Integer.toString(conditionBean.getType()));
         uriVariables.put("selectorNo", Integer.toString(conditionBean.getSelectorNo()));
         uriVariables.put("selectorKeyHash", Integer.toString(conditionBean.getSelectorKeyHash()));
         uriVariables.put("selectorScore", Integer.toString(conditionBean.getSelectorScore()));
         uriVariables.put("selectorName", Integer.toString(conditionBean.getSelectorName()));
         uriVariables.put("number", Integer.toString(pageable.getPageNumber()));
         uriVariables.put("size", Integer.toString(pageable.getPageSize()));
-        URI uri = new UriTemplate(search + "?type={type}").expand(uriVariables);
+        URI uri = new UriTemplate(search + "?selectType={selectType}&selectorNo={selectorNo}&selectorKeyHash={selectorKeyHash}&selectorScore={selectorScore}&selectorName={selectorName}&number={number}&size={size}").expand(uriVariables);
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
@@ -63,7 +63,7 @@ public class RdbApiSearchEndPoints {
                         .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .build();
         try {
-            ResponseEntity<Page<AnswerInfoTbl>> generateEntity = restOperations.exchange(
+            ResponseEntity<PagedResources<AnswerInfoTbl>> generateEntity = restOperations.exchange(
                     requestEntity,
                     new ParameterizedTypeReference<>() {
                     }
