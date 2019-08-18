@@ -5,6 +5,7 @@ import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
+import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.logic.SudokuModule;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
@@ -105,7 +106,7 @@ public class SearchHelper {
                             .body(request);
             ResponseEntity<SearchSudokuRecordResponseBean> generateEntity =
                     restOperations.exchange(requestEntity, SearchSudokuRecordResponseBean.class);
-            Page page = generateEntity.getBody().getPage();
+            Page<SearchResultBean> page = generateEntity.getBody().getPage();
             // ページ番号を設定し直す
             form.setPageNumber(page.getNumber());
             model.addAttribute("page", page);

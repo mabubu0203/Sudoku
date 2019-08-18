@@ -32,7 +32,7 @@ public class ScoreInfoServiceImpl implements ScoreInfoService {
     @Override
     public ScoreInfoTbl insert(NumberPlaceBean numberplaceBean) {
         ScoreInfoTbl scoreInfoTbl = modelMapper.map(numberplaceBean, ScoreInfoTbl.class);
-        scoreInfoTbl.setScore(CommonConstants.INTEGER_ZERO);
+        scoreInfoTbl.setScore(0);
         scoreInfoTbl.setName(CommonConstants.EMPTY_STR);
         scoreInfoTbl.setMemo(CommonConstants.EMPTY_STR);
         scoreInfoTbl.setUpdateDate(LocalDateTime.now());

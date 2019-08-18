@@ -38,7 +38,7 @@ public class RdbApiCreateEndPoints {
     ) {
 
         final String insert = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH;
+                + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH;
         try {
             URI uri = new URI(insert);
             RequestEntity requestEntity =
