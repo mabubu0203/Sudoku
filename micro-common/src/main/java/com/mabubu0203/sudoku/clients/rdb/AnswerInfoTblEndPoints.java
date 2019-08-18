@@ -2,9 +2,15 @@ package com.mabubu0203.sudoku.clients.rdb;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
-import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -12,11 +18,12 @@ import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriTemplate;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * {@code /answerInfoTbls}のエンドポイントのラッパーです。<br>
@@ -27,45 +34,9 @@ import java.util.Optional;
  * @version 1.0
  * @since 1.0
  */
+@Slf4j
 @Service
 public class AnswerInfoTblEndPoints {
-
-    /**
-     * {@code /}<br>
-     *
-     * @param restOperations
-     * @param answerInfoTbl
-     * @return boolean
-     * @since 1.0
-     */
-    public boolean insert(
-            final RestOperations restOperations,
-            final AnswerInfoTbl answerInfoTbl) {
-        final String insert = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + "answerInfoTbls" + CommonConstants.SLASH;
-
-        try {
-            URI uri = new URI(insert);
-            RequestEntity requestEntity =
-                    RequestEntity
-                            .post(uri)
-                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .body(answerInfoTbl);
-            ResponseEntity<ScoreInfoTbl> generateEntity = restOperations.exchange(requestEntity, ScoreInfoTbl.class);
-            HttpStatus status = generateEntity.getStatusCode();
-            switch (status) {
-                case OK:
-                    return true;
-                case CONFLICT:
-                default:
-                    return false;
-            }
-        } catch (URISyntaxException | RestClientException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     /**
      * {@code /search/findFirstByType}<br>
@@ -79,7 +50,7 @@ public class AnswerInfoTblEndPoints {
             final RestOperations restOperations,
             final int type) {
         final String findByTypeAndKeyHash = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + "answerInfoTbls" + CommonConstants.SLASH
+                + "answerInfoTbls" + CommonConstants.SLASH
                 + "search" + CommonConstants.SLASH + "findFirstByType";
 
         Map<String, String> uriVariables = new HashMap<>();
@@ -88,8 +59,8 @@ public class AnswerInfoTblEndPoints {
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, "application/hal+json;charset=UTF-8")
-                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                        .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                         .build();
 
         try {
@@ -120,20 +91,20 @@ public class AnswerInfoTblEndPoints {
             final RestOperations restOperations,
             final String answerKey) {
         final String findByAnswerKey = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + "answerInfoTbls" + CommonConstants.SLASH
+                + "answerInfoTbls" + CommonConstants.SLASH
                 + "search" + CommonConstants.SLASH + "findByAnswerKey";
 
         Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("findByAnswerKey", answerKey);
+        uriVariables.put("answerKey", answerKey);
         URI uri = new UriTemplate(findByAnswerKey + "?answerKey={answerKey}").expand(uriVariables);
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, "application/hal+json;charset=UTF-8")
-                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                        .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                         .build();
         try {
-            ResponseEntity<List<AnswerInfoTbl>> generateEntity = restOperations.exchange(
+            ResponseEntity<PagedResources<Resource<AnswerInfoTbl>>> generateEntity = restOperations.exchange(
                     requestEntity,
                     new ParameterizedTypeReference<>() {
                     }
@@ -141,7 +112,10 @@ public class AnswerInfoTblEndPoints {
             HttpStatus status = generateEntity.getStatusCode();
             switch (status) {
                 case OK:
-                    return generateEntity.getBody();
+                    return generateEntity.getBody().getContent()
+                            .stream()
+                            .map(Resource::getContent)
+                            .collect(toList());
                 case NOT_FOUND:
                 default:
                     return null;
@@ -167,7 +141,7 @@ public class AnswerInfoTblEndPoints {
             final String keyHash) {
 
         final String findByTypeAndKeyHash = "http://localhost:9011/SudokuRdb/"
-                + CommonConstants.SLASH + "answerInfoTbls" + CommonConstants.SLASH
+                + "answerInfoTbls" + CommonConstants.SLASH
                 + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
 
         Map<String, String> uriVariables = new HashMap<>();
@@ -177,8 +151,8 @@ public class AnswerInfoTblEndPoints {
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, "application/hal+json;charset=UTF-8")
-                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                        .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                         .build();
 
         try {

@@ -21,12 +21,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 
 import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * 検索する為のサービスクラスです。<br>
@@ -69,8 +72,8 @@ public class SearchServiceImpl implements SearchService {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        Page<AnswerInfoTbl> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
-        if (Objects.nonNull(page) && page.hasContent()) {
+        PagedResources<AnswerInfoTbl> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
+        if (Objects.nonNull(page) && page.getContent().size() > 0) {
             Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
             SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
             response.setPage(modiftyPage);
@@ -126,10 +129,11 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
-    private Page<SearchResultBean> convertJacksonFile(final Page<AnswerInfoTbl> page) {
+    private Page<SearchResultBean> convertJacksonFile(final PagedResources<AnswerInfoTbl> page) {
 
-        Pageable pageable = PageRequest.of(page.getNumber(), page.getSize());
-        List<AnswerInfoTbl> content = page.getContent();
+        Pageable pageable = PageRequest.of((int) page.getMetadata().getNumber(), (int) page.getMetadata().getSize());
+        List<AnswerInfoTbl> content = page.getContent().stream()
+                .collect(toList());
         List<SearchResultBean> modifyContent = new ArrayList<>();
         for (AnswerInfoTbl record : content) {
             SearchResultBean bean = new SearchResultBean();
@@ -143,7 +147,7 @@ public class SearchServiceImpl implements SearchService {
             bean.setUpdateDate(scoreInfoTbl.getUpdateDate());
             modifyContent.add(bean);
         }
-        Page<SearchResultBean> result = new PageImpl(modifyContent, pageable, page.getTotalElements());
+        Page<SearchResultBean> result = new PageImpl(modifyContent, pageable, page.getMetadata().getTotalElements());
         return result;
     }
 
