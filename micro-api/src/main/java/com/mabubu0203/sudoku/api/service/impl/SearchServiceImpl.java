@@ -44,7 +44,6 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-
     private final RdbApiSearchEndPoints rdbApiSearchEndPoints;
     private final AnswerInfoTblEndPoints answerInfoTblEndpoints;
     private final ScoreInfoTblEndPoints scoreInfoTblEndPoints;
@@ -100,7 +99,9 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
             final RestOperations restOperations,
-            final int type, final String keyHash) {
+            final int type,
+            final String keyHash
+    ) {
 
         Optional<AnswerInfoTbl> answerInfoTblOpt = answerInfoTblEndpoints.findByTypeAndKeyHash(
                 restOperations, type, keyHash);
@@ -115,7 +116,8 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public ResponseEntity<ScoreResponseBean> getScore(
             final RestOperations restOperations,
-            final int type, final String keyHash
+            final int type,
+            final String keyHash
     ) {
 
         Optional<ScoreInfoTbl> scoreInfoTblOpt =
@@ -132,7 +134,9 @@ public class SearchServiceImpl implements SearchService {
     private Page<SearchResultBean> convertJacksonFile(final PagedResources<AnswerInfoTbl> page) {
 
         Pageable pageable = PageRequest.of((int) page.getMetadata().getNumber(), (int) page.getMetadata().getSize());
-        List<AnswerInfoTbl> content = page.getContent().stream()
+        List<AnswerInfoTbl> content = page
+                .getContent()
+                .stream()
                 .collect(toList());
         List<SearchResultBean> modifyContent = new ArrayList<>();
         for (AnswerInfoTbl record : content) {

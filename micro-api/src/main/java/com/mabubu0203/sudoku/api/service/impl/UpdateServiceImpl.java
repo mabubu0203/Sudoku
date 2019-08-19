@@ -32,7 +32,8 @@ public class UpdateServiceImpl implements UpdateService {
             final RestOperations restOperations,
             final ScoreInfoTbl updateScoreBean,
             final int type,
-            final String keyHash) {
+            final String keyHash
+    ) {
 
         Optional<ScoreInfoTbl> scoreInfoTblOpt =
                 scoreInfoTblEndPoints.findByTypeAndKeyHash(restOperations, type, keyHash);
