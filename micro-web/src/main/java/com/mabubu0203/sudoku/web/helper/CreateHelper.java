@@ -62,7 +62,7 @@ public class CreateHelper {
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
-        URI uri = new UriTemplate(sudokuUriApi + "/createMaster/{type}").expand(form.getSelectType());
+        URI uri = new UriTemplate(sudokuUriApi + "createMaster/{type}").expand(form.getSelectType());
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)

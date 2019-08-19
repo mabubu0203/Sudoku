@@ -85,7 +85,7 @@ public class PlayHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getSelectType()));
         uriVariables.put("keyHash", "");
-        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
+        URI uri = new UriTemplate(sudokuUriApi + "searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
@@ -130,7 +130,7 @@ public class PlayHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
-        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
+        URI uri = new UriTemplate(sudokuUriApi + "searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
@@ -147,7 +147,7 @@ public class PlayHelper {
             throw new SudokuApplicationException();
         }
         if (form.isCompareFlg()) {
-            uri = new UriTemplate(sudokuUriApi + "/searchMaster/score?type={type}&keyHash={keyHash}").expand(uriVariables);
+            uri = new UriTemplate(sudokuUriApi + "searchMaster/score?type={type}&keyHash={keyHash}").expand(uriVariables);
             requestEntity =
                     RequestEntity
                             .get(uri)
@@ -231,7 +231,7 @@ public class PlayHelper {
         UpdateSudokuScoreRequestBean request =
                 new ModelMapper().map(form, UpdateSudokuScoreRequestBean.class);
         try {
-            URI uri = new URI(sudokuUriApi + "/updateMaster/score/");
+            URI uri = new URI(sudokuUriApi + "updateMaster/score/");
             RequestEntity requestEntity =
                     RequestEntity
                             .put(uri)

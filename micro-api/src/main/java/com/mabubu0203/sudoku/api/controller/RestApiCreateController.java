@@ -72,9 +72,10 @@ public class RestApiCreateController extends RestBaseController {
     ) {
 
         log.info("resisterSudoku");
-
-        return service.insertAnswerAndScore(restTemplateBuilder.build(),
-                request.getNumberPlaceBean());
+        return service.insertAnswerAndScore(
+                restTemplateBuilder.build(),
+                request.getNumberPlaceBean()
+        );
     }
 
 }
