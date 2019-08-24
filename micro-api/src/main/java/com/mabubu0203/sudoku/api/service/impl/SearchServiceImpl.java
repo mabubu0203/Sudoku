@@ -8,7 +8,6 @@ import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Type;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
@@ -73,11 +72,12 @@ public class SearchServiceImpl implements SearchService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         PagedResources<AnswerInfoTbl> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
         if (Objects.nonNull(page) && page.getContent().size() > 0) {
-            Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
-            SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
-            response.setPage(modiftyPage);
-            response.setPh(new PagenationHelper(modiftyPage));
-            return new ResponseEntity<>(response, HttpStatus.OK);
+//            Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
+//            SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
+//            response.setPage(modiftyPage);
+//            response.setPh(new PagenationHelper(modiftyPage));
+            return new ResponseEntity<>(null, HttpStatus.OK);
+//            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
             return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);

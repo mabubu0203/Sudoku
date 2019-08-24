@@ -3,8 +3,8 @@ package com.mabubu0203.sudoku.rdb.service;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedResources;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +69,7 @@ public interface AnswerInfoService {
      * @return N件
      * @since 1.0
      */
-    Page<AnswerInfoTbl> searchRecords(SearchConditionBean condition, Pageable pageable);
+    PagedResources<AnswerInfoTbl> searchRecords(SearchConditionBean condition, Pageable pageable);
 
     /**
      * EntityをBeanに変換して返却します。<br>
