@@ -1,5 +1,8 @@
 package com.mabubu0203.sudoku.web.helper;
 
+import com.mabubu0203.sudoku.clients.api.RestApiSearchEndPoints;
+import com.mabubu0203.sudoku.clients.api.RestApiUpdateEndPoints;
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.RecordBean;
@@ -18,17 +21,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
-import org.springframework.web.util.UriTemplate;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <br>
@@ -43,6 +43,11 @@ import java.util.*;
 public class PlayHelper {
 
     private final SudokuModule sudokuModule;
+    private final RestApiSearchEndPoints restApiSearchEndPoints;
+    private final RestApiUpdateEndPoints restApiUpdateEndPoints;
+
+    private final ModelMapper modelMapper;
+
     @Value("${sudoku.uri.api}")
     private String sudokuUriApi;
 
@@ -80,30 +85,20 @@ public class PlayHelper {
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
-        Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("type", Integer.toString(form.getSelectType()));
-        uriVariables.put("keyHash", "");
-        URI uri = new UriTemplate(sudokuUriApi + "searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
-        RequestEntity requestEntity =
-                RequestEntity
-                        .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .build();
+
         try {
-            ResponseEntity<NumberPlaceBean> generateEntity =
-                    restOperations.exchange(requestEntity, NumberPlaceBean.class);
-            NumberPlaceBean numberPlaceBean = generateEntity.getBody();
+            NumberPlaceBean numberPlaceBean = restApiSearchEndPoints
+                    .sudoku(restOperations, form.getSelectType(), CommonConstants.EMPTY_STR);
             // 一件から虫食いのリストを取得します。
             numberPlaceBean =
                     sudokuModule.filteredOfLevel(form.getSelectType(), numberPlaceBean, form.getSelectLevel());
-            PlayForm playForm = new ModelMapper().map(numberPlaceBean, PlayForm.class);
+            PlayForm playForm = modelMapper.map(numberPlaceBean, PlayForm.class);
             playForm.setCount(0);
             playForm.setScore(SudokuUtils.calculationScore(form.getSelectType(), form.getSelectLevel()));
             model.addAttribute("playForm", playForm);
             model.addAttribute("selectNums", ESListWrapUtils.getSelectNum(form.getSelectType()));
             model.addAttribute("selectCells", ESListWrapUtils.createCells(form.getSelectType()));
-        } catch (RestClientException e) {
+        } catch (SudokuApplicationException e) {
             e.printStackTrace();
             throw new SudokuApplicationException();
         }
@@ -125,41 +120,24 @@ public class PlayHelper {
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
-        Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("type", Integer.toString(form.getType()));
-        uriVariables.put("keyHash", form.getKeyHash());
-        URI uri = new UriTemplate(sudokuUriApi + "searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
-        RequestEntity requestEntity =
-                RequestEntity
-                        .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .build();
+
         try {
-            ResponseEntity<NumberPlaceBean> generateEntity =
-                    restOperations.exchange(requestEntity, NumberPlaceBean.class);
-            NumberPlaceBean numberPlaceBean = generateEntity.getBody();
+            NumberPlaceBean numberPlaceBean = restApiSearchEndPoints
+                    .sudoku(restOperations, form.getType(), form.getKeyHash());
             CompareUtil.playFormCompareAnswer(form, numberPlaceBean);
-        } catch (RestClientException e) {
+        } catch (SudokuApplicationException e) {
             e.printStackTrace();
             throw new SudokuApplicationException();
         }
+
         if (form.isCompareFlg()) {
-            uri = new UriTemplate(sudokuUriApi + "searchMaster/score?type={type}&keyHash={keyHash}").expand(uriVariables);
-            requestEntity =
-                    RequestEntity
-                            .get(uri)
-                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .build();
             try {
-                ResponseEntity<ScoreResponseBean> generateEntity2 =
-                        restOperations.exchange(requestEntity, ScoreResponseBean.class);
-                ScoreResponseBean score = generateEntity2.getBody();
-                ScoreForm scoreForm = new ModelMapper().map(form, ScoreForm.class);
+                ScoreResponseBean score = restApiSearchEndPoints
+                        .score(restOperations, form.getType(), form.getKeyHash());
+                ScoreForm scoreForm = modelMapper.map(form, ScoreForm.class);
                 if (scoreForm.getScore() > score.getScore()) {
-                    scoreForm.setName("");
-                    scoreForm.setMemo("");
+                    scoreForm.setName(CommonConstants.EMPTY_STR);
+                    scoreForm.setMemo(CommonConstants.EMPTY_STR);
                     // modelに詰め込みます。
                     model.addAttribute("scoreForm", scoreForm);
                     model.addAttribute("hiScore", score.getScore());
@@ -174,7 +152,7 @@ public class PlayHelper {
                     // score によって、完了に進む
                     return 2;
                 }
-            } catch (RestClientException e) {
+            } catch (SudokuApplicationException e) {
                 e.printStackTrace();
                 throw new SudokuApplicationException();
             }
@@ -202,6 +180,7 @@ public class PlayHelper {
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
+
         Optional<Long> noOpt = Optional.ofNullable(updateScore(restOperations, form));
         if (noOpt.isPresent()) {
             // modelに詰め込みます。
@@ -228,28 +207,12 @@ public class PlayHelper {
 
         UpdateSudokuScoreRequestBean request =
                 new ModelMapper().map(form, UpdateSudokuScoreRequestBean.class);
-        try {
-            URI uri = new URI(sudokuUriApi + "updateMaster/score/");
-            RequestEntity requestEntity =
-                    RequestEntity
-                            .put(uri)
-                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .body(request);
-            ResponseEntity<Long> generateEntity = restOperations.exchange(requestEntity, Long.class);
-            return generateEntity.getBody();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+
+        Optional<Long> noOpt = restApiUpdateEndPoints.update(restOperations, request);
+        if (noOpt.isPresent()) {
+            return noOpt.get();
+        } else {
             return null;
-        } catch (HttpClientErrorException e) {
-            HttpStatus status = e.getStatusCode();
-            switch (status) {
-                case BAD_REQUEST:
-                    log.info("???");
-                    log.info(e.getMessage());
-                default:
-                    return null;
-            }
         }
     }
 

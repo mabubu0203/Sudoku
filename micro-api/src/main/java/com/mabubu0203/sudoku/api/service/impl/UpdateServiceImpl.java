@@ -51,7 +51,7 @@ public class UpdateServiceImpl implements UpdateService {
                 return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
             }
         } else {
-            return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Long.MIN_VALUE, HttpStatus.NOT_FOUND);
         }
 
     }

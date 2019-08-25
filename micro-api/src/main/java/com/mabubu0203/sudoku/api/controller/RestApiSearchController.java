@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.*;
         value = {CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH},
         consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
         produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
-
 )
 public class RestApiSearchController extends RestBaseController {
 
