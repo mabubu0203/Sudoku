@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +51,7 @@ public class RdbApiSearchController {
      * @since 1.0
      */
     @GetMapping(value = {CommonConstants.EMPTY_STR})
-    public PagedResources<AnswerInfoTbl> search(
+    public PagedResources<Resource<AnswerInfoTbl>> search(
             @RequestParam(value = "selectType") Integer selectType,
             @RequestParam(value = "no", required = false) Long no,
             @RequestParam(value = "keyHash", required = false) String keyHash,

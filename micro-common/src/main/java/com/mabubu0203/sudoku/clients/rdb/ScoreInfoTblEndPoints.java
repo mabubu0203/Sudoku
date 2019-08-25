@@ -3,7 +3,9 @@ package com.mabubu0203.sudoku.clients.rdb;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -59,10 +61,14 @@ public class ScoreInfoTblEndPoints {
                 .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
                 .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                 .build();
-
         try {
-            ResponseEntity<ScoreInfoTbl> generateEntity = restOperations.exchange(requestEntity, ScoreInfoTbl.class);
-            return Optional.of(generateEntity.getBody());
+            ResponseEntity<Resource<ScoreInfoTbl>> generateEntity = restOperations
+                    .exchange(
+                            requestEntity,
+                            new ParameterizedTypeReference<>() {
+                            }
+                    );
+            return Optional.of(generateEntity.getBody().getContent());
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             switch (status) {
@@ -90,14 +96,19 @@ public class ScoreInfoTblEndPoints {
 
         updateScoreBean.setUpdateDate(LocalDateTime.now());
         URI uri = new UriTemplate(update + "{no}").expand(updateScoreBean.getNo());
+        RequestEntity requestEntity = RequestEntity
+                .put(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
+                .body(updateScoreBean);
         try {
-            RequestEntity requestEntity = RequestEntity
-                    .put(uri)
-                    .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
-                    .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
-                    .body(updateScoreBean);
-            ResponseEntity<ScoreInfoTbl> generateEntity = restOperations.exchange(requestEntity, ScoreInfoTbl.class);
-            log.info(generateEntity.getBody().toString());
+            ResponseEntity<Resource<ScoreInfoTbl>> generateEntity = restOperations
+                    .exchange(
+                            requestEntity,
+                            new ParameterizedTypeReference<>() {
+                            }
+                    );
+            log.info(generateEntity.getBody().getContent().toString());
             return true;
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();

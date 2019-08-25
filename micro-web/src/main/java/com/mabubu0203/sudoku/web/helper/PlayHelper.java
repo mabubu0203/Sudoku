@@ -18,12 +18,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriTemplate;
@@ -240,9 +238,18 @@ public class PlayHelper {
                             .body(request);
             ResponseEntity<Long> generateEntity = restOperations.exchange(requestEntity, Long.class);
             return generateEntity.getBody();
-        } catch (RestClientException | URISyntaxException e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             return null;
+        } catch (HttpClientErrorException e) {
+            HttpStatus status = e.getStatusCode();
+            switch (status) {
+                case BAD_REQUEST:
+                    log.info("???");
+                    log.info(e.getMessage());
+                default:
+                    return null;
+            }
         }
     }
 

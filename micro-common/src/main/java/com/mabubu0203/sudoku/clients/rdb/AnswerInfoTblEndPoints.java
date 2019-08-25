@@ -62,8 +62,13 @@ public class AnswerInfoTblEndPoints {
                 .build();
 
         try {
-            ResponseEntity<AnswerInfoTbl> generateEntity = restOperations.exchange(requestEntity, AnswerInfoTbl.class);
-            return Optional.of(generateEntity.getBody());
+            ResponseEntity<Resource<AnswerInfoTbl>> generateEntity = restOperations
+                    .exchange(
+                            requestEntity,
+                            new ParameterizedTypeReference<>() {
+                            }
+                    );
+            return Optional.of(generateEntity.getBody().getContent());
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             switch (status) {
@@ -99,11 +104,12 @@ public class AnswerInfoTblEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                 .build();
         try {
-            ResponseEntity<PagedResources<Resource<AnswerInfoTbl>>> generateEntity = restOperations.exchange(
-                    requestEntity,
-                    new ParameterizedTypeReference<>() {
-                    }
-            );
+            ResponseEntity<PagedResources<Resource<AnswerInfoTbl>>> generateEntity = restOperations
+                    .exchange(
+                            requestEntity,
+                            new ParameterizedTypeReference<>() {
+                            }
+                    );
             return generateEntity.getBody().getContent()
                     .stream()
                     .map(Resource::getContent)
@@ -147,8 +153,13 @@ public class AnswerInfoTblEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                 .build();
         try {
-            ResponseEntity<AnswerInfoTbl> generateEntity = restOperations.exchange(requestEntity, AnswerInfoTbl.class);
-            return Optional.of(generateEntity.getBody());
+            ResponseEntity<Resource<AnswerInfoTbl>> generateEntity = restOperations
+                    .exchange(
+                            requestEntity,
+                            new ParameterizedTypeReference<>() {
+                            }
+                    );
+            return Optional.of(generateEntity.getBody().getContent());
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             switch (status) {
