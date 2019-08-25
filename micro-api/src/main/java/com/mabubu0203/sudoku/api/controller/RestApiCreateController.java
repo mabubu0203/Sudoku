@@ -51,7 +51,8 @@ public class RestApiCreateController extends RestBaseController {
             }
     )
     public ResponseEntity<NumberPlaceBean> generateSudoku(
-            @PathVariable(name = "type") @Type final Integer type) {
+            @PathVariable(name = "type") @Type final Integer type
+    ) {
 
         log.info("generateSudoku");
         return service.generate(type.intValue());
@@ -67,12 +68,14 @@ public class RestApiCreateController extends RestBaseController {
      */
     @PostMapping(value = {RestUrlConstants.URL_GENERATE})
     public ResponseEntity<String> resisterSudoku(
-            @RequestBody @Validated final ResisterSudokuRecordRequestBean request) {
+            @RequestBody @Validated final ResisterSudokuRecordRequestBean request
+    ) {
 
         log.info("resisterSudoku");
-
-        return service.insertAnswerAndScore(restTemplateBuilder.build(),
-                request.getNumberPlaceBean());
+        return service.insertAnswerAndScore(
+                restTemplateBuilder.build(),
+                request.getNumberPlaceBean()
+        );
     }
 
 }

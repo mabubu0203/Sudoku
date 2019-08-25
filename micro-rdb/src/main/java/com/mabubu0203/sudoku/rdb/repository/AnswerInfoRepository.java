@@ -31,7 +31,7 @@ public interface AnswerInfoRepository
     List<AnswerInfoTbl> findByAnswerKey(@Param("answerkey") String answerKey);
 
     /**
-     * {@code answer_info_tbl}へTypeとKeyHashで検索を行います。<br>
+     * {@code answer_info_tbl}へ{@code type}と{@code keyHash}で検索を行います。<br>
      * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type
@@ -39,10 +39,10 @@ public interface AnswerInfoRepository
      * @return 0/1件
      * @since 1.0
      */
-    Optional<AnswerInfoTbl> findByTypeAndKeyHash(@Param("type") Integer type, @Param("keyhash") String keyHash);
+    Optional<AnswerInfoTbl> findByTypeAndKeyHash(@Param("type") Integer type, @Param("keyHash") String keyHash);
 
     /**
-     * {@code answer_info_tbl}へTypeで検索を行います。<br>
+     * {@code answer_info_tbl}へ{@code type}で検索を行います。<br>
      * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type

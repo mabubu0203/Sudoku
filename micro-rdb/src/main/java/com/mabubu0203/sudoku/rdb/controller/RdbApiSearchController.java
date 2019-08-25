@@ -7,10 +7,11 @@ import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * 検索する為のcontrollerです。<br>
@@ -49,7 +51,7 @@ public class RdbApiSearchController {
      * @since 1.0
      */
     @GetMapping(value = {CommonConstants.EMPTY_STR})
-    public Page<AnswerInfoTbl> search(
+    public PagedResources<Resource<AnswerInfoTbl>> search(
             @RequestParam(value = "selectType") Integer selectType,
             @RequestParam(value = "no", required = false) Long no,
             @RequestParam(value = "keyHash", required = false) String keyHash,
@@ -65,10 +67,25 @@ public class RdbApiSearchController {
     ) {
 
         SearchConditionBean condition = new SearchConditionBean();
-        condition.setSelectorNo(selectorNo);
-        condition.setSelectorScore(selectorScore);
-        condition.setSelectorKeyHash(selectorKeyHash);
-        condition.setSelectorName(selectorName);
+        condition.setType(selectType);
+        condition.setDateStart(dateStart);
+        condition.setDateEnd(dateEnd);
+        if (Objects.nonNull(selectorNo)) {
+            condition.setNo(no);
+            condition.setSelectorNo(selectorNo);
+        }
+        if (Objects.nonNull(selectorScore)) {
+            condition.setScore(score);
+            condition.setSelectorScore(selectorScore);
+        }
+        if (Objects.nonNull(selectorKeyHash)) {
+            condition.setKeyHash(keyHash);
+            condition.setSelectorKeyHash(selectorKeyHash);
+        }
+        if (Objects.nonNull(selectorName)) {
+            condition.setName(name);
+            condition.setSelectorName(selectorName);
+        }
         return answerInfoService.searchRecords(condition, pageable);
     }
 

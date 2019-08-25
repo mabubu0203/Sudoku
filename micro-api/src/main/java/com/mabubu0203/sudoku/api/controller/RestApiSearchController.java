@@ -58,7 +58,8 @@ public class RestApiSearchController extends RestBaseController {
     @GetMapping(value = {RestUrlConstants.URL_SUDOKU})
     public ResponseEntity<NumberPlaceBean> getNumberPlaceDetail(
             @RequestParam(name = "type") @Type(message = "数値1桁を入力しましょう。") final Integer type,
-            @RequestParam(name = "keyHash", required = false) @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
+            @RequestParam(name = "keyHash", required = false) @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash
+    ) {
 
         log.info("getNumberPlaceDetail");
         if (StringUtils.isEmpty(keyHash)) {
@@ -80,7 +81,8 @@ public class RestApiSearchController extends RestBaseController {
     @GetMapping(value = {RestUrlConstants.URL_SCORE})
     public ResponseEntity<ScoreResponseBean> getScore(
             @RequestParam(name = "type") @Type(message = "数値1桁を入力しましょう。") final Integer type,
-            @RequestParam(name = "keyHash") @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash) {
+            @RequestParam(name = "keyHash") @KeyHash(message = "数値64桁を入力しましょう。") final String keyHash
+    ) {
 
         log.info("getScore");
         return service.getScore(restTemplateBuilder.build(), type.intValue(), keyHash);
@@ -96,8 +98,8 @@ public class RestApiSearchController extends RestBaseController {
      */
     @GetMapping(value = {PathParameterConstants.PATH_TYPEANSWER_KEY})
     public ResponseEntity<Boolean> isSudokuExist(
-            @PathVariable(name = "answerKey")
-            @AnswerKey(message = "数値64桁を入力しましょう。") final String answerKey) {
+            @PathVariable(name = "answerKey") @AnswerKey(message = "数値64桁を入力しましょう。") final String answerKey
+    ) {
 
         log.info("isSudokuExist");
         return service.isExist(restTemplateBuilder.build(), answerKey);
@@ -113,7 +115,8 @@ public class RestApiSearchController extends RestBaseController {
      */
     @PostMapping(value = {CommonConstants.EMPTY_STR})
     public ResponseEntity<SearchSudokuRecordResponseBean> search(
-            @RequestBody @Validated final SearchSudokuRecordRequestBean request) {
+            @RequestBody @Validated final SearchSudokuRecordRequestBean request
+    ) {
 
         log.info("search");
         SearchConditionBean conditionBean = modelMapper.map(request, SearchConditionBean.class);

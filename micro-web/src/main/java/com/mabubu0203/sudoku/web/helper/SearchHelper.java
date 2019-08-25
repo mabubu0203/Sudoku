@@ -83,7 +83,7 @@ public class SearchHelper {
      */
     public void isSearch(final RestOperations restOperations, final HelperBean bean) {
 
-        final String searchMaster = sudokuUriApi + CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
+        final String searchMaster = sudokuUriApi + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
         SearchForm form = (SearchForm) bean.getForm();
         Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {
@@ -145,7 +145,7 @@ public class SearchHelper {
      */
     public void playNumberPlaceDetail(final RestOperations restOperations, final HelperBean bean) {
 
-        final String searchMaster = sudokuUriApi + CommonConstants.SLASH + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
+        final String searchMaster = sudokuUriApi + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
         DetailForm form = (DetailForm) bean.getForm();
         Model model = bean.getModel();
         if (Objects.isNull(form) || Objects.isNull(model)) {

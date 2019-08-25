@@ -86,7 +86,8 @@ public class PlayController {
     public String okPlayNumberPlace(
             @Validated @ModelAttribute final CreateForm form,
             final BindingResult bindingResult,
-            final Model model) {
+            final Model model
+    ) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
@@ -112,7 +113,8 @@ public class PlayController {
     public String okIsCheck(
             @Validated @ModelAttribute final PlayForm form,
             final BindingResult bindingResult,
-            final Model model) {
+            final Model model
+    ) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
@@ -147,7 +149,8 @@ public class PlayController {
     public String bestScore(
             @Validated @ModelAttribute final ScoreForm form,
             final BindingResult bindingResult,
-            final Model model) {
+            final Model model
+    ) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");

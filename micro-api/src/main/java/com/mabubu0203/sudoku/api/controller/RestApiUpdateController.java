@@ -50,7 +50,8 @@ public class RestApiUpdateController extends RestBaseController {
      */
     @PutMapping(value = {RestUrlConstants.URL_SCORE})
     public ResponseEntity<Long> updateScore(
-            @RequestBody @Validated final UpdateSudokuScoreRequestBean request) {
+            @RequestBody @Validated final UpdateSudokuScoreRequestBean request
+    ) {
 
         log.info("updateScore");
         ScoreInfoTbl updateScoreBean = modelMapper.map(request, ScoreInfoTbl.class);

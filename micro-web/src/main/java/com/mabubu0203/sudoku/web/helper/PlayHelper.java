@@ -18,12 +18,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriTemplate;
@@ -85,7 +83,7 @@ public class PlayHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getSelectType()));
         uriVariables.put("keyHash", "");
-        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
+        URI uri = new UriTemplate(sudokuUriApi + "searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
@@ -130,7 +128,7 @@ public class PlayHelper {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(form.getType()));
         uriVariables.put("keyHash", form.getKeyHash());
-        URI uri = new UriTemplate(sudokuUriApi + "/searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
+        URI uri = new UriTemplate(sudokuUriApi + "searchMaster/sudoku?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
@@ -147,7 +145,7 @@ public class PlayHelper {
             throw new SudokuApplicationException();
         }
         if (form.isCompareFlg()) {
-            uri = new UriTemplate(sudokuUriApi + "/searchMaster/score?type={type}&keyHash={keyHash}").expand(uriVariables);
+            uri = new UriTemplate(sudokuUriApi + "searchMaster/score?type={type}&keyHash={keyHash}").expand(uriVariables);
             requestEntity =
                     RequestEntity
                             .get(uri)
@@ -231,22 +229,27 @@ public class PlayHelper {
         UpdateSudokuScoreRequestBean request =
                 new ModelMapper().map(form, UpdateSudokuScoreRequestBean.class);
         try {
-            URI uri = new URI(sudokuUriApi + "/updateMaster/score/");
+            URI uri = new URI(sudokuUriApi + "updateMaster/score/");
             RequestEntity requestEntity =
                     RequestEntity
                             .put(uri)
                             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                             .body(request);
-            Optional<ResponseEntity<Long>> generateEntityOpt = Optional.ofNullable(restOperations.exchange(requestEntity, Long.class));
-            if (generateEntityOpt.isPresent()) {
-                return generateEntityOpt.get().getBody();
-            } else {
-                return null;
-            }
-        } catch (RestClientException | URISyntaxException e) {
+            ResponseEntity<Long> generateEntity = restOperations.exchange(requestEntity, Long.class);
+            return generateEntity.getBody();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             return null;
+        } catch (HttpClientErrorException e) {
+            HttpStatus status = e.getStatusCode();
+            switch (status) {
+                case BAD_REQUEST:
+                    log.info("???");
+                    log.info(e.getMessage());
+                default:
+                    return null;
+            }
         }
     }
 

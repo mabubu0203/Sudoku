@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -52,12 +53,13 @@ public class RestApiMasterController extends RestBaseController {
     @GetMapping(value = {PathParameterConstants.PATH_TYPE})
     public ResponseEntity<String> createFromWeb(
             @PathVariable(name = "type") @Type final Integer type,
-            final UriComponentsBuilder uriComponentsBuilder) {
+            final UriComponentsBuilder uriComponentsBuilder
+    ) {
 
         log.info("Creating From Web");
         URI uri;
         RequestEntity requestEntity;
-
+        NumberPlaceBean numberPlaceBean;
         uri =
                 uriComponentsBuilder
                         .cloneBuilder()
@@ -72,16 +74,21 @@ public class RestApiMasterController extends RestBaseController {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .build();
-        // 1. 生成します。
-        ResponseEntity<NumberPlaceBean> generateEntity =
-                restTemplateBuilder.build().exchange(requestEntity, NumberPlaceBean.class);
+        try {
+            // 1. 生成します。
+            ResponseEntity<NumberPlaceBean> generateEntity =
+                    restTemplateBuilder.build().exchange(requestEntity, NumberPlaceBean.class);
 
-        if (generateEntity.getStatusCode() != HttpStatus.CREATED) {
-            log.error("一意制約違反です。");
-            return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
+            if (generateEntity.getStatusCode() != HttpStatus.CREATED) {
+                log.error("一意制約違反です。");
+                return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
+            }
+            numberPlaceBean = generateEntity.getBody();
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+            return null;
         }
 
-        NumberPlaceBean numberPlaceBean = generateEntity.getBody();
         String answerKey = numberPlaceBean.getAnswerKey();
         uri =
                 uriComponentsBuilder
@@ -96,13 +103,17 @@ public class RestApiMasterController extends RestBaseController {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .build();
-        // 2.存在確認します。
-        ResponseEntity<Boolean> isSudokuExistEntity =
-                restTemplateBuilder.build().exchange(requestEntity, Boolean.class);
-
-        if (isSudokuExistEntity.getBody().booleanValue()) {
-            log.error("一意制約違反です。");
-            return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
+        try {
+            // 2.存在確認します。
+            ResponseEntity<Boolean> isSudokuExistEntity =
+                    restTemplateBuilder.build().exchange(requestEntity, Boolean.class);
+            if (isSudokuExistEntity.getBody().booleanValue()) {
+                log.error("一意制約違反です。");
+                return new ResponseEntity<>(CommonConstants.EMPTY_STR, HttpStatus.CONFLICT);
+            }
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+            return null;
         }
 
         ResisterSudokuRecordRequestBean request = new ResisterSudokuRecordRequestBean();
@@ -120,11 +131,14 @@ public class RestApiMasterController extends RestBaseController {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(request);
-        // 3.保存します。
-        ResponseEntity<String> resisterEntity = restTemplateBuilder.build().exchange(requestEntity, String.class);
-
-        return resisterEntity;
-
+        try {
+            // 3.保存します。
+            ResponseEntity<String> resisterEntity = restTemplateBuilder.build().exchange(requestEntity, String.class);
+            return resisterEntity;
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

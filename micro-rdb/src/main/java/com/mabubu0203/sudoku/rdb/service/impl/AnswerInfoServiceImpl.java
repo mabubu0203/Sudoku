@@ -18,6 +18,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -65,10 +67,12 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public Page<AnswerInfoTbl> searchRecords(SearchConditionBean condition, Pageable pageable) {
+    public PagedResources<Resource<AnswerInfoTbl>> searchRecords(SearchConditionBean condition, Pageable pageable) {
         Specification<AnswerInfoTbl> answerSpecification = createSpecification(condition);
         Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
-        return page;
+        // TODO:ResourceAssemblerSupport, Resource,
+        PagedResources<Resource<AnswerInfoTbl>> pagedResources = null;
+        return pagedResources;
     }
 
     @Override
