@@ -6,6 +6,7 @@ import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
+import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
@@ -123,7 +124,7 @@ public class RestApiSearchEndPoints {
      * @return NumberPlaceBean
      * @since 1.0
      */
-    public NumberPlaceBean score(
+    public ScoreResponseBean score(
             final RestOperations restOperations,
             final int type,
             final String keyHash
@@ -144,8 +145,8 @@ public class RestApiSearchEndPoints {
                         .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .build();
         try {
-            ResponseEntity<NumberPlaceBean> generateEntity =
-                    restOperations.exchange(requestEntity, NumberPlaceBean.class);
+            ResponseEntity<ScoreResponseBean> generateEntity =
+                    restOperations.exchange(requestEntity, ScoreResponseBean.class);
             return generateEntity.getBody();
         } catch (HttpClientErrorException e) {
             throw new SudokuApplicationException();
