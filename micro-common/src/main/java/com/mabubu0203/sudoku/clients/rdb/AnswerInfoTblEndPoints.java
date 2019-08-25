@@ -13,7 +13,6 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriTemplate;
 
@@ -56,26 +55,23 @@ public class AnswerInfoTblEndPoints {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(type));
         URI uri = new UriTemplate(findFirstByType + "?type={type}").expand(uriVariables);
-        RequestEntity requestEntity =
-                RequestEntity
-                        .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
-                        .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
-                        .build();
+        RequestEntity requestEntity = RequestEntity
+                .get(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
+                .build();
 
         try {
             ResponseEntity<AnswerInfoTbl> generateEntity = restOperations.exchange(requestEntity, AnswerInfoTbl.class);
-            HttpStatus status = generateEntity.getStatusCode();
+            return Optional.of(generateEntity.getBody());
+        } catch (HttpClientErrorException e) {
+            HttpStatus status = e.getStatusCode();
             switch (status) {
-                case OK:
-                    return Optional.of(generateEntity.getBody());
                 case NOT_FOUND:
+                    log.info("見つかりませんでした。");
                 default:
                     return Optional.empty();
             }
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
-            return Optional.empty();
         }
     }
 
@@ -97,32 +93,29 @@ public class AnswerInfoTblEndPoints {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("answerKey", answerKey);
         URI uri = new UriTemplate(findByAnswerKey + "?answerKey={answerKey}").expand(uriVariables);
-        RequestEntity requestEntity =
-                RequestEntity
-                        .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
-                        .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
-                        .build();
+        RequestEntity requestEntity = RequestEntity
+                .get(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
+                .build();
         try {
             ResponseEntity<PagedResources<Resource<AnswerInfoTbl>>> generateEntity = restOperations.exchange(
                     requestEntity,
                     new ParameterizedTypeReference<>() {
                     }
             );
-            HttpStatus status = generateEntity.getStatusCode();
+            return generateEntity.getBody().getContent()
+                    .stream()
+                    .map(Resource::getContent)
+                    .collect(toList());
+        } catch (HttpClientErrorException e) {
+            HttpStatus status = e.getStatusCode();
             switch (status) {
-                case OK:
-                    return generateEntity.getBody().getContent()
-                            .stream()
-                            .map(Resource::getContent)
-                            .collect(toList());
                 case NOT_FOUND:
+                    log.info("見つかりませんでした。");
                 default:
                     return null;
             }
-        } catch (RestClientException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -149,10 +142,10 @@ public class AnswerInfoTblEndPoints {
         uriVariables.put("keyHash", keyHash);
         URI uri = new UriTemplate(findByTypeAndKeyhash + "?type={type}&keyHash={keyHash}").expand(uriVariables);
         RequestEntity requestEntity = RequestEntity
-                        .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
-                        .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
-                        .build();
+                .get(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
+                .build();
         try {
             ResponseEntity<AnswerInfoTbl> generateEntity = restOperations.exchange(requestEntity, AnswerInfoTbl.class);
             return Optional.of(generateEntity.getBody());
