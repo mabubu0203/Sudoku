@@ -40,8 +40,7 @@ public class RestApiUpdateEndPoints {
     ) {
 
         final String update = "http://localhost:9001/SudokuApi/"
-                + RestUrlConstants.URL_UPDATE_MASTER + CommonConstants.SLASH
-                + RestUrlConstants.URL_SCORE + CommonConstants.SLASH;
+                + RestUrlConstants.URL_UPDATE_MASTER + CommonConstants.SLASH + RestUrlConstants.URL_SCORE;
         try {
             URI uri = new URI(update);
             RequestEntity requestEntity =

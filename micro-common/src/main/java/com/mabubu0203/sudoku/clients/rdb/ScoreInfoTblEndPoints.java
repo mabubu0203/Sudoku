@@ -69,7 +69,8 @@ public class ScoreInfoTblEndPoints {
                             new ParameterizedTypeReference<>() {
                             }
                     );
-            return Optional.of(generateEntity.getBody().getContent());
+            Resource<ScoreInfoTbl> resource = generateEntity.getBody();
+            return Optional.of(resource.getContent());
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             switch (status) {
@@ -96,7 +97,9 @@ public class ScoreInfoTblEndPoints {
                 + "scoreInfoTbls" + CommonConstants.SLASH + PathParameterConstants.PATH_NO;
 
         updateScoreBean.setUpdateDate(LocalDateTime.now());
-        URI uri = new UriTemplate(update).expand(updateScoreBean.getNo());
+        Map<String, String> uriVariables = new HashMap<>();
+        uriVariables.put("no", updateScoreBean.getNo().toString());
+        URI uri = new UriTemplate(update).expand(uriVariables);
         RequestEntity requestEntity = RequestEntity
                 .put(uri)
                 .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
@@ -114,6 +117,8 @@ public class ScoreInfoTblEndPoints {
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             switch (status) {
+                case NOT_FOUND:
+                    log.info("見つかりません。");
                 case CONFLICT:
                     log.info("衝突しています。");
                 default:
