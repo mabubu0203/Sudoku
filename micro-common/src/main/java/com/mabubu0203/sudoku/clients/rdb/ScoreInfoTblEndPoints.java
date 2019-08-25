@@ -1,6 +1,7 @@
 package com.mabubu0203.sudoku.clients.rdb;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
+import com.mabubu0203.sudoku.constants.PathParameterConstants;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -92,10 +93,10 @@ public class ScoreInfoTblEndPoints {
             final RestOperations restOperations,
             final ScoreInfoTbl updateScoreBean) {
         final String update = "http://localhost:9011/SudokuRdb/"
-                + "scoreInfoTbls" + CommonConstants.SLASH;
+                + "scoreInfoTbls" + CommonConstants.SLASH + PathParameterConstants.PATH_NO;
 
         updateScoreBean.setUpdateDate(LocalDateTime.now());
-        URI uri = new UriTemplate(update + "{no}").expand(updateScoreBean.getNo());
+        URI uri = new UriTemplate(update).expand(updateScoreBean.getNo());
         RequestEntity requestEntity = RequestEntity
                 .put(uri)
                 .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
