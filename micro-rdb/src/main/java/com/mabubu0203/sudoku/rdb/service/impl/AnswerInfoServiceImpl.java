@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ import java.util.Optional;
 public class AnswerInfoServiceImpl implements AnswerInfoService {
 
     private final AnswerInfoRepository answerInfoRepository;
+    private final PagedResourcesAssembler assembler;
     private final ModelMapper modelMapper;
 
     @Override
@@ -70,8 +72,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     public PagedResources<Resource<AnswerInfoTbl>> searchRecords(SearchConditionBean condition, Pageable pageable) {
         Specification<AnswerInfoTbl> answerSpecification = createSpecification(condition);
         Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
-        // TODO:ResourceAssemblerSupport, Resource,
-        PagedResources<Resource<AnswerInfoTbl>> pagedResources = null;
+        PagedResources<Resource<AnswerInfoTbl>> pagedResources = assembler.toResource(page);
         return pagedResources;
     }
 
@@ -79,7 +80,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     public NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl) {
         NumberPlaceBean numberPlaceBean = new ModelMapper().map(answerInfoTbl, NumberPlaceBean.class);
         String answerKey = numberPlaceBean.getAnswerKey();
-        String[] valueArray = answerKey.split("");
+        String[] valueArray = answerKey.split(CommonConstants.EMPTY_STR);
         Type type = Type.getType(numberPlaceBean.getType());
         if (type == null) {
             throw new SudokuApplicationException();

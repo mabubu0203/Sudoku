@@ -117,8 +117,6 @@ public class ScoreInfoTblEndPoints {
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             switch (status) {
-                case NOT_FOUND:
-                    log.info("見つかりません。");
                 case CONFLICT:
                     log.info("衝突しています。");
                 default:
