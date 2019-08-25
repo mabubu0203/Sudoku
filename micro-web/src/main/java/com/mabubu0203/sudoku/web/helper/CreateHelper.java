@@ -1,20 +1,20 @@
 package com.mabubu0203.sudoku.web.helper;
 
+import com.mabubu0203.sudoku.clients.api.RestApiCreateEndPoints;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.utils.ESMapWrapUtils;
 import com.mabubu0203.sudoku.web.form.CreateForm;
 import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
-import org.springframework.web.util.UriTemplate;
 
-import java.net.URI;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <br>
@@ -25,7 +25,10 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CreateHelper {
+
+    private RestApiCreateEndPoints restApiCreateEndPoints;
 
     @Value("${sudoku.uri.api}")
     private String sudokuUriApi;
@@ -62,30 +65,16 @@ public class CreateHelper {
         if (Objects.isNull(form) || Objects.isNull(model)) {
             throw new SudokuApplicationException();
         }
-        URI uri = new UriTemplate(sudokuUriApi + "createMaster/{type}").expand(form.getSelectType());
-        RequestEntity requestEntity =
-                RequestEntity
-                        .get(uri)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .build();
-        try {
-            ResponseEntity<String> generateEntity = restOperations.exchange(requestEntity, String.class);
-            HttpStatus status = generateEntity.getStatusCode();
-            switch (status) {
-                case OK:
-                    model.addAttribute("message", "登録完了です。");
-                    model.addAttribute("keyHash", generateEntity.getBody());
-                    break;
-                case CONFLICT:
-                default:
-                    model.addAttribute("selectTypes", ESMapWrapUtils.getSelectTypes());
-                    model.addAttribute("message", "新規追加失敗です。");
-                    break;
-            }
-            return status;
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
+
+        Optional<String> keyHashOpt = restApiCreateEndPoints.createMaster(restOperations, form.getSelectType());
+
+        if (keyHashOpt.isPresent()) {
+            model.addAttribute("message", "登録完了です。");
+            model.addAttribute("keyHash", keyHashOpt.get());
+            return HttpStatus.OK;
+        } else {
+            model.addAttribute("selectTypes", ESMapWrapUtils.getSelectTypes());
+            model.addAttribute("message", "新規追加失敗です。");
             return HttpStatus.NO_CONTENT;
         }
     }
