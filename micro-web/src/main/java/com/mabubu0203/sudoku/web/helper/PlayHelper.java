@@ -238,12 +238,8 @@ public class PlayHelper {
                             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                             .body(request);
-            Optional<ResponseEntity<Long>> generateEntityOpt = Optional.ofNullable(restOperations.exchange(requestEntity, Long.class));
-            if (generateEntityOpt.isPresent()) {
-                return generateEntityOpt.get().getBody();
-            } else {
-                return null;
-            }
+            ResponseEntity<Long> generateEntity = restOperations.exchange(requestEntity, Long.class);
+            return generateEntity.getBody();
         } catch (RestClientException | URISyntaxException e) {
             e.printStackTrace();
             return null;
