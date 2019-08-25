@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -70,7 +71,7 @@ public class SearchServiceImpl implements SearchService {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        PagedResources<AnswerInfoTbl> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
+        PagedResources<Resource<AnswerInfoTbl>> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
         if (Objects.nonNull(page) && page.getContent().size() > 0) {
 //            Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
 //            SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();

@@ -7,6 +7,7 @@ import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -40,7 +41,7 @@ public class RdbApiSearchEndPoints {
      * @return boolean
      * @since 1.0
      */
-    public PagedResources<AnswerInfoTbl> search(
+    public PagedResources<Resource<AnswerInfoTbl>> search(
             final RestOperations restOperations,
             final SearchConditionBean conditionBean,
             final Pageable pageable) {
@@ -63,7 +64,7 @@ public class RdbApiSearchEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .build();
         try {
-            ResponseEntity<PagedResources<AnswerInfoTbl>> generateEntity = restOperations.exchange(
+            ResponseEntity<PagedResources<Resource<AnswerInfoTbl>>> generateEntity = restOperations.exchange(
                     requestEntity,
                     new ParameterizedTypeReference<>() {
                     }

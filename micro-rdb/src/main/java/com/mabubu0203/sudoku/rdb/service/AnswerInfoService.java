@@ -5,6 +5,7 @@ import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +70,7 @@ public interface AnswerInfoService {
      * @return N件
      * @since 1.0
      */
-    PagedResources<AnswerInfoTbl> searchRecords(SearchConditionBean condition, Pageable pageable);
+    PagedResources<Resource<AnswerInfoTbl>> searchRecords(SearchConditionBean condition, Pageable pageable);
 
     /**
      * EntityをBeanに変換して返却します。<br>
