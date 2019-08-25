@@ -18,7 +18,7 @@ import java.util.Optional;
 public interface ScoreRepository extends JpaRepository<ScoreInfoTbl, Long> {
 
     /**
-     * {@code score_info_tbl}へTypeとKeyHashで検索を行います。<br>
+     * {@code score_info_tbl}へ{@code type}と{@code keyHash}で検索を行います。<br>
      * 返却は0/1件を表すOptionalで返却します。<br>
      *
      * @param type

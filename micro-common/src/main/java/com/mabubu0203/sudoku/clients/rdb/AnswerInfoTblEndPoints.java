@@ -49,13 +49,13 @@ public class AnswerInfoTblEndPoints {
     public Optional<AnswerInfoTbl> findFirstByType(
             final RestOperations restOperations,
             final int type) {
-        final String findByTypeAndKeyHash = "http://localhost:9011/SudokuRdb/"
+        final String findFirstByType = "http://localhost:9011/SudokuRdb/"
                 + "answerInfoTbls" + CommonConstants.SLASH
                 + "search" + CommonConstants.SLASH + "findFirstByType";
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(type));
-        URI uri = new UriTemplate(findByTypeAndKeyHash + "?type={type}").expand(uriVariables);
+        URI uri = new UriTemplate(findFirstByType + "?type={type}").expand(uriVariables);
         RequestEntity requestEntity =
                 RequestEntity
                         .get(uri)
@@ -71,11 +71,11 @@ public class AnswerInfoTblEndPoints {
                     return Optional.of(generateEntity.getBody());
                 case NOT_FOUND:
                 default:
-                    return Optional.ofNullable(null);
+                    return Optional.empty();
             }
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
-            return Optional.ofNullable(null);
+            return Optional.empty();
         }
     }
 
@@ -140,34 +140,30 @@ public class AnswerInfoTblEndPoints {
             final int type,
             final String keyHash) {
 
-        final String findByTypeAndKeyHash = "http://localhost:9011/SudokuRdb/"
+        final String findByTypeAndKeyhash = "http://localhost:9011/SudokuRdb/"
                 + "answerInfoTbls" + CommonConstants.SLASH
                 + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(type));
         uriVariables.put("keyHash", keyHash);
-        URI uri = new UriTemplate(findByTypeAndKeyHash + "?type={type}&keyHash={keyHash}").expand(uriVariables);
-        RequestEntity requestEntity =
-                RequestEntity
+        URI uri = new UriTemplate(findByTypeAndKeyhash + "?type={type}&keyHash={keyHash}").expand(uriVariables);
+        RequestEntity requestEntity = RequestEntity
                         .get(uri)
                         .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
                         .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                         .build();
-
         try {
             ResponseEntity<AnswerInfoTbl> generateEntity = restOperations.exchange(requestEntity, AnswerInfoTbl.class);
-            HttpStatus status = generateEntity.getStatusCode();
-            switch (status) {
-                case OK:
-                    return Optional.of(generateEntity.getBody());
-                case NOT_FOUND:
-                default:
-                    return Optional.ofNullable(null);
-            }
+            return Optional.of(generateEntity.getBody());
         } catch (HttpClientErrorException e) {
-            e.printStackTrace();
-            return Optional.ofNullable(null);
+            HttpStatus status = e.getStatusCode();
+            switch (status) {
+                case NOT_FOUND:
+                    log.info("見つかりませんでした。");
+                default:
+                    return Optional.empty();
+            }
         }
     }
 
