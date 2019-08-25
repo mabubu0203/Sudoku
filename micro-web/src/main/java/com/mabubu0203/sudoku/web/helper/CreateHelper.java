@@ -28,7 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CreateHelper {
 
-    private RestApiCreateEndPoints restApiCreateEndPoints;
+    private final RestApiCreateEndPoints restApiCreateEndPoints;
 
     @Value("${sudoku.uri.api}")
     private String sudokuUriApi;
