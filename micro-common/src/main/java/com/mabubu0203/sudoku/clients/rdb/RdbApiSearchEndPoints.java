@@ -4,6 +4,7 @@ import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
@@ -30,6 +31,7 @@ import java.util.Map;
  * @version 1.0
  * @since 1.0
  */
+@Slf4j
 @Service
 public class RdbApiSearchEndPoints {
 
@@ -69,6 +71,7 @@ public class RdbApiSearchEndPoints {
                     new ParameterizedTypeReference<>() {
                     }
             );
+            log.info(generateEntity.getBody().toString());
             return generateEntity.getBody();
         } catch (HttpClientErrorException e) {
             e.printStackTrace();

@@ -43,7 +43,7 @@ public class RestApiSearchEndPoints {
      * @return PagedResources
      * @since 1.0
      */
-    public ResponseEntity<SearchSudokuRecordResponseBean> search(
+    public SearchSudokuRecordResponseBean search(
             final RestOperations restOperations,
             final SearchSudokuRecordRequestBean request
     ) {
@@ -64,7 +64,7 @@ public class RestApiSearchEndPoints {
                             requestEntity,
                             SearchSudokuRecordResponseBean.class
                     );
-            return generateEntity;
+            return generateEntity.getBody();
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return null;

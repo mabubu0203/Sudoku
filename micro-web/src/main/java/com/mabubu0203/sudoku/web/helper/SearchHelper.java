@@ -3,6 +3,7 @@ package com.mabubu0203.sudoku.web.helper;
 import com.mabubu0203.sudoku.clients.api.RestApiSearchEndPoints;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
+import com.mabubu0203.sudoku.interfaces.PagenationHelper;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
@@ -19,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestOperations;
@@ -40,6 +40,7 @@ public class SearchHelper {
 
     private final SudokuModule sudokuModule;
     private final RestApiSearchEndPoints restApiSearchEndPoints;
+    private final ModelMapper modelMapper;
 
     @Value("${sudoku.uri.api}")
     private String sudokuUriApi;
@@ -85,16 +86,15 @@ public class SearchHelper {
         model.addAttribute("selectorKeyHash", ESMapWrapUtils.getSelectorKeyHash());
         model.addAttribute("selectorScore", ESMapWrapUtils.getSelectorScore());
         model.addAttribute("selectorName", ESMapWrapUtils.getSelectorName());
-        SearchSudokuRecordRequestBean request =
-                new ModelMapper().map(form, SearchSudokuRecordRequestBean.class);
+        SearchSudokuRecordRequestBean request = modelMapper.map(form, SearchSudokuRecordRequestBean.class);
 
-        ResponseEntity<SearchSudokuRecordResponseBean> generateEntity = restApiSearchEndPoints
-                .search(restOperations, request);
-        Page<SearchResultBean> page = generateEntity.getBody().getPage();
+        SearchSudokuRecordResponseBean response = restApiSearchEndPoints.search(restOperations, request);
+        Page<SearchResultBean> page = response.getPage();
+        PagenationHelper ph = response.getPh();
         // ページ番号を設定し直す
         form.setPageNumber(page.getNumber());
         model.addAttribute("page", page);
-        model.addAttribute("ph", generateEntity.getBody().getPh());
+        model.addAttribute("ph", ph);
     }
 
     /**
@@ -135,8 +135,7 @@ public class SearchHelper {
             NumberPlaceBean numberPlaceBean = restApiSearchEndPoints
                     .sudoku(restOperations, form.getType(), form.getKeyHash());
             // 一件から虫食いのリストを取得します。
-            numberPlaceBean =
-                    sudokuModule.filteredOfLevel(form.getType(), numberPlaceBean, form.getSelectLevel());
+            numberPlaceBean = sudokuModule.filteredOfLevel(form.getType(), numberPlaceBean, form.getSelectLevel());
             PlayForm playForm = new ModelMapper().map(numberPlaceBean, PlayForm.class);
             playForm.setCount(0);
             playForm.setScore(SudokuUtils.calculationScore(form.getType(), form.getSelectLevel()));

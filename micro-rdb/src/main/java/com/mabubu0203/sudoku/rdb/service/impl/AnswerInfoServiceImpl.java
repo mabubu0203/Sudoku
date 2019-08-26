@@ -72,7 +72,9 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     public PagedResources<Resource<AnswerInfoTbl>> searchRecords(SearchConditionBean condition, Pageable pageable) {
         Specification<AnswerInfoTbl> answerSpecification = createSpecification(condition);
         Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
+        log.info(page.toString());
         PagedResources<Resource<AnswerInfoTbl>> pagedResources = assembler.toResource(page);
+        log.info(pagedResources.toString());
         return pagedResources;
     }
 
