@@ -3,8 +3,8 @@ package com.mabubu0203.sudoku.web.helper;
 import com.mabubu0203.sudoku.clients.api.RestApiSearchEndPoints;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
+import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.logic.SudokuModule;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
@@ -19,15 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestOperations;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <br>
@@ -91,15 +88,13 @@ public class SearchHelper {
         SearchSudokuRecordRequestBean request =
                 new ModelMapper().map(form, SearchSudokuRecordRequestBean.class);
 
-        PagedResources<Resource<AnswerInfoTbl>> pagedResources = restApiSearchEndPoints.search(restOperations, request);
-        Page<Resource<AnswerInfoTbl>> page = new PageImpl(pagedResources.getContent().stream().collect(Collectors.toList()));
-//            Page<SearchResultBean> page = generateEntity.getBody().getPage();
+        ResponseEntity<SearchSudokuRecordResponseBean> generateEntity = restApiSearchEndPoints
+                .search(restOperations, request);
+        Page<SearchResultBean> page = generateEntity.getBody().getPage();
         // ページ番号を設定し直す
         form.setPageNumber(page.getNumber());
         model.addAttribute("page", page);
-        model.addAttribute("ph", new SearchSudokuRecordResponseBean().getPh());
-//            model.addAttribute("ph", generateEntity.getBody().getPh());
-
+        model.addAttribute("ph", generateEntity.getBody().getPh());
     }
 
     /**

@@ -4,13 +4,10 @@ import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
+import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -46,7 +43,7 @@ public class RestApiSearchEndPoints {
      * @return PagedResources
      * @since 1.0
      */
-    public PagedResources<Resource<AnswerInfoTbl>> search(
+    public ResponseEntity<SearchSudokuRecordResponseBean> search(
             final RestOperations restOperations,
             final SearchSudokuRecordRequestBean request
     ) {
@@ -62,12 +59,12 @@ public class RestApiSearchEndPoints {
                             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                             .body(request);
-            ResponseEntity<PagedResources<Resource<AnswerInfoTbl>>> generateEntity = restOperations.exchange(
-                    requestEntity,
-                    new ParameterizedTypeReference<>() {
-                    }
-            );
-            return generateEntity.getBody();
+            ResponseEntity<SearchSudokuRecordResponseBean> generateEntity = restOperations
+                    .exchange(
+                            requestEntity,
+                            SearchSudokuRecordResponseBean.class
+                    );
+            return generateEntity;
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return null;
