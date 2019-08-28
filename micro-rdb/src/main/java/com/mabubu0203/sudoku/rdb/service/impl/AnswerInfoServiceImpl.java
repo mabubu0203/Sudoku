@@ -6,6 +6,7 @@ import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.projection.SearchResult;
 import com.mabubu0203.sudoku.rdb.repository.AnswerInfoRepository;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;
@@ -18,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
@@ -44,6 +46,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
 
     private final AnswerInfoRepository answerInfoRepository;
     private final PagedResourcesAssembler assembler;
+    private final ProjectionFactory factory;
     private final ModelMapper modelMapper;
 
     @Override
@@ -69,12 +72,11 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public PagedResources<Resource<AnswerInfoTbl>> searchRecords(SearchConditionBean condition, Pageable pageable) {
+    public PagedResources<Resource<SearchResult>> searchRecords(SearchConditionBean condition, Pageable pageable) {
         Specification<AnswerInfoTbl> answerSpecification = createSpecification(condition);
         Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
-        log.info(page.toString());
-        PagedResources<Resource<AnswerInfoTbl>> pagedResources = assembler.toResource(page);
-        log.info(pagedResources.toString());
+        Page<SearchResult> projected = page.map(l -> factory.createProjection(SearchResult.class, l));
+        PagedResources<Resource<SearchResult>> pagedResources = assembler.toResource(projected);
         return pagedResources;
     }
 

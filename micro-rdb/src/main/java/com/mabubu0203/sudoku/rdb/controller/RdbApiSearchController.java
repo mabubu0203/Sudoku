@@ -3,7 +3,7 @@ package com.mabubu0203.sudoku.rdb.controller;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
-import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
+import com.mabubu0203.sudoku.interfaces.projection.SearchResult;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,7 +53,7 @@ public class RdbApiSearchController {
      * @since 1.0
      */
     @GetMapping(value = {CommonConstants.EMPTY_STR})
-    public PagedResources<Resource<AnswerInfoTbl>> search(
+    public ResponseEntity<PagedResources<Resource<SearchResult>>> search(
             @RequestParam(value = "selectType") Integer selectType,
             @RequestParam(value = "no", required = false) Long no,
             @RequestParam(value = "keyHash", required = false) String keyHash,
@@ -86,7 +88,7 @@ public class RdbApiSearchController {
             condition.setName(name);
             condition.setSelectorName(selectorName);
         }
-        return answerInfoService.searchRecords(condition, pageable);
+        return new ResponseEntity<>(answerInfoService.searchRecords(condition, pageable), HttpStatus.OK);
     }
 
 }

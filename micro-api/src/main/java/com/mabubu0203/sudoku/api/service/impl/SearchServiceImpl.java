@@ -72,7 +72,7 @@ public class SearchServiceImpl implements SearchService {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        PagedResources<Resource<AnswerInfoTbl>> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
+        PagedResources<Resource<SearchResultBean>> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
         if (Objects.nonNull(page) && page.getContent().size() > 0) {
             Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
             SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
@@ -132,23 +132,21 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
-    private Page<SearchResultBean> convertJacksonFile(final PagedResources<Resource<AnswerInfoTbl>> page) {
+    private Page<SearchResultBean> convertJacksonFile(final PagedResources<Resource<SearchResultBean>> page) {
 
         log.info(page.toString());
         Pageable pageable = PageRequest.of((int) page.getMetadata().getNumber(), (int) page.getMetadata().getSize());
-        List<AnswerInfoTbl> content = page.getContent().stream().map(e -> e.getContent()).collect(toList());
+        List<SearchResultBean> content = page.getContent().stream().map(e -> e.getContent()).collect(toList());
         List<SearchResultBean> modifyContent = new ArrayList<>();
-        for (AnswerInfoTbl record : content) {
+        for (SearchResultBean record : content) {
             SearchResultBean bean = new SearchResultBean();
             bean.setNo(record.getNo());
             bean.setType(record.getType());
             bean.setKeyHash(record.getKeyHash());
-//            ScoreInfoTbl scoreInfoTbl = record.getScoreInfoTbl();
-//
-//            bean.setName(scoreInfoTbl.getName());
-//            bean.setScore(scoreInfoTbl.getScore());
-//            bean.setMemo(scoreInfoTbl.getMemo());
-//            bean.setUpdateDate(scoreInfoTbl.getUpdateDate());
+            bean.setName(record.getName());
+            bean.setScore(record.getScore());
+            bean.setMemo(record.getMemo());
+            bean.setUpdateDate(record.getUpdateDate());
             modifyContent.add(bean);
         }
         Page<SearchResultBean> result = new PageImpl(modifyContent, pageable, page.getMetadata().getTotalElements());
