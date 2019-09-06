@@ -1,9 +1,9 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.SearchService;
-import com.mabubu0203.sudoku.clients.rdb.AnswerInfoTblEndPoints;
-import com.mabubu0203.sudoku.clients.rdb.RdbApiSearchEndPoints;
-import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.custom.RdbApiSearchEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.domains.AnswerInfoTblEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.domains.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Type;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;

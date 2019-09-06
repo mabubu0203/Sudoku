@@ -28,7 +28,8 @@ public class RdbConstants {
      */
     public enum Forward {
         ANSWER_INFO_TBL(URL_ANSWER_INFO_TBL),
-        SCORE_INFO_TBL(URL_SCORE_INFO_TBL);
+        SCORE_INFO_TBL(URL_SCORE_INFO_TBL),
+        ;
 
         /**
          * パスを定義します。

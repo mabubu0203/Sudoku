@@ -1,9 +1,10 @@
-package com.mabubu0203.sudoku.clients.rdb;
+package com.mabubu0203.sudoku.clients.rdb.domains;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.PathParameterConstants;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resource;
@@ -35,6 +36,9 @@ import java.util.Optional;
 @Service
 public class ScoreInfoTblEndPoints {
 
+    @Value("${sudoku.rdb.api}")
+    private String sudokuUriApi;
+
     /**
      * {@code /search/findByTypeAndKeyHash}<br>
      *
@@ -49,9 +53,7 @@ public class ScoreInfoTblEndPoints {
             final int type,
             final String keyHash) {
 
-        final String findByTypeAndKeyHash = "http://localhost:9011/SudokuRdb/"
-                + "scoreInfoTbls" + CommonConstants.SLASH
-                + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
+        final String findByTypeAndKeyHash = sudokuUriApi + "scoreInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(type));
@@ -93,8 +95,7 @@ public class ScoreInfoTblEndPoints {
     public boolean update(
             final RestOperations restOperations,
             final ScoreInfoTbl updateScoreBean) {
-        final String update = "http://localhost:9011/SudokuRdb/"
-                + "scoreInfoTbls" + CommonConstants.SLASH + PathParameterConstants.PATH_NO;
+        final String update = sudokuUriApi + "scoreInfoTbls" + CommonConstants.SLASH + PathParameterConstants.PATH_NO;
 
         updateScoreBean.setUpdateDate(LocalDateTime.now());
         Map<String, String> uriVariables = new HashMap<>();

@@ -14,8 +14,11 @@ public enum Tables {
      * answerInfoTbl
      */
     ANSWER_INFO_TBL,
+
     /**
      * scoreInfoTbl
      */
-    SCORE_INFO_TBL
+    SCORE_INFO_TBL,
+
+    ;
 }

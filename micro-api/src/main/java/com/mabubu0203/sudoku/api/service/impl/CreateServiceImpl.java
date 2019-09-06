@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.CreateService;
-import com.mabubu0203.sudoku.clients.rdb.RdbApiCreateEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.custom.RdbApiCreateEndPoints;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.logic.SudokuModule;

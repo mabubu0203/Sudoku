@@ -95,7 +95,7 @@ public class RestApiSearchController extends RestBaseController {
      * @author uratamanabu
      * @since 1.0
      */
-    @GetMapping(value = {PathParameterConstants.PATH_TYPEANSWER_KEY})
+    @GetMapping(value = {PathParameterConstants.PATH_ANSWER_KEY})
     public ResponseEntity<Boolean> isSudokuExist(
             @PathVariable(name = "answerKey") @AnswerKey(message = "数値64桁を入力しましょう。") final String answerKey
     ) {

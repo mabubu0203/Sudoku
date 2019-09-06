@@ -4,6 +4,7 @@ import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.interfaces.request.UpdateSudokuScoreRequestBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -25,6 +26,9 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class RestApiUpdateEndPoints {
+
+    @Value("${sudoku.uri.api}")
+    private String sudokuUriApi;
 
     /**
      * {@code /score}<br>

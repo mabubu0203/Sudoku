@@ -1,8 +1,9 @@
-package com.mabubu0203.sudoku.clients.rdb;
+package com.mabubu0203.sudoku.clients.rdb.domains;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
@@ -37,6 +38,9 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class AnswerInfoTblEndPoints {
 
+    @Value("${sudoku.rdb.api}")
+    private String sudokuUriApi;
+
     /**
      * {@code /search/findFirstByType}<br>
      *
@@ -48,9 +52,7 @@ public class AnswerInfoTblEndPoints {
     public Optional<AnswerInfoTbl> findFirstByType(
             final RestOperations restOperations,
             final int type) {
-        final String findFirstByType = "http://localhost:9011/SudokuRdb/"
-                + "answerInfoTbls" + CommonConstants.SLASH
-                + "search" + CommonConstants.SLASH + "findFirstByType";
+        final String findFirstByType = sudokuUriApi + "answerInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findFirstByType";
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(type));
@@ -91,9 +93,7 @@ public class AnswerInfoTblEndPoints {
     public List<AnswerInfoTbl> findByAnswerKey(
             final RestOperations restOperations,
             final String answerKey) {
-        final String findByAnswerKey = "http://localhost:9011/SudokuRdb/"
-                + "answerInfoTbls" + CommonConstants.SLASH
-                + "search" + CommonConstants.SLASH + "findByAnswerKey";
+        final String findByAnswerKey = sudokuUriApi + "answerInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findByAnswerKey";
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("answerKey", answerKey);
@@ -139,9 +139,7 @@ public class AnswerInfoTblEndPoints {
             final int type,
             final String keyHash) {
 
-        final String findByTypeAndKeyhash = "http://localhost:9011/SudokuRdb/"
-                + "answerInfoTbls" + CommonConstants.SLASH
-                + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
+        final String findByTypeAndKeyhash = sudokuUriApi + "answerInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("type", Integer.toString(type));

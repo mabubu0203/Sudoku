@@ -94,7 +94,7 @@ public class RestApiCreateController extends RestBaseController {
                         .cloneBuilder()
                         .pathSegment(
                                 RestUrlConstants.URL_SEARCH_MASTER,
-                                PathParameterConstants.PATH_TYPEANSWER_KEY)
+                                PathParameterConstants.PATH_ANSWER_KEY)
                         .buildAndExpand(answerKey)
                         .toUri();
         requestEntity = RequestEntity

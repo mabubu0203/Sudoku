@@ -18,6 +18,9 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
 
+    // ModelMapper
+    implementation("org.modelmapper:modelmapper:$modelmapperVersion")
+
 }
 
 jar {

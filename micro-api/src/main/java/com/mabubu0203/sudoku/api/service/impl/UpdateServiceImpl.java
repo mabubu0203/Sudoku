@@ -1,7 +1,7 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.UpdateService;
-import com.mabubu0203.sudoku.clients.rdb.ScoreInfoTblEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.domains.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

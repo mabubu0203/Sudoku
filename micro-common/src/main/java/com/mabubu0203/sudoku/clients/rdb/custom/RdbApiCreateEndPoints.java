@@ -1,9 +1,10 @@
-package com.mabubu0203.sudoku.clients.rdb;
+package com.mabubu0203.sudoku.clients.rdb.custom;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -26,6 +27,9 @@ import java.util.Optional;
 @Service
 public class RdbApiCreateEndPoints {
 
+    @Value("${sudoku.rdb.api}")
+    private String sudokuUriApi;
+
     /**
      * {@code /}<br>
      *
@@ -39,8 +43,7 @@ public class RdbApiCreateEndPoints {
             final NumberPlaceBean numberPlaceBean
     ) {
 
-        final String insert = "http://localhost:9011/SudokuRdb/"
-                + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH;
+        final String insert = sudokuUriApi + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH;
         try {
             URI uri = new URI(insert);
             RequestEntity requestEntity = RequestEntity

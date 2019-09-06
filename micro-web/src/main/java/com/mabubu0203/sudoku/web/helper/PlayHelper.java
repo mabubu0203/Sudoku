@@ -20,7 +20,6 @@ import com.mabubu0203.sudoku.web.utils.CompareUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestOperations;
@@ -45,11 +44,7 @@ public class PlayHelper {
     private final SudokuModule sudokuModule;
     private final RestApiSearchEndPoints restApiSearchEndPoints;
     private final RestApiUpdateEndPoints restApiUpdateEndPoints;
-
     private final ModelMapper modelMapper;
-
-    @Value("${sudoku.uri.api}")
-    private String sudokuUriApi;
 
     /**
      * <br>
@@ -205,8 +200,7 @@ public class PlayHelper {
 
     private Long updateScore(final RestOperations restOperations, ScoreForm form) {
 
-        UpdateSudokuScoreRequestBean request =
-                new ModelMapper().map(form, UpdateSudokuScoreRequestBean.class);
+        UpdateSudokuScoreRequestBean request = modelMapper.map(form, UpdateSudokuScoreRequestBean.class);
 
         Optional<Long> noOpt = restApiUpdateEndPoints.update(restOperations, request);
         if (noOpt.isPresent()) {
