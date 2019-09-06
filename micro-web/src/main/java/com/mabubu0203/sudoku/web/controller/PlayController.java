@@ -1,5 +1,6 @@
 package com.mabubu0203.sudoku.web.controller;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.WebUrlConstants;
 import com.mabubu0203.sudoku.web.form.CreateForm;
 import com.mabubu0203.sudoku.web.form.PlayForm;
@@ -130,7 +131,7 @@ public class PlayController {
                 case 3:
                     return WebUrlConstants.Forward.PLAY_NUMBER_PLACE.getPath();
                 default:
-                    return "";
+                    return CommonConstants.EMPTY_STR;
             }
         }
     }

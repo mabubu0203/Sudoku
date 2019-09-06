@@ -18,7 +18,6 @@ import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -41,9 +40,6 @@ public class SearchHelper {
     private final SudokuModule sudokuModule;
     private final RestApiSearchEndPoints restApiSearchEndPoints;
     private final ModelMapper modelMapper;
-
-    @Value("${sudoku.uri.api}")
-    private String sudokuUriApi;
 
     /**
      * <br>

@@ -1,5 +1,6 @@
 package com.mabubu0203.sudoku.web.controller;
 
+import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.WebUrlConstants;
 import com.mabubu0203.sudoku.controller.WebBaseController;
 import com.mabubu0203.sudoku.web.form.ScoreForm;
@@ -85,7 +86,7 @@ public class WebPageController extends WebBaseController {
             final Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
-            return "";
+            return CommonConstants.EMPTY_STR;
         } else {
             return WebUrlConstants.Forward.BEST_SCORE_COMPLETE.getPath();
         }
@@ -109,7 +110,7 @@ public class WebPageController extends WebBaseController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("validationError", "不正な値が入力されました。");
-            return "";
+            return CommonConstants.EMPTY_STR;
         } else {
             return WebUrlConstants.Forward.COMPLETE_NUMBER_PLACE.getPath();
         }

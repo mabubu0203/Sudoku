@@ -1,10 +1,10 @@
-package com.mabubu0203.sudoku.rdb.config;
+package com.mabubu0203.sudoku.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration(value = "com.mabubu0203.sudoku.rdb.config.ModelMapperConfiguration")
+@Configuration
 public class ModelMapperConfiguration {
 
     @Bean

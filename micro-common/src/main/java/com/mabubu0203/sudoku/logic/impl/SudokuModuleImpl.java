@@ -1,8 +1,10 @@
-package com.mabubu0203.sudoku.logic;
+package com.mabubu0203.sudoku.logic.impl;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
+import com.mabubu0203.sudoku.logic.SudokuModule;
+import com.mabubu0203.sudoku.logic.SudokuModuleBean;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.NumberPlaceArrayUtils;
 import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;

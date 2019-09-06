@@ -8,6 +8,7 @@ import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -35,6 +36,9 @@ import java.util.Map;
 @Service
 public class RestApiSearchEndPoints {
 
+    @Value("${sudoku.uri.api}")
+    private String sudokuUriApi;
+
     /**
      * {@code /}<br>
      *
@@ -48,7 +52,7 @@ public class RestApiSearchEndPoints {
             final SearchSudokuRecordRequestBean request
     ) {
 
-        final String search = "http://localhost:9001/SudokuApi/"
+        final String search = sudokuUriApi
                 + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
 
         try {
@@ -89,7 +93,7 @@ public class RestApiSearchEndPoints {
             final String keyHash
     ) {
 
-        final String sudoku = "http://localhost:9001/SudokuApi/"
+        final String sudoku = sudokuUriApi
                 + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH
                 + RestUrlConstants.URL_SUDOKU + "?type={type}&keyHash={keyHash}";
 
@@ -127,7 +131,7 @@ public class RestApiSearchEndPoints {
             final String keyHash
     ) {
 
-        final String score = "http://localhost:9001/SudokuApi/"
+        final String score = sudokuUriApi
                 + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH
                 + RestUrlConstants.URL_SCORE + "?type={type}&keyHash={keyHash}";
 

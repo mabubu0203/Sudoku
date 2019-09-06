@@ -1,10 +1,11 @@
-package com.mabubu0203.sudoku.clients.rdb;
+package com.mabubu0203.sudoku.clients.rdb.custom;
 
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
@@ -35,6 +36,9 @@ import java.util.Map;
 @Service
 public class RdbApiSearchEndPoints {
 
+    @Value("${sudoku.rdb.api}")
+    private String sudokuUriApi;
+
     /**
      * {@code /}<br>
      *
@@ -48,8 +52,7 @@ public class RdbApiSearchEndPoints {
             final SearchConditionBean conditionBean,
             final Pageable pageable) {
 
-        final String search = "http://localhost:9011/SudokuRdb/"
-                + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
+        final String search = sudokuUriApi + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("selectType", Integer.toString(conditionBean.getType()));
