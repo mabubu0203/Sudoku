@@ -96,23 +96,27 @@ public class SearchHelper {
         Pageable pageable = PageRequest.of(form.getPageNumber(), form.getPageSize(), sort);
         PagedResources<Resource<SearchResultBean>> page = rdbApiSearchEndPoints
                 .search(restOperations, request, pageable);
-        setPageInfomation(model, page);
+        setPageInformation(model, page);
     }
 
-    private void setPageInfomation(Model model, PagedResources<Resource<SearchResultBean>> page) {
+    private void setPageInformation(Model model, PagedResources<Resource<SearchResultBean>> page) {
 
         List<SearchResultBean> content = page.getContent().stream().map(e -> e.getContent()).collect(toList());
 
         PagedResources.PageMetadata metadata = page.getMetadata();
-
+        long pageSize = metadata.getSize();
+        long totalElements = metadata.getTotalElements();
         long totalPages = metadata.getTotalPages();
-        long number = metadata.getNumber();
+        long pageNumber = metadata.getNumber();
 
         boolean existPrev = metadata.getNumber() != 0;
-        boolean existNext = (totalPages != 0) && (number != totalPages - 1);
+        boolean existNext = (totalPages != 0) && (pageNumber != totalPages - 1);
 
         model.addAttribute("content", content);
-        model.addAttribute("metadata", metadata);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalElements", totalElements);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("pageNumber", pageNumber);
         model.addAttribute("hiddenPrev", !existPrev);
         model.addAttribute("hiddenNext", !existNext);
     }

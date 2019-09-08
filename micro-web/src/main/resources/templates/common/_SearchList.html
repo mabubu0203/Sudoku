@@ -42,10 +42,10 @@
             <input th:id="name" th:name="name" th:value="*{name}" type="hidden"/>
             <input th:id="selectorName" th:name="selectorName" th:value="*{selectorName}" type="hidden"/>
 
-            <input th:id="pageSize" th:name="pageSize" th:value="${metadata.size}" type="hidden"/>
-            <input th:id="totalElements" th:name="totalElements" th:value="${metadata.totalElements}" type="hidden"/>
-            <input th:id="totalPages" th:name="totalPages" th:value="${metadata.totalPages}" type="hidden"/>
-            <input th:id="pageNumber" th:name="pageNumber" th:value="${metadata.number}" type="hidden"/>
+            <input th:id="pageSize" th:name="pageSize" th:value="${pageSize}" type="hidden"/>
+            <input th:id="totalElements" th:name="totalElements" th:value="${totalElements}" type="hidden"/>
+            <input th:id="totalPages" th:name="totalPages" th:value="${totalPages}" type="hidden"/>
+            <input th:id="pageNumber" th:name="pageNumber" th:value="${pageNumber}" type="hidden"/>
 
             <div class="text-center">
                 <ul class="pagination">
@@ -98,12 +98,12 @@
         <script th:inline="javascript" type="text/javascript">
             /*<![CDATA[*/
             $('#pagination-prev').click(function () {
-                setPagenation(/*[[ ${metadata.number - 1} ]]*/,/*[[ ${metadata.size} ]]*/);
+                setPagenation(/*[[ ${pageNumber - 1} ]]*/,/*[[ ${pageSize} ]]*/);
                 $('#searchForm').submit();
             });
 
             $('#pagination-next').click(function () {
-                setPagenation(/*[[ ${metadata.number + 1} ]]*/,/*[[ ${metadata.size} ]]*/);
+                setPagenation(/*[[ ${pageNumber + 1} ]]*/,/*[[ ${pageSize} ]]*/);
                 $('#searchForm').submit();
             });
 
