@@ -8,9 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 
-import java.util.List;
-import java.util.Optional;
-
 /**
  * ANSWER_INFO_TBLへのinterfaceです。<br>
  * このinterfaceを経由してCRUD操作を実行してください。<br>
@@ -32,39 +29,8 @@ public interface AnswerInfoService {
     AnswerInfoTbl insert(NumberPlaceBean numberplaceBean);
 
     /**
-     * ANSWER_INFO_TBLへanswerKeyで検索を行います。<br>
-     * 返却はN件を表すStreamで返却します。<br>
-     *
-     * @param answerKey answerKey
-     * @return N件
-     * @since 1.0
-     */
-    List<AnswerInfoTbl> searchByAnswerKey(String answerKey);
-
-    /**
-     * ANSWER_INFO_TBLへTypeで検索を行います。<br>
-     * 返却は0/1件を表すOptionalで返却します。<br>
-     *
-     * @param type タイプ
-     * @return 0/1件
-     * @since 1.0
-     */
-    Optional<AnswerInfoTbl> findFirstByType(Integer type);
-
-    /**
-     * ANSWER_INFO_TBLへTypeとKeyHashで検索を行います。<br>
-     * 返却は0/1件を表すOptionalで返却します。<br>
-     *
-     * @param type    タイプ
-     * @param keyHash KeyHash
-     * @return 0/1件
-     * @since 1.0
-     */
-    Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash);
-
-    /**
      * ANSWER_INFO_TBLとScore_INFO_TBLの結合テーブルへ検索画面から入力された条件で検索します。<br>
-     * 返却はN件を表すPageで返却します。<br>
+     * 返却はN件を表す{@code PagedResources}で返却します。<br>
      *
      * @param condition 検索条件
      * @param pageable  ページ情報

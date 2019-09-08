@@ -21,9 +21,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * ANSWER_INFO_TBLへのサービスクラスです。 <br>
@@ -48,21 +46,6 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
         AnswerInfoTbl answerInfoTbl = modelMapper.map(numberplaceBean, AnswerInfoTbl.class);
         answerInfoTbl.setCreateDate(LocalDateTime.now());
         return answerInfoRepository.saveAndFlush(answerInfoTbl);
-    }
-
-    @Override
-    public List<AnswerInfoTbl> searchByAnswerKey(String answerKey) {
-        return answerInfoRepository.findByAnswerKey(answerKey);
-    }
-
-    @Override
-    public Optional<AnswerInfoTbl> findFirstByType(Integer type) {
-        return answerInfoRepository.findFirstByType(type);
-    }
-
-    @Override
-    public Optional<AnswerInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash) {
-        return answerInfoRepository.findByTypeAndKeyHash(type, keyHash);
     }
 
     @Override
