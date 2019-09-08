@@ -36,7 +36,7 @@ import java.util.Map;
 @Service
 public class RdbApiSearchEndPoints {
 
-    @Value("${sudoku.rdb.api}")
+    @Value("${sudoku.uri.rdb}")
     private String sudokuUriApi;
 
     /**

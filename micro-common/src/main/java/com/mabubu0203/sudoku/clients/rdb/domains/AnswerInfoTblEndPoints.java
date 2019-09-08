@@ -38,7 +38,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class AnswerInfoTblEndPoints {
 
-    @Value("${sudoku.rdb.api}")
+    @Value("${sudoku.uri.rdb}")
     private String sudokuUriApi;
 
     /**
