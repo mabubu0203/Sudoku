@@ -22,7 +22,7 @@ public interface AnswerInfoRepository
 
     /**
      * {@code answer_info_tbl}へAnswerKeyで検索を行います。<br>
-     * 返却はN件を表すStreamで返却します。<br>
+     * 返却はN件を表す{@code List}で返却します。<br>
      *
      * @param answerKey
      * @return N件
@@ -32,7 +32,7 @@ public interface AnswerInfoRepository
 
     /**
      * {@code answer_info_tbl}へ{@code type}と{@code keyHash}で検索を行います。<br>
-     * 返却は0/1件を表すOptionalで返却します。<br>
+     * 返却は0/1件を表す{@code Optional}で返却します。<br>
      *
      * @param type
      * @param keyHash
@@ -43,7 +43,7 @@ public interface AnswerInfoRepository
 
     /**
      * {@code answer_info_tbl}へ{@code type}で検索を行います。<br>
-     * 返却は0/1件を表すOptionalで返却します。<br>
+     * 返却は0/1件を表す{@code Optional}で返却します。<br>
      *
      * @param type
      * @return 0/1件

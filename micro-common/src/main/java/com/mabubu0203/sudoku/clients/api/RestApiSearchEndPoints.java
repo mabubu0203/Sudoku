@@ -4,9 +4,7 @@ import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
-import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +17,6 @@ import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriTemplate;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,45 +35,6 @@ public class RestApiSearchEndPoints {
 
     @Value("${sudoku.uri.api}")
     private String sudokuUriApi;
-
-    /**
-     * {@code /}<br>
-     *
-     * @param restOperations
-     * @param request
-     * @return PagedResources
-     * @since 1.0
-     */
-    public SearchSudokuRecordResponseBean search(
-            final RestOperations restOperations,
-            final SearchSudokuRecordRequestBean request
-    ) {
-
-        final String search = sudokuUriApi
-                + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
-
-        try {
-            URI uri = new URI(search);
-            RequestEntity requestEntity =
-                    RequestEntity
-                            .post(uri)
-                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                            .body(request);
-            ResponseEntity<SearchSudokuRecordResponseBean> generateEntity = restOperations
-                    .exchange(
-                            requestEntity,
-                            SearchSudokuRecordResponseBean.class
-                    );
-            return generateEntity.getBody();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return null;
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     /**
      * {@code /sudoku}<br>

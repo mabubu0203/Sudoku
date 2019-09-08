@@ -60,9 +60,9 @@ public class RdbApiSearchEndPoints {
         uriVariables.put("selectorKeyHash", Integer.toString(conditionBean.getSelectorKeyHash()));
         uriVariables.put("selectorScore", Integer.toString(conditionBean.getSelectorScore()));
         uriVariables.put("selectorName", Integer.toString(conditionBean.getSelectorName()));
-        uriVariables.put("number", Integer.toString(pageable.getPageNumber()));
+        uriVariables.put("page", Integer.toString(pageable.getPageNumber()));
         uriVariables.put("size", Integer.toString(pageable.getPageSize()));
-        URI uri = new UriTemplate(search + "?selectType={selectType}&selectorNo={selectorNo}&selectorKeyHash={selectorKeyHash}&selectorScore={selectorScore}&selectorName={selectorName}&number={number}&size={size}").expand(uriVariables);
+        URI uri = new UriTemplate(search + "?selectType={selectType}&selectorNo={selectorNo}&selectorKeyHash={selectorKeyHash}&selectorScore={selectorScore}&selectorName={selectorName}&page={page}&size={size}").expand(uriVariables);
         RequestEntity requestEntity = RequestEntity
                 .get(uri)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * SCORE_INFO_TBLへのサービスクラスです。<br>
@@ -35,24 +34,6 @@ public class ScoreInfoServiceImpl implements ScoreInfoService {
         scoreInfoTbl.setScore(0);
         scoreInfoTbl.setName(CommonConstants.EMPTY_STR);
         scoreInfoTbl.setMemo(CommonConstants.EMPTY_STR);
-        scoreInfoTbl.setUpdateDate(LocalDateTime.now());
-        return scoreRepository.save(scoreInfoTbl);
-    }
-
-    @Override
-    public Optional<ScoreInfoTbl> findByTypeAndKeyHash(Integer type, String keyHash) {
-        return scoreRepository.findByTypeAndKeyHash(type, keyHash);
-    }
-
-    @Override
-    public ScoreInfoTbl update(NumberPlaceBean numberplaceBean) {
-        ScoreInfoTbl scoreInfoTbl = modelMapper.map(numberplaceBean, ScoreInfoTbl.class);
-        scoreInfoTbl.setUpdateDate(LocalDateTime.now());
-        return scoreRepository.save(scoreInfoTbl);
-    }
-
-    @Override
-    public ScoreInfoTbl update(ScoreInfoTbl scoreInfoTbl) {
         scoreInfoTbl.setUpdateDate(LocalDateTime.now());
         return scoreRepository.save(scoreInfoTbl);
     }

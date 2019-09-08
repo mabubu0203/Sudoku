@@ -1,12 +1,11 @@
 package com.mabubu0203.sudoku.web.helper;
 
 import com.mabubu0203.sudoku.clients.api.RestApiSearchEndPoints;
+import com.mabubu0203.sudoku.clients.rdb.custom.RdbApiSearchEndPoints;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.PagenationHelper;
-import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
+import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
-import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.logic.SudokuModule;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.ESMapWrapUtils;
@@ -18,12 +17,19 @@ import com.mabubu0203.sudoku.web.helper.bean.HelperBean;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestOperations;
 
+import java.util.List;
 import java.util.Objects;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * <br>
@@ -39,6 +45,7 @@ public class SearchHelper {
 
     private final SudokuModule sudokuModule;
     private final RestApiSearchEndPoints restApiSearchEndPoints;
+    private final RdbApiSearchEndPoints rdbApiSearchEndPoints;
     private final ModelMapper modelMapper;
 
     /**
@@ -82,15 +89,36 @@ public class SearchHelper {
         model.addAttribute("selectorKeyHash", ESMapWrapUtils.getSelectorKeyHash());
         model.addAttribute("selectorScore", ESMapWrapUtils.getSelectorScore());
         model.addAttribute("selectorName", ESMapWrapUtils.getSelectorName());
-        SearchSudokuRecordRequestBean request = modelMapper.map(form, SearchSudokuRecordRequestBean.class);
 
-        SearchSudokuRecordResponseBean response = restApiSearchEndPoints.search(restOperations, request);
-        Page<SearchResultBean> page = response.getPage();
-        PagenationHelper ph = response.getPh();
-        // ページ番号を設定し直す
-        form.setPageNumber(page.getNumber());
-        model.addAttribute("page", page);
-        model.addAttribute("ph", ph);
+        SearchConditionBean request = modelMapper.map(form, SearchConditionBean.class);
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "no");
+        Pageable pageable = PageRequest.of(form.getPageNumber(), form.getPageSize(), sort);
+        PagedResources<Resource<SearchResultBean>> page = rdbApiSearchEndPoints
+                .search(restOperations, request, pageable);
+        setPageInformation(model, page);
+    }
+
+    private void setPageInformation(Model model, PagedResources<Resource<SearchResultBean>> page) {
+
+        List<SearchResultBean> content = page.getContent().stream().map(e -> e.getContent()).collect(toList());
+
+        PagedResources.PageMetadata metadata = page.getMetadata();
+        long pageSize = metadata.getSize();
+        long totalElements = metadata.getTotalElements();
+        long totalPages = metadata.getTotalPages();
+        long pageNumber = metadata.getNumber();
+
+        boolean existPrev = metadata.getNumber() != 0;
+        boolean existNext = (totalPages != 0) && (pageNumber != totalPages - 1);
+
+        model.addAttribute("content", content);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalElements", totalElements);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("hiddenPrev", !existPrev);
+        model.addAttribute("hiddenNext", !existNext);
     }
 
     /**

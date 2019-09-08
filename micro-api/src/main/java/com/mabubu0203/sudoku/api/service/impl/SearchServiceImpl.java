@@ -1,26 +1,25 @@
 package com.mabubu0203.sudoku.api.service.impl;
 
 import com.mabubu0203.sudoku.api.service.SearchService;
-import com.mabubu0203.sudoku.clients.rdb.custom.RdbApiSearchEndPoints;
 import com.mabubu0203.sudoku.clients.rdb.domains.AnswerInfoTblEndPoints;
 import com.mabubu0203.sudoku.clients.rdb.domains.ScoreInfoTblEndPoints;
 import com.mabubu0203.sudoku.constants.CommonConstants;
 import com.mabubu0203.sudoku.enums.Type;
 import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.PagenationHelper;
-import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
 import com.mabubu0203.sudoku.interfaces.response.SearchResultBean;
-import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.utils.ESListWrapUtils;
 import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -45,7 +47,6 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    private final RdbApiSearchEndPoints rdbApiSearchEndPoints;
     private final AnswerInfoTblEndPoints answerInfoTblEndpoints;
     private final ScoreInfoTblEndPoints scoreInfoTblEndPoints;
     private final ModelMapper modelMapper;
@@ -60,29 +61,6 @@ public class SearchServiceImpl implements SearchService {
             return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
         }
 
-    }
-
-    @Override
-    public ResponseEntity<SearchSudokuRecordResponseBean> search(
-            final RestOperations restOperations,
-            final SearchConditionBean conditionBean,
-            final int pageNumber,
-            final int pageSize
-    ) {
-
-        Sort sort = Sort.by(Sort.Direction.DESC, "no");
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        PagedResources<Resource<SearchResultBean>> page = rdbApiSearchEndPoints.search(restOperations, conditionBean, pageable);
-        if (Objects.nonNull(page) && page.getContent().size() > 0) {
-            Page<SearchResultBean> modiftyPage = convertJacksonFile(page);
-            SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
-            response.setPage(modiftyPage);
-            response.setPh(new PagenationHelper(modiftyPage));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            SearchSudokuRecordResponseBean response = new SearchSudokuRecordResponseBean();
-            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
-        }
     }
 
     @Override
