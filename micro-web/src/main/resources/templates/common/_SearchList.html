@@ -53,9 +53,6 @@
                         <button class="btn btn-default" th:id="pagination-prev" type="button">&#171;
                         </button>
                     </li>
-                </ul>
-
-                <ul class="pagination">
                     <li th:attr="style=${hiddenNext} ? 'visibility:hidden'">
                         <button class="btn btn-default" th:id="pagination-next" type="button">&#187;
                         </button>
@@ -93,6 +90,20 @@
                 </tr>
                 </tbody>
             </table>
+
+            <div class="text-center">
+                <ul class="pagination">
+                    <li th:attr="style=${hiddenPrev} ? 'visibility:hidden'">
+                        <button class="btn btn-default" th:id="pagination-prev" type="button">&#171;
+                        </button>
+                    </li>
+                    <li th:attr="style=${hiddenNext} ? 'visibility:hidden'">
+                        <button class="btn btn-default" th:id="pagination-next" type="button">&#187;
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
         </form>
 
         <script th:inline="javascript" type="text/javascript">
