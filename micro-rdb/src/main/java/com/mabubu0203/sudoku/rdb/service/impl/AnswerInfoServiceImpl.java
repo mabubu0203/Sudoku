@@ -1,8 +1,5 @@
 package com.mabubu0203.sudoku.rdb.service.impl;
 
-import com.mabubu0203.sudoku.constants.CommonConstants;
-import com.mabubu0203.sudoku.enums.Type;
-import com.mabubu0203.sudoku.exception.SudokuApplicationException;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
 import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
@@ -11,8 +8,6 @@ import com.mabubu0203.sudoku.rdb.repository.AnswerInfoRepository;
 import com.mabubu0203.sudoku.rdb.service.AnswerInfoService;
 import com.mabubu0203.sudoku.rdb.specification.AnswerInfoSpecifications;
 import com.mabubu0203.sudoku.rdb.specification.ScoreInfoSpecifications;
-import com.mabubu0203.sudoku.utils.ESListWrapUtils;
-import com.mabubu0203.sudoku.utils.NumberPlaceBeanUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -27,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -80,28 +74,7 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
         return pagedResources;
     }
 
-    @Override
-    public NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl) {
-        NumberPlaceBean numberPlaceBean = new ModelMapper().map(answerInfoTbl, NumberPlaceBean.class);
-        String answerKey = numberPlaceBean.getAnswerKey();
-        String[] valueArray = answerKey.split(CommonConstants.EMPTY_STR);
-        Type type = Type.getType(numberPlaceBean.getType());
-        if (type == null) {
-            throw new SudokuApplicationException();
-        }
-        ListIterator<String> itr = ESListWrapUtils.createCells(type.getSize(), CommonConstants.INTEGER_ZERO).listIterator();
-        try {
-            for (String value : valueArray) {
-                NumberPlaceBeanUtils.setCell(numberPlaceBean, itr.next(), Integer.valueOf(value));
-            }
-        } catch (SudokuApplicationException e) {
-            e.printStackTrace();
-            log.error("やらかしています。");
-            throw new SudokuApplicationException();
-        }
-        return numberPlaceBean;
-    }
-
+    @Deprecated
     private Specification<AnswerInfoTbl> createSpecification(SearchConditionBean condition) {
         Specification<AnswerInfoTbl> specification = Specification.where(AnswerInfoSpecifications.typeContains(condition.getType()));
 

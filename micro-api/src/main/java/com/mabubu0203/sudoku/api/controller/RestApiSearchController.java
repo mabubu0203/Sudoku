@@ -6,10 +6,7 @@ import com.mabubu0203.sudoku.constants.PathParameterConstants;
 import com.mabubu0203.sudoku.constants.RestUrlConstants;
 import com.mabubu0203.sudoku.controller.RestBaseController;
 import com.mabubu0203.sudoku.interfaces.NumberPlaceBean;
-import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
-import com.mabubu0203.sudoku.interfaces.request.SearchSudokuRecordRequestBean;
 import com.mabubu0203.sudoku.interfaces.response.ScoreResponseBean;
-import com.mabubu0203.sudoku.interfaces.response.SearchSudokuRecordResponseBean;
 import com.mabubu0203.sudoku.validator.constraint.AnswerKey;
 import com.mabubu0203.sudoku.validator.constraint.KeyHash;
 import com.mabubu0203.sudoku.validator.constraint.Type;
@@ -20,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -102,25 +98,6 @@ public class RestApiSearchController extends RestBaseController {
 
         log.info("isSudokuExist");
         return service.isExist(restTemplateBuilder.build(), answerKey);
-    }
-
-    /**
-     * 数独の検索を実施します。<br>
-     *
-     * @param request 検索条件
-     * @return ResponseEntity
-     * @author uratamanabu
-     * @since 1.0
-     */
-    @PostMapping(value = {CommonConstants.EMPTY_STR})
-    public ResponseEntity<SearchSudokuRecordResponseBean> search(
-            @RequestBody @Validated final SearchSudokuRecordRequestBean request
-    ) {
-
-        log.info("search");
-        SearchConditionBean conditionBean = modelMapper.map(request, SearchConditionBean.class);
-        conditionBean.setType(request.getSelectType());
-        return service.search(restTemplateBuilder.build(), conditionBean, request.getPageNumber().intValue(), request.getPageSize().intValue());
     }
 
 }

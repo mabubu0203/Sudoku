@@ -73,14 +73,4 @@ public interface AnswerInfoService {
      */
     PagedResources<Resource<SearchResult>> searchRecords(SearchConditionBean condition, Pageable pageable);
 
-    /**
-     * EntityをBeanに変換して返却します。<br>
-     * .
-     *
-     * @param answerInfoTbl
-     * @return NumberPlaceBean
-     * @since 1.0
-     */
-    NumberPlaceBean answerInfoTblConvertBean(AnswerInfoTbl answerInfoTbl);
-
 }
