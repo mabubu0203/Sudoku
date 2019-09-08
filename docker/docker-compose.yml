@@ -23,6 +23,24 @@ services:
       - esnet
     restart: always
 
+  fluentd:
+    build: ./docker-fluentd
+    container_name: docker-fluentd
+    ports:
+      - 24224:24224
+    links:
+      - elasticsearch
+    volumes:
+      - "./docker-fluentd/conf:/fluentd/etc"
+      - "./docker-fluentd/log:/fluentd/log"
+    networks:
+      - esnet
+    environment:
+      FLUENTD_CONF: fluent.conf
+    depends_on:
+      - elasticsearch
+    restart: always
+
   kibana:
     build: ./docker-kibana
     container_name: docker-kibana
@@ -103,6 +121,8 @@ services:
     ports:
       - 9410:9410
       - 9411:9411
+    networks:
+      - esnet
     environment:
       - STORAGE_TYPE=elasticsearch
       - ES_HOSTS=elasticsearch

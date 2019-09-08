@@ -36,7 +36,7 @@ import java.util.Optional;
 @Service
 public class ScoreInfoTblEndPoints {
 
-    @Value("${sudoku.rdb.api}")
+    @Value("${sudoku.uri.rdb}")
     private String sudokuUriApi;
 
     /**

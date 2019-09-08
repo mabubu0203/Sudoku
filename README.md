@@ -55,8 +55,8 @@ name   | Front | Batch | Admin
 | OpenJdk           | 12
 | DockerCompose     | 1.24.0
 | Gradle            | 5.6.0 
-| mysql             | 8.0.17 
-| ElasticSearch     | 7.3.0 
+| mysql             | 8.0.x 
+| ElasticSearch     | 7.3.x 
 
 ### Ports
 
@@ -77,6 +77,7 @@ name   | Front | Batch | Admin
 | web3号機           | 9023
 | elasticsearch     | 9200
 | zipkin            | 9411
+| fluentd            | 24224
 
 [kibana]: http://localhost:5601     "kibana"
 [phpMyAdmin]: http://localhost:8021/     "phpMyAdmin"
