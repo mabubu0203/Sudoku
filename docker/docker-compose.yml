@@ -33,6 +33,8 @@ services:
     volumes:
       - "./docker-fluentd/conf:/fluentd/etc"
       - "./docker-fluentd/log:/fluentd/log"
+    networks:
+      - esnet
     environment:
       FLUENTD_CONF: fluent.conf
     depends_on:
@@ -119,6 +121,8 @@ services:
     ports:
       - 9410:9410
       - 9411:9411
+    networks:
+      - esnet
     environment:
       - STORAGE_TYPE=elasticsearch
       - ES_HOSTS=elasticsearch
