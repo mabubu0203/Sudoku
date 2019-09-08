@@ -77,6 +77,7 @@ name   | Front | Batch | Admin
 | web3号機           | 9023
 | elasticsearch     | 9200
 | zipkin            | 9411
+| fluentd            | 24224
 
 [kibana]: http://localhost:5601     "kibana"
 [phpMyAdmin]: http://localhost:8021/     "phpMyAdmin"

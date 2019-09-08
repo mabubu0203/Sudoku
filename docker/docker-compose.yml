@@ -30,11 +30,11 @@ services:
       - 24224:24224
     links:
       - elasticsearch
-    environment:
-      - "FLUENTD_CONF=./docker-fluentd/conf/fluentd.conf"
     volumes:
-      - "./docker-fluentd:/fluentd/log"
-      - "./docker-fluentd:/fluentd/etc"
+      - "./docker-fluentd/conf:/fluentd/etc"
+      - "./docker-fluentd/log:/fluentd/log"
+    environment:
+      FLUENTD_CONF: fluent.conf
     depends_on:
       - elasticsearch
     restart: always
