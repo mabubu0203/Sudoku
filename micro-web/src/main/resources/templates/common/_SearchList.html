@@ -29,7 +29,7 @@
 </head>
 
 <div th:fragment="base">
-    <div class="bs-component" th:if="${page} != null">
+    <div class="bs-component" th:if="${content} != null">
         <form action="#" autocomplete="off" class="form-horizontal" id="searchForm" method="post"
               th:action="@{/isSearch}" th:object="${searchForm}">
             <input th:id="selectType" th:name="selectType" th:value="*{selectType}" type="hidden"/>
@@ -41,34 +41,22 @@
             <input th:id="selectorScore" th:name="selectorScore" th:value="*{selectorScore}" type="hidden"/>
             <input th:id="name" th:name="name" th:value="*{name}" type="hidden"/>
             <input th:id="selectorName" th:name="selectorName" th:value="*{selectorName}" type="hidden"/>
-            <input th:id="pageNumber" th:name="pageNumber" th:value="${page.number}" type="hidden"/>
-            <input th:id="pageSize" th:name="pageSize" th:value="${page.size}" type="hidden"/>
+
+            <input th:id="pageSize" th:name="pageSize" th:value="${metadata.size}" type="hidden"/>
+            <input th:id="totalElements" th:name="totalElements" th:value="${metadata.totalElements}" type="hidden"/>
+            <input th:id="totalPages" th:name="totalPages" th:value="${metadata.totalPages}" type="hidden"/>
+            <input th:id="pageNumber" th:name="pageNumber" th:value="${metadata.number}" type="hidden"/>
+
             <div class="text-center">
                 <ul class="pagination">
-                    <li th:attr="style=${ph.hiddenPrev} ? 'visibility:hidden'">
+                    <li th:attr="style=${hiddenPrev} ? 'visibility:hidden'">
                         <button class="btn btn-default" th:id="pagination-prev" type="button">&#171;
                         </button>
                     </li>
                 </ul>
+
                 <ul class="pagination">
-                    <li th:class="${ph.activePage1} ? 'active'">
-                        <button class="btn btn-default" th:id="pagination-1" th:text="${ph.page1PageValue + 1}"
-                                type="button">1
-                        </button>
-                    </li>
-                    <li th:attr="style=${ph.hiddenPage2} ? 'visibility:hidden'" th:class="${ph.activePage2} ? 'active'">
-                        <button class="btn btn-default" th:id="pagination-2" th:text="${ph.page1PageValue + 2}"
-                                type="button">2
-                        </button>
-                    </li>
-                    <li th:attr="style=${ph.hiddenPage3} ? 'visibility:hidden'" th:class="${ph.activePage3} ? 'active'">
-                        <button class="btn btn-default" th:id="pagination-3" th:text="${ph.page1PageValue + 3}"
-                                type="button">3
-                        </button>
-                    </li>
-                </ul>
-                <ul class="pagination">
-                    <li th:attr="style=${ph.hiddenNext} ? 'visibility:hidden'">
+                    <li th:attr="style=${hiddenNext} ? 'visibility:hidden'">
                         <button class="btn btn-default" th:id="pagination-next" type="button">&#187;
                         </button>
                     </li>
@@ -87,7 +75,7 @@
                     <th>memo</th>
                     <th>date</th>
                 </tr>
-                <tr th:each="record, recordStat : ${page}" th:object="${record}">
+                <tr th:each="record, recordStat : ${content}" th:object="${record}">
                     <td align="left" th:text="${recordStat.count}">Sequence</td>
                     <td align="right" th:text="${record.no}">No</td>
                     <td align="right" th:text="${record.type}">Type</td>
@@ -106,38 +94,25 @@
                 </tbody>
             </table>
         </form>
+
         <script th:inline="javascript" type="text/javascript">
-        /*<![CDATA[*/
-            $('#pagination-prev').click(function() {
-                setPagenation(/*[[ ${page.number - 1} ]]*/,/*[[ ${page.size} ]]*/);
+            /*<![CDATA[*/
+            $('#pagination-prev').click(function () {
+                setPagenation(/*[[ ${metadata.number - 1} ]]*/,/*[[ ${metadata.size} ]]*/);
                 $('#searchForm').submit();
             });
-            $('#pagination-1').click(function() {
-                setPagenation(/*[[ ${ph.page1PageValue} ]]*/,/*[[ ${page.size} ]]*/);
+
+            $('#pagination-next').click(function () {
+                setPagenation(/*[[ ${metadata.number + 1} ]]*/,/*[[ ${metadata.size} ]]*/);
                 $('#searchForm').submit();
             });
-            $('#pagination-2').click(function() {
-                setPagenation(/*[[ ${ph.page1PageValue + 1} ]]*/,/*[[ ${page.size} ]]*/);
-                $('#searchForm').submit();
-            });
-            $('#pagination-3').click(function() {
-                setPagenation(/*[[ ${ph.page1PageValue + 2} ]]*/,/*[[ ${page.size} ]]*/);
-                $('#searchForm').submit();
-            });
-            $('#pagination-next').click(function() {
-                setPagenation(/*[[ ${page.number + 1} ]]*/,/*[[ ${page.size} ]]*/);
-                $('#searchForm').submit();
-            });
-            function setPagenation(pageNumber,pageSize) {
+
+            function setPagenation(pageNumber, pageSize) {
                 $('#pageNumber').val(pageNumber);
                 $('#pageSize').val(pageSize);
             }
-        /*]]>*/
 
-
-
-
-
+            /*]]>*/
         </script>
     </div>
 </div>
