@@ -45,13 +45,14 @@ public class ScoreInfoTblEndPoints {
      * @param restOperations
      * @param type
      * @param keyHash
-     * @return
+     * @return Optional
      * @since 1.0
      */
     public Optional<ScoreInfoTbl> findByTypeAndKeyHash(
             final RestOperations restOperations,
             final int type,
-            final String keyHash) {
+            final String keyHash
+    ) {
 
         final String findByTypeAndKeyHash = sudokuUriApi + "scoreInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
 
@@ -94,7 +95,9 @@ public class ScoreInfoTblEndPoints {
      */
     public boolean update(
             final RestOperations restOperations,
-            final ScoreInfoTbl updateScoreBean) {
+            final ScoreInfoTbl updateScoreBean
+    ) {
+
         final String update = sudokuUriApi + "scoreInfoTbls" + CommonConstants.SLASH + PathParameterConstants.PATH_NO;
 
         updateScoreBean.setUpdateDate(LocalDateTime.now());

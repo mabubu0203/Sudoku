@@ -40,17 +40,19 @@ public class RdbApiSearchEndPoints {
     private String sudokuUriApi;
 
     /**
-     * {@code /}<br>
+     * {@code /searchMaster}<br>
      *
      * @param restOperations
      * @param conditionBean
-     * @return boolean
+     * @param pageable
+     * @return PagedResources
      * @since 1.0
      */
     public PagedResources<Resource<SearchResultBean>> search(
             final RestOperations restOperations,
             final SearchConditionBean conditionBean,
-            final Pageable pageable) {
+            final Pageable pageable
+    ) {
 
         final String search = sudokuUriApi + RestUrlConstants.URL_SEARCH_MASTER + CommonConstants.SLASH;
 
@@ -74,7 +76,6 @@ public class RdbApiSearchEndPoints {
                     new ParameterizedTypeReference<>() {
                     }
             );
-            log.info(generateEntity.getBody().toString());
             return generateEntity.getBody();
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
