@@ -31,11 +31,11 @@ public class RdbApiCreateEndPoints {
     private String sudokuUriApi;
 
     /**
-     * {@code /}<br>
+     * {@code /createMaster}<br>
      *
      * @param restOperations
      * @param numberPlaceBean
-     * @return boolean
+     * @return Optional
      * @since 1.0
      */
     public Optional<String> insert(
@@ -44,6 +44,7 @@ public class RdbApiCreateEndPoints {
     ) {
 
         final String insert = sudokuUriApi + RestUrlConstants.URL_CREATE_MASTER + CommonConstants.SLASH;
+
         try {
             URI uri = new URI(insert);
             RequestEntity requestEntity = RequestEntity

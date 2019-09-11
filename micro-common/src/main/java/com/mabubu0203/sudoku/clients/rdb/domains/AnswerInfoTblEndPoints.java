@@ -46,12 +46,14 @@ public class AnswerInfoTblEndPoints {
      *
      * @param restOperations
      * @param type
-     * @return
+     * @return Optional
      * @since 1.0
      */
     public Optional<AnswerInfoTbl> findFirstByType(
             final RestOperations restOperations,
-            final int type) {
+            final int type
+    ) {
+
         final String findFirstByType = sudokuUriApi + "answerInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findFirstByType";
 
         Map<String, String> uriVariables = new HashMap<>();
@@ -87,12 +89,14 @@ public class AnswerInfoTblEndPoints {
      *
      * @param restOperations
      * @param answerKey
-     * @return
+     * @return Optional
      * @since 1.0
      */
     public List<AnswerInfoTbl> findByAnswerKey(
             final RestOperations restOperations,
-            final String answerKey) {
+            final String answerKey
+    ) {
+
         final String findByAnswerKey = sudokuUriApi + "answerInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findByAnswerKey";
 
         Map<String, String> uriVariables = new HashMap<>();
@@ -131,13 +135,14 @@ public class AnswerInfoTblEndPoints {
      * @param restOperations
      * @param type
      * @param keyHash
-     * @return
+     * @return Optional
      * @since 1.0
      */
     public Optional<AnswerInfoTbl> findByTypeAndKeyHash(
             final RestOperations restOperations,
             final int type,
-            final String keyHash) {
+            final String keyHash
+    ) {
 
         final String findByTypeAndKeyhash = sudokuUriApi + "answerInfoTbls" + CommonConstants.SLASH + "search" + CommonConstants.SLASH + "findByTypeAndKeyHash";
 
