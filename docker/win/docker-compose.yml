@@ -1,0 +1,144 @@
+# Docker Engine 18.06.0+
+version: '3.7'
+
+services:
+
+  elasticsearch:
+    build: ./docker-elastic
+    container_name: docker-elastic
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "./docker-elastic/data/:/usr/share/elasticsearch/data"
+    networks:
+      - esnet
+    restart: always
+
+  fluentd:
+    build: ./docker-fluentd
+    container_name: docker-fluentd
+    ports:
+      - 24224:24224
+    links:
+      - elasticsearch
+    volumes:
+      - "./docker-fluentd/conf:/fluentd/etc"
+      - "./docker-fluentd/log:/fluentd/log"
+    networks:
+      - esnet
+    environment:
+      FLUENTD_CONF: fluent.conf
+    depends_on:
+      - elasticsearch
+    restart: always
+
+  kibana:
+    build: ./docker-kibana
+    container_name: docker-kibana
+    ports:
+      - 5601:5601
+    links:
+      - elasticsearch
+    networks:
+      - esnet
+    restart: always
+
+  mysql:
+    build: ./docker-mysql
+    container_name: docker-mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - "./docker-mysql/init:/docker-entrypoint-initdb.d"
+      - "./docker-mysql/conf/:/etc/mysql/conf.d"
+      - "./docker-mysql/data/:/var/lib/mysql"
+    #    networks:
+    #      - sonarnet
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass
+      TZ: "Asia/Tokyo"
+    restart: always
+
+  #  nginx:
+  #    build: ./docker-nginx
+  #    container_name: docker-nginx
+  #    ports:
+  #      - 8011:80
+  #      - 8080:8080
+  #    restart: always
+
+  phpmyadmin:
+    build: ./docker-phpmyadmin
+    container_name: docker-phpmyadmin
+    links:
+      - mysql
+    ports:
+      - 8021:80
+      - 8280:8280
+      - 9000:9000
+    volumes:
+      - "./docker-phpmyadmin/sessions/:/sessions"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    restart: always
+
+  #  sonarqube:
+  #    build: ./docker-sonar
+  #    container_name: docker-sonar
+  #    depends_on:
+  #      - mysql
+  #    volumes:
+  #      - sonarqube_conf:/opt/sonarqube/conf
+  #      - sonarqube_data:/opt/sonarqube/data
+  #      - sonarqube_extensions:/opt/sonarqube/extensions
+  #      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+  #    networks:
+  #      - sonarnet
+  #    command: -Dsonar.web.context=/sonar
+  #    ports:
+  #      - 9092:9000
+  #    environment:
+  #      - SONAR_JDBC_URL=jdbc:mysql://localhost:3306/sonar?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+  #    restart: always
+
+  zipkin:
+    build: ./docker-zipkin
+    container_name: docker-zipkin
+    ports:
+      - 9410:9410
+      - 9411:9411
+    networks:
+      - esnet
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch
+      - SELF_TRACING_ENABLED=true
+      - JAVA_OPTS=-Dlogging.level.zipkin2=DEBUG
+      - SCRIBE_ENABLED=true
+    depends_on:
+      - elasticsearch
+    restart: always
+
+networks:
+  esnet:
+#  sonarnet:
+#    driver: bridge
+#volumes:
+#  sonarqube_conf:
+#  sonarqube_data:
+#  sonarqube_extensions:
+#  sonarqube_bundled-plugins:
