@@ -6,8 +6,8 @@ import com.mabubu0203.sudoku.interfaces.domain.ScoreInfoTbl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -66,13 +66,13 @@ public class ScoreInfoTblEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                 .build();
         try {
-            ResponseEntity<Resource<ScoreInfoTbl>> generateEntity = restOperations
+            ResponseEntity<EntityModel<ScoreInfoTbl>> generateEntity = restOperations
                     .exchange(
                             requestEntity,
                             new ParameterizedTypeReference<>() {
                             }
                     );
-            Resource<ScoreInfoTbl> resource = generateEntity.getBody();
+            EntityModel<ScoreInfoTbl> resource = generateEntity.getBody();
             return Optional.of(resource.getContent());
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
@@ -110,7 +110,7 @@ public class ScoreInfoTblEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                 .body(updateScoreBean);
         try {
-            ResponseEntity<Resource<ScoreInfoTbl>> generateEntity = restOperations
+            ResponseEntity<EntityModel<ScoreInfoTbl>> generateEntity = restOperations
                     .exchange(
                             requestEntity,
                             new ParameterizedTypeReference<>() {

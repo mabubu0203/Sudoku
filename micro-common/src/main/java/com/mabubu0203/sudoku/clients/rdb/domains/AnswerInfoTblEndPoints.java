@@ -5,9 +5,9 @@ import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -66,7 +66,7 @@ public class AnswerInfoTblEndPoints {
                 .build();
 
         try {
-            ResponseEntity<Resource<AnswerInfoTbl>> generateEntity = restOperations
+            ResponseEntity<EntityModel<AnswerInfoTbl>> generateEntity = restOperations
                     .exchange(
                             requestEntity,
                             new ParameterizedTypeReference<>() {
@@ -108,7 +108,7 @@ public class AnswerInfoTblEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                 .build();
         try {
-            ResponseEntity<PagedResources<Resource<AnswerInfoTbl>>> generateEntity = restOperations
+            ResponseEntity<PagedModel<EntityModel<AnswerInfoTbl>>> generateEntity = restOperations
                     .exchange(
                             requestEntity,
                             new ParameterizedTypeReference<>() {
@@ -116,7 +116,7 @@ public class AnswerInfoTblEndPoints {
                     );
             return generateEntity.getBody().getContent()
                     .stream()
-                    .map(Resource::getContent)
+                    .map(EntityModel::getContent)
                     .collect(toList());
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
@@ -156,7 +156,7 @@ public class AnswerInfoTblEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaTypes.HAL_JSON_VALUE)
                 .build();
         try {
-            ResponseEntity<Resource<AnswerInfoTbl>> generateEntity = restOperations
+            ResponseEntity<EntityModel<AnswerInfoTbl>> generateEntity = restOperations
                     .exchange(
                             requestEntity,
                             new ParameterizedTypeReference<>() {

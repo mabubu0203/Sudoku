@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -48,7 +48,7 @@ public class RdbApiSearchEndPoints {
      * @return PagedResources
      * @since 1.0
      */
-    public PagedResources<Resource<SearchResultBean>> search(
+    public PagedModel<EntityModel<SearchResultBean>> search(
             final RestOperations restOperations,
             final SearchConditionBean conditionBean,
             final Pageable pageable
@@ -71,7 +71,7 @@ public class RdbApiSearchEndPoints {
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .build();
         try {
-            ResponseEntity<PagedResources<Resource<SearchResultBean>>> generateEntity = restOperations.exchange(
+            ResponseEntity<PagedModel<EntityModel<SearchResultBean>>> generateEntity = restOperations.exchange(
                     requestEntity,
                     new ParameterizedTypeReference<>() {
                     }
