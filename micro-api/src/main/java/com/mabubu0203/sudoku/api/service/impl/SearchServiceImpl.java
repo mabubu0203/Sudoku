@@ -20,8 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -110,7 +110,7 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
-    private Page<SearchResultBean> convertJacksonFile(final PagedResources<Resource<SearchResultBean>> page) {
+    private Page<SearchResultBean> convertJacksonFile(final PagedModel<EntityModel<SearchResultBean>> page) {
 
         log.info(page.toString());
         Pageable pageable = PageRequest.of((int) page.getMetadata().getNumber(), (int) page.getMetadata().getSize());
