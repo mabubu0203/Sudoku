@@ -20,8 +20,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestOperations;
@@ -94,16 +94,16 @@ public class SearchHelper {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "no");
         Pageable pageable = PageRequest.of(form.getPageNumber(), form.getPageSize(), sort);
-        PagedResources<Resource<SearchResultBean>> page = rdbApiSearchEndPoints
+        PagedModel<EntityModel<SearchResultBean>> page = rdbApiSearchEndPoints
                 .search(restOperations, request, pageable);
         setPageInformation(model, page);
     }
 
-    private void setPageInformation(Model model, PagedResources<Resource<SearchResultBean>> page) {
+    private void setPageInformation(Model model, PagedModel<EntityModel<SearchResultBean>> page) {
 
         List<SearchResultBean> content = page.getContent().stream().map(e -> e.getContent()).collect(toList());
 
-        PagedResources.PageMetadata metadata = page.getMetadata();
+        PagedModel.PageMetadata metadata = page.getMetadata();
         long pageSize = metadata.getSize();
         long totalElements = metadata.getTotalElements();
         long totalPages = metadata.getTotalPages();

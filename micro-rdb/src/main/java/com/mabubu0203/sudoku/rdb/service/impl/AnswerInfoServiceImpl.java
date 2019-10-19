@@ -16,8 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -49,11 +49,11 @@ public class AnswerInfoServiceImpl implements AnswerInfoService {
     }
 
     @Override
-    public PagedResources<Resource<SearchResult>> searchRecords(SearchConditionBean condition, Pageable pageable) {
+    public PagedModel<EntityModel<SearchResult>> searchRecords(SearchConditionBean condition, Pageable pageable) {
         Specification<AnswerInfoTbl> answerSpecification = createSpecification(condition);
         Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
         Page<SearchResult> projected = page.map(l -> factory.createProjection(SearchResult.class, l));
-        PagedResources<Resource<SearchResult>> pagedResources = assembler.toResource(projected);
+        PagedModel<EntityModel<SearchResult>> pagedResources = assembler.toModel(projected);
         return pagedResources;
     }
 

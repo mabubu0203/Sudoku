@@ -10,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +53,7 @@ public class RdbApiSearchController {
      * @since 1.0
      */
     @GetMapping(value = {CommonConstants.EMPTY_STR})
-    public ResponseEntity<PagedResources<Resource<SearchResult>>> search(
+    public ResponseEntity<PagedModel<EntityModel<SearchResult>>> search(
             @RequestParam(value = "selectType") Integer selectType,
             @RequestParam(value = "no", required = false) Long no,
             @RequestParam(value = "keyHash", required = false) String keyHash,

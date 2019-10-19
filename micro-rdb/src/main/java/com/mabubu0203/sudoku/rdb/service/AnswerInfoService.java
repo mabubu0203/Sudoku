@@ -5,8 +5,8 @@ import com.mabubu0203.sudoku.interfaces.SearchConditionBean;
 import com.mabubu0203.sudoku.interfaces.domain.AnswerInfoTbl;
 import com.mabubu0203.sudoku.interfaces.projection.SearchResult;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 
 /**
  * ANSWER_INFO_TBLへのinterfaceです。<br>
@@ -37,6 +37,6 @@ public interface AnswerInfoService {
      * @return N件
      * @since 1.0
      */
-    PagedResources<Resource<SearchResult>> searchRecords(SearchConditionBean condition, Pageable pageable);
+    PagedModel<EntityModel<SearchResult>> searchRecords(SearchConditionBean condition, Pageable pageable);
 
 }

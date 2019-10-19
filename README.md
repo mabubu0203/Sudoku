@@ -7,13 +7,13 @@
 
 name   | Front | Batch | Admin
 :----- | :---- | :---- | :----
-数独解答作成 | ○     | ○     | ○
+数独解答作成 | ○     | ○    | ○
 数独虫食作成 | ○     | ✖︎    | ✖︎
-数独実行   | ○     | ✖︎    | ✖︎
-数独検索   | ○     | ✖︎    | ○
-スコア登録  | ○     | ✖︎    | ✖︎
-スコア編集  | ✖︎    | ✖︎    | ○
-管理機能   | ✖︎    | ✖︎    | ○
+数独実行    | ○     | ✖︎    | ✖︎
+数独検索    | ○     | ✖︎    | ○
+スコア登録   | ○     | ✖︎    | ✖︎
+スコア編集   | ✖︎     | ✖︎    | ○
+管理機能    | ✖︎     | ✖︎    | ○
 
 上記をマルチプロジェクトで作成し、管理します。
 
@@ -52,11 +52,11 @@ name   | Front | Batch | Admin
 
 | name              | version
 | :---------------- | :-------
-| OpenJdk           | 12
+| OpenJdk           | 12.x
 | DockerCompose     | 1.24.0
-| Gradle            | 5.6.0 
+| Gradle            | 5.6.x 
 | mysql             | 8.0.x 
-| ElasticSearch     | 7.3.x 
+| ElasticSearch     | 7.4.x 
 
 ### Ports
 
@@ -77,7 +77,7 @@ name   | Front | Batch | Admin
 | web3号機           | 9023
 | elasticsearch     | 9200
 | zipkin            | 9411
-| fluentd            | 24224
+| fluentd           | 24224
 
 [kibana]: http://localhost:5601     "kibana"
 [phpMyAdmin]: http://localhost:8021/     "phpMyAdmin"
