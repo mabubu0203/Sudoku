@@ -1,0 +1,1 @@
+FROM openzipkin/zipkin:2.18.0

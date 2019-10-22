@@ -21,7 +21,7 @@ name   | Front | Batch | Admin
 
 1. 当プロジェクトをIntelliJ IDEAにGradleProjectとしてclone  
 2. docker-composeよりMysqlを起動  
-    `$ cd docker`  
+    `$ cd docker/mac`  
     `$ docker-compose -f docker-compose.yml build`  
     `$ docker-compose -f docker-compose.yml up -d`  
 3. GradleタスクよりbootRun(`:micro-config -> Tasks -> application -> bootRun`)
