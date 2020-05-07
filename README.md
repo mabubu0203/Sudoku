@@ -54,9 +54,9 @@ name   | Front | Batch | Admin
 | :---------------- | :-------
 | OpenJdk           | 13.x
 | DockerCompose     | 1.24.0
-| Gradle            | 6.0.x 
+| Gradle            | 6.4.x 
 | mysql             | 8.0.x 
-| ElasticSearch     | 7.5.x 
+| ElasticSearch     | 7.6.x 
 
 ### Ports
 
