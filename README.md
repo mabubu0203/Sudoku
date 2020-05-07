@@ -52,11 +52,11 @@ name   | Front | Batch | Admin
 
 | name              | version
 | :---------------- | :-------
-| OpenJdk           | 12.x
+| OpenJdk           | 13.x
 | DockerCompose     | 1.24.0
-| Gradle            | 5.6.x 
+| Gradle            | 6.4.x 
 | mysql             | 8.0.x 
-| ElasticSearch     | 7.4.x 
+| ElasticSearch     | 7.6.x 
 
 ### Ports
 
